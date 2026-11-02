@@ -1,0 +1,9 @@
+// Add this named formula to the host canvas app's App.Formulas property.
+// Formula separators may differ with the Power Apps authoring language.
+// Reviewed against source properties; Power Apps Studio validation is pending.
+UiTheme = {
+    Accent: App.Theme.Colors.Primary,
+    Mode: "Light",
+    Motion: false,
+    OnAccent: ColorValue("#FFFFFF")
+};
