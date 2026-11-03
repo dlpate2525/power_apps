@@ -1,9 +1,23 @@
 // Add this named formula to the host canvas app's App.Formulas property.
 // Formula separators may differ with the Power Apps authoring language.
-// Reviewed against source properties; Power Apps Studio validation is pending.
+// Edit these shared values to customize the default Wells Fargo-inspired palette.
+// Light palette only. Color checks do not replace Power Apps Studio validation.
 UiTheme = {
-    Accent: App.Theme.Colors.Primary,
+    Accent: ColorValue("#463782"),
+    OnAccent: ColorValue("#FFFFFF"),
+    AccentHover: ColorValue("#362965"),
+    AccentSoft: ColorValue("#ECEBF3"),
+    AccentBorder: ColorValue("#C5BFD7"),
+    Secondary: ColorValue("#D88777"),
+    OnSecondary: ColorValue("#292630"),
+    SecondaryText: ColorValue("#8D4538"),
+    Background: ColorValue("#FFFFFF"),
+    Surface: ColorValue("#F5F4F7"),
+    Text: ColorValue("#292630"),
+    TextMuted: ColorValue("#625F69"),
+    Border: ColorValue("#DFDCE6"),
+    ControlBorder: ColorValue("#625F69"),
+    Focus: ColorValue("#463782"),
     Mode: "Light",
-    Motion: false,
-    OnAccent: ColorValue("#FFFFFF")
+    Motion: false
 };

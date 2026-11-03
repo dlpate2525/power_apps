@@ -6,7 +6,7 @@ Build consistent Power Apps screens with ready-made UI patterns. This fork aims 
 
 [Browse components](#component-catalog) · [Set up shared colors](docs/THEMING.md) · [Read the evaluation](docs/FORK-REVIEW.md) · [View the roadmap](docs/ROADMAP.md)
 
-> **Current status:** 12 inherited component samples, a shared-theme starter, and a modernization plan. The component YAML is unchanged from upstream. This fork has not yet completed its own Power Apps Studio validation.
+> **Current status:** 12 component samples with a purple accent default, an editable shared palette, and a modernization plan. This fork has not yet completed its own Power Apps Studio validation.
 
 This project builds on [LowCodeStacks / power-apps-components](https://github.com/posiauday/power-apps-components), under the [MIT License](LICENSE). Original names, previews, and attribution are retained.
 
@@ -14,7 +14,7 @@ This project builds on [LowCodeStacks / power-apps-components](https://github.co
 
 Create a practical library of modern Power Apps components that makers can reuse across business applications.
 
-- Change brand colors through shared settings.
+- Start with the previously selected Wells Fargo-inspired purple/coral palette and change it through shared settings.
 - Use Microsoft modern controls and themes where their behavior fits.
 - Keep each component's inputs, outputs, and events easy to understand.
 - Support keyboard use, readable contrast, and responsive layouts.
@@ -36,16 +36,46 @@ A **design token** is a named value for a shared style, such as a brand color or
 
 `Theme` is currently a text input. It is not Microsoft's `App.Theme` object. Changing `AccentColor` does not replace every internal color.
 
+### Default palette
+
+The defaults reuse our selected Wells Fargo-inspired palette: white and quiet gray surfaces, deep purple actions, and restrained coral accents. These are project design choices, not an official Wells Fargo brand specification.
+
+| Role | Default | Shared value |
+| --- | --- | --- |
+| Primary action | Deep purple `#463782` | `UiTheme.Accent` |
+| Primary action text | White `#FFFFFF` | `UiTheme.OnAccent` |
+| Secondary accent | Muted coral `#D88777` | `UiTheme.Secondary` |
+| Text on coral | Ink `#292630` | `UiTheme.OnSecondary` |
+| Main background | White `#FFFFFF` | `UiTheme.Background` |
+| Secondary surface | Quiet gray `#F5F4F7` | `UiTheme.Surface` |
+| Main text | Ink `#292630` | `UiTheme.Text` |
+| Supporting text | Muted ink `#625F69` | `UiTheme.TextMuted` |
+
+All 12 component `AccentColor` defaults now use `#463782`. The remaining values style the host app where explicitly bound; they do not replace every internal component color.
+
 ### Start with one theme record
 
-Add this named formula to **App.Formulas** in the host app. A named formula recalculates when its dependencies change.
+Add the complete [theme formula](examples/theme/App.Formulas.powerfx) to **App.Formulas** in the host app. Edit its values to change the shared palette. A named formula recalculates when its dependencies change.
 
 ```powerfx
 UiTheme = {
-    Accent: App.Theme.Colors.Primary,
+    Accent: ColorValue("#463782"),
+    OnAccent: ColorValue("#FFFFFF"),
+    AccentHover: ColorValue("#362965"),
+    AccentSoft: ColorValue("#ECEBF3"),
+    AccentBorder: ColorValue("#C5BFD7"),
+    Secondary: ColorValue("#D88777"),
+    OnSecondary: ColorValue("#292630"),
+    SecondaryText: ColorValue("#8D4538"),
+    Background: ColorValue("#FFFFFF"),
+    Surface: ColorValue("#F5F4F7"),
+    Text: ColorValue("#292630"),
+    TextMuted: ColorValue("#625F69"),
+    Border: ColorValue("#DFDCE6"),
+    ControlBorder: ColorValue("#625F69"),
+    Focus: ColorValue("#463782"),
     Mode: "Light",
-    Motion: false,
-    OnAccent: ColorValue("#FFFFFF")
+    Motion: false
 };
 ```
 
@@ -58,7 +88,13 @@ Set each inserted component's supported properties in Studio:
 | `Motion` | `UiTheme.Motion` |
 | Floating action button `ContentColor` | `UiTheme.OnAccent` |
 
-Choose a modern app theme to change the shared accent. Check contrast for your selected colors, including `OnAccent`.
+For host controls, bind screen `Fill` to `UiTheme.Background` and text `Color` to `UiTheme.Text`. Use `UiTheme.OnSecondary` for text placed on coral.
+
+To follow the selected Microsoft theme instead, replace the `Accent` expression with `App.Theme.Colors.Primary`. This is an optional change; selecting a Microsoft theme does not override the literal defaults above.
+
+White on purple has **9.86:1** contrast; ink on coral has **5.41:1**. Coral on white has only **2.74:1**, so use coral for decorative accents rather than text or required control indicators on white.
+
+After editing the palette, run `python scripts/check_theme.py` to check the documented light-mode color pairs. See [theme validation](docs/THEMING.md) for limits and keyboard checks.
 
 For this simple setup, set the navigation shell's `ShowThemeToggle` to `false` on a fresh instance. Its internal toggle can override its `Theme` input.
 
@@ -66,7 +102,7 @@ The starter has been checked against the declared properties and Microsoft docum
 
 ## Component catalog
 
-Versions below are inherited upstream versions. Links open the source and its original setup guide.
+Versions below identify the upstream baselines. This fork changes their accent defaults to purple; the existing behavior remains based on those versions. Links open the source and its original setup guide.
 
 | Component | Use | Version | Studio name |
 | --- | --- | --- | --- |
@@ -85,7 +121,7 @@ Versions below are inherited upstream versions. Links open the source and its or
 
 ### Upstream previews
 
-These previews show the original LowCodeStacks samples. They do not demonstrate a completed theme migration in this fork.
+These previews show the original LowCodeStacks samples, including their original colors. They do not show this fork's new purple defaults.
 
 | Button | KPI card |
 | --- | --- |
@@ -121,7 +157,7 @@ Here, a module is the implementation behind a component's public interface. This
 
 | Stage | Outcome | Status |
 | --- | --- | --- |
-| Foundation | Fork identity, source review, and shared accent setup | Documentation available; Studio check pending |
+| Foundation | Fork identity, source review, and configurable purple/coral defaults | Source changes available; Studio check pending |
 | Theme pilot | Shared color, spacing, typography, and corner inputs in Button and KPI card | Planned |
 | Reusable library | Versioned library, sample app, and solution packaging | Planned |
 | Validated catalog | Remaining components meet documented release checks | Planned |

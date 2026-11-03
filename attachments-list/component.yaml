@@ -88,7 +88,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for the drop card, the button, the focus rings and files of a type without a colour of its own."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

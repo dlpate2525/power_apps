@@ -108,7 +108,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for the selected node."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

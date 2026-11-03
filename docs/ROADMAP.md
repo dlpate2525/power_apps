@@ -2,7 +2,7 @@
 
 The goal is a reusable Power Apps library with shared design settings and evidence that each published component works.
 
-The current change provides documentation and a host-app theme starter. It does not modernize the component YAML or produce a packaged library.
+The current change provides documentation, a host-app theme starter, and purple accent defaults in all 12 component definitions. Broader component styling and packaged library delivery remain planned work.
 
 ## 1. Validate the baseline
 

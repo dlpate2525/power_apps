@@ -32,7 +32,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "The button's colour. Use your app's brand colour."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       ContentColor:
         PropertyKind: Input
         DisplayName: ContentColor

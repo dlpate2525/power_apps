@@ -32,7 +32,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour. Primary buttons use it, and their hover and pressed colours are worked out from it."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

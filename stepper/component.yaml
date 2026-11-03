@@ -127,7 +127,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for finished and current steps and the Next button."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

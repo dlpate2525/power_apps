@@ -147,7 +147,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for the current item and badges."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Look:
         PropertyKind: Input
         DisplayName: Look

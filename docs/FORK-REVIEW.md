@@ -8,7 +8,7 @@ The fork is a useful starting collection for reusable Power Apps canvas componen
 
 The review covers all 12 component definitions and all 13 README files at commit `2965dafd3df99ef942f35e7678c5238414924418`. GitHub returned that same commit for the [fork](https://github.com/dlpate2525/power_apps/commit/2965dafd3df99ef942f35e7678c5238414924418) and [upstream](https://github.com/posiauday/power-apps-components/commit/2965dafd3df99ef942f35e7678c5238414924418) default branches before this documentation change. There was no fork-specific implementation difference to review.
 
-This change leaves the existing component YAML untouched. Imported previews and external demos describe the upstream implementation. They do not establish validation of future fork changes.
+This evaluation describes the baseline above. On November 3, the fork changed all 12 `AccentColor` defaults to purple `#463782` and expanded the editable host-app palette. The findings below still describe the inherited implementation; no broader styling migration or Studio validation has been completed. Imported previews and external demos show upstream colors.
 
 ## What already works at the design level
 
