@@ -2,13 +2,11 @@
 
 Use `dlpate2525/power_apps` on GitHub for tickets and specifications. Use its existing pull-request workflow for code changes and reviews.
 
-## Current availability
+## Availability
 
-The repository README states that GitHub Issues are disabled. Verify availability before an issue operation.
+GitHub Issues is enabled for this repository. If an operation later fails because of access or repository settings, report the blocker and keep the proposed ticket in the current task's output.
 
-If Issues remain disabled, report the blocker and keep the proposed ticket in the current task's output. Enabling Issues is a separate repository setting change.
-
-Pull-request review remains available. Resolve a supplied issue or pull-request reference before choosing the relevant workflow.
+Resolve a supplied issue or pull-request reference before choosing the relevant workflow.
 
 ## Tool choice
 
