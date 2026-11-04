@@ -198,7 +198,7 @@ The attachments sample enables app-scope access and uses shared collections. Tre
 
 The source license is MIT. Power Apps, connectors, data sources, and environments have separate licensing requirements.
 
-Feedback belongs in this fork's [pull requests](https://github.com/dlpate2525/power_apps/pulls). Its issue tracker is currently disabled.
+Track bugs, requests, and specifications in [GitHub Issues](https://github.com/dlpate2525/power_apps/issues). Use [pull requests](https://github.com/dlpate2525/power_apps/pulls) for code changes and reviews.
 
 ## Sources and attribution
 
