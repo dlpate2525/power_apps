@@ -38,6 +38,8 @@ A **design token** is a named value for a shared style, such as a brand color or
 
 `Theme` is currently a text input. It is not Microsoft's `App.Theme` object. Changing `AccentColor` does not replace every internal color.
 
+The [complete property reference](docs/COMPONENT-PROPERTIES.md) lists inputs, defaults, outputs, events, and actions for all 15 components. The [preservation review](docs/COMPONENT-PRESERVATION.md) confirms that all 301 original public properties remain available.
+
 ### Default palette
 
 Use white and quiet gray surfaces, deep purple actions, and restrained coral accents. Reserve reds for status and confirmation cues.

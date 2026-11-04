@@ -12,6 +12,8 @@ Display form steps, progress, and navigation controls. Support checks before use
 
 The fork uses a configurable purple accent default. The original baseline version identifies the component's starting point.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#stepper) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

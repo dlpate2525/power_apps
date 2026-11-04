@@ -17,6 +17,8 @@ Recorded from the HTML preview with sample data. Native Power Apps validation is
 
 </details>
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#search-filter-bar) for inputs, defaults, outputs, events, and actions.
+
 ## Property contract
 
 | Property | Kind | Default and meaning |

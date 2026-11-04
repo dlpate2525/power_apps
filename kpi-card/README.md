@@ -12,6 +12,8 @@ Display a value, its comparison with a previous value, and progress toward a tar
 
 The fork uses a configurable purple accent default. The original baseline version identifies the component's starting point.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#kpi-card) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

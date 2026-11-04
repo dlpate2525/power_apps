@@ -1,0 +1,1825 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "commit": "2965dafd3df99ef942f35e7678c5238414924418",
+    "repository": "https://github.com/posiauday/power-apps-components"
+  },
+  "comparison": "Preserve original property signatures and default source text. Normalize line endings and outer whitespace only; do not parse Power Fx semantics. Ignore descriptions and display names. Allow additional properties and changes to AccentColor.Default only.",
+  "components": {
+    "accordion/component.yaml": {
+      "identifier": "lcsAccordion",
+      "properties": {
+        "Items": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table({Key: \"what\", Title: \"What is this app for?\", Body: \"Raising and tracking requests with the facilities team, from a broken light to a new desk. Every request gets a number and you can see its status here.\"}, {Key: \"who\", Title: \"Who can see my request?\", Body: \"You, the facilities team and your manager. Nobody else, unless you add them.\"}, {Key: \"long\", Title: \"How long does it take?\", Body: \"Most requests are closed within three working days. Urgent ones are picked up within the hour during opening hours.\"})"
+        },
+        "MultipleOpen": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "DefaultOpenKeys": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "BodySize": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=14"
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "OpenKeys": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "OpenCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "OnToggle": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "IsOpen",
+              "DataType": "Boolean",
+              "Default": "=false"
+            }
+          ]
+        },
+        "Toggle": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "ExpandAll": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "CollapseAll": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "attachments-list/component.yaml": {
+      "identifier": "lcsAttachmentList",
+      "properties": {
+        "Title": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Upload documents\""
+        },
+        "Subtitle": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Add the files for this request\""
+        },
+        "Files": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table({Key: \"f1\", Name: \"Site survey.pdf\", Size: 1843200, Url: \"\", Who: \"Dana Kaur\", When: DateAdd(Now(), -2, TimeUnit.Days)}, {Key: \"f2\", Name: \"Notes.docx\", Size: 23552, Url: \"\", Who: \"Sam Okafor\", When: DateAdd(Now(), -20, TimeUnit.Minutes)})"
+        },
+        "AcceptedTypes": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"pdf,docx,xlsx,png,jpg\""
+        },
+        "MaxFiles": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=3"
+        },
+        "MaxFileSize": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=10"
+        },
+        "AllowUpload": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "AllowRemove": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "IsUploading": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "ShowMeta": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"size,who,when\""
+        },
+        "OpenOnSelect": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "EmptyText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"No files yet\""
+        },
+        "MaxHeight": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=0"
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "Count": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "TotalSize": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "TotalSizeText": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "ReadyCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "StagedFiles": {
+          "PropertyKind": "Output",
+          "DataType": "Table"
+        },
+        "StagedFilesData": {
+          "PropertyKind": "Output",
+          "DataType": "Table"
+        },
+        "RemovedKeys": {
+          "PropertyKind": "Output",
+          "DataType": "Table"
+        },
+        "HasChanges": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "OnOpen": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Name",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Url",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnSave": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Ready",
+              "DataType": "Number",
+              "Default": "=0"
+            },
+            {
+              "Name": "Removed",
+              "DataType": "Number",
+              "Default": "=0"
+            }
+          ]
+        },
+        "OnCancel": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Discarded",
+              "DataType": "Number",
+              "Default": "=0"
+            }
+          ]
+        }
+      }
+    },
+    "button/component.yaml": {
+      "identifier": "lcsButton",
+      "properties": {
+        "Label": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Save\""
+        },
+        "Appearance": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Primary\""
+        },
+        "IconName": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "IsBusy": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "RequireConfirm": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "ConfirmLabel": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Select again\""
+        },
+        "ConfirmSeconds": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=4"
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "IsArmed": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "ClickCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "FormatLabel": {
+          "PropertyKind": "InputFunction",
+          "DataType": "Text",
+          "Default": "=Text",
+          "Parameters": [
+            {
+              "Name": "Text",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "IsValidLabel": {
+          "PropertyKind": "OutputFunction",
+          "DataType": "Boolean",
+          "Parameters": [
+            {
+              "Name": "Text",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnClick": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Count",
+              "DataType": "Number",
+              "Default": "=0"
+            }
+          ]
+        },
+        "ResetCount": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "carousel/component.yaml": {
+      "identifier": "lcsCarousel",
+      "properties": {
+        "Items": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table({Key: \"welcome\", Title: \"Welcome to the facilities app\", Text: \"Raise a request, track it, and see what's booked, all in one place.\", Image: \"\", Color: \"#0f6cbd\"}, {Key: \"rooms\", Title: \"Book a room in two taps\", Text: \"Pick a room, pick a time. Projector and chairs come with it.\", Image: \"\", Color: \"#7c3aed\"}, {Key: \"help\", Title: \"Something broken?\", Text: \"Photograph it and send it. The desk replies within the hour.\", Image: \"\", Color: \"#0e7490\"})"
+        },
+        "AutoPlay": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "Interval": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=5000"
+        },
+        "Loop": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowDots": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowArrows": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowPause": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowCaptions": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "CurrentIndex": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "CurrentKey": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "IsPlaying": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "OnChange": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Index",
+              "DataType": "Number",
+              "Default": "=1"
+            }
+          ]
+        },
+        "OnSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Index",
+              "DataType": "Number",
+              "Default": "=1"
+            }
+          ]
+        },
+        "Next": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Previous": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "GoTo": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "Index",
+              "DataType": "Number",
+              "Default": "=1"
+            }
+          ]
+        },
+        "Play": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Pause": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "data-table/component.yaml": {
+      "identifier": "lcsDataTable",
+      "properties": {
+        "Columns": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Label: \"Order\", Width: 110, Kind: \"Strong\"},\n    {Label: \"Customer\", Width: 200, Kind: \"Text\"},\n    {Label: \"Status\", Width: 140, Kind: \"Badge\"},\n    {Label: \"Progress\", Width: 190, Kind: \"Progress\"},\n    {Label: \"Due\", Width: 110, Kind: \"Text\"},\n    {Label: \"Priority\", Width: 110, Kind: \"Badge\"}\n)"
+        },
+        "Rows": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Id: \"1001\", C1: \"#1001\", C2: \"Avery Brooks\", C3: \"In progress\", C4: \"2/4\", C5: \"Mar 3\", C6: \"High\"},\n    {Id: \"1002\", C1: \"#1002\", C2: \"Jordan Lee\", C3: \"Completed\", C4: \"5/5\", C5: \"Mar 5\", C6: \"Medium\"},\n    {Id: \"1003\", C1: \"#1003\", C2: \"Priya Nair\", C3: \"On hold\", C4: \"1/3\", C5: \"Mar 9\", C6: \"Low\"},\n    {Id: \"1004\", C1: \"#1004\", C2: \"Mateo Alvarez\", C3: \"Not started\", C4: \"0/4\", C5: \"Mar 12\", C6: \"High\"}\n)"
+        },
+        "BadgeStyles": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Value: \"In progress\", Fill: RGBA(219, 234, 254, 1), Ink: RGBA(30, 64, 175, 1)},\n    {Value: \"Completed\", Fill: RGBA(220, 252, 231, 1), Ink: RGBA(22, 101, 52, 1)},\n    {Value: \"On hold\", Fill: RGBA(254, 243, 199, 1), Ink: RGBA(146, 64, 14, 1)},\n    {Value: \"Not started\", Fill: RGBA(243, 244, 246, 1), Ink: RGBA(75, 85, 99, 1)},\n    {Value: \"High\", Fill: RGBA(254, 226, 226, 1), Ink: RGBA(153, 27, 27, 1)},\n    {Value: \"Medium\", Fill: RGBA(254, 243, 199, 1), Ink: RGBA(146, 64, 14, 1)},\n    {Value: \"Low\", Fill: RGBA(220, 252, 231, 1), Ink: RGBA(22, 101, 52, 1)}\n)"
+        },
+        "View": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Table\""
+        },
+        "ShowViewToggle": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "TitleColumn": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=2"
+        },
+        "SubtitleColumn": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=1"
+        },
+        "Sortable": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "Selectable": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "BulkActions": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "RowActions": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"View,Edit,Delete\""
+        },
+        "Density": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Comfortable\""
+        },
+        "Loading": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "EmptyTitle": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"No items found\""
+        },
+        "EmptyText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Try changing your search or filters.\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "CurrentView": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "SortColumn": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "SortDescending": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "SelectedIds": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "SelectedCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "SelectedRows": {
+          "PropertyKind": "Output",
+          "DataType": "Table"
+        },
+        "OnRowSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "RowId",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnRowAction": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Action",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "RowId",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnBulkAction": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Action",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "RowIds",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnSort": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "ColumnNumber",
+              "DataType": "Number",
+              "Default": "=1"
+            },
+            {
+              "Name": "Descending",
+              "DataType": "Boolean",
+              "Default": "=false"
+            }
+          ]
+        },
+        "OnViewChange": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "NewView",
+              "DataType": "Text",
+              "Default": "=\"Table\""
+            }
+          ]
+        },
+        "ClearSelection": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "floating-action-button/component.yaml": {
+      "identifier": "lcsFab",
+      "properties": {
+        "Icon": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Add\""
+        },
+        "Label": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Add new\""
+        },
+        "Extended": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "Size": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Regular\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "ContentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(255, 255, 255, 1)"
+        },
+        "SpeedDial": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "Items": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Key: \"note\", Icon: \"Edit\", Label: \"New note\"},\n    {Key: \"photo\", Icon: \"Camera\", Label: \"Take a photo\"},\n    {Key: \"upload\", Icon: \"Upload\", Label: \"Upload a file\"}\n)"
+        },
+        "HiddenKeys": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "DisabledKeys": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "Direction": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Up\""
+        },
+        "ItemHeight": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=48"
+        },
+        "Disabled": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "IsOpen": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "SelectedKey": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "IconSvg": {
+          "PropertyKind": "OutputFunction",
+          "DataType": "Text",
+          "Parameters": [
+            {
+              "Name": "Name",
+              "DataType": "Text",
+              "Default": "=\"Add\""
+            },
+            {
+              "Name": "Stroke",
+              "DataType": "Text",
+              "Default": "=\"#FFFFFF\""
+            }
+          ]
+        },
+        "OnSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false"
+        },
+        "OnItemSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Label",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "Open": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Close": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Toggle": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "kanban-board/component.yaml": {
+      "identifier": "lcsKanban",
+      "properties": {
+        "Columns": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Key: \"todo\", Title: \"To do\", Limit: 0},\n    {Key: \"doing\", Title: \"In progress\", Limit: 3},\n    {Key: \"review\", Title: \"In review\", Limit: 2},\n    {Key: \"done\", Title: \"Done\", Limit: 0}\n)"
+        },
+        "Cards": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Key: \"c1\", Column: \"todo\", Title: \"Draft the onboarding email\", Detail: \"Due Friday\", Tag: \"Marketing\"},\n    {Key: \"c2\", Column: \"todo\", Title: \"Book the venue for the launch\", Detail: \"Two quotes in\", Tag: \"Events\"},\n    {Key: \"c3\", Column: \"doing\", Title: \"Build the approval flow\", Detail: \"Waiting on the finance list\", Tag: \"Automation\"},\n    {Key: \"c4\", Column: \"doing\", Title: \"Fix the gallery that stops at 500 rows\", Detail: \"Delegation warning on Filter\", Tag: \"Power Apps\"},\n    {Key: \"c5\", Column: \"review\", Title: \"Check the sales report totals\", Detail: \"Two regions differ\", Tag: \"Power BI\"},\n    {Key: \"c6\", Column: \"review\", Title: \"Read the security roles plan\", Detail: \"Comments by Tuesday\", Tag: \"Dataverse\"},\n    {Key: \"c7\", Column: \"done\", Title: \"Turn on the data policy\", Detail: \"Signed off\", Tag: \"Governance\"}\n)"
+        },
+        "CurrentKey": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "BlockWhenFull": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowDetail": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowTags": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "CardHeight": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=96"
+        },
+        "BoardLabel": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Board\""
+        },
+        "CardsText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"cards\""
+        },
+        "OfText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"of\""
+        },
+        "FullText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Full\""
+        },
+        "MoveText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Move\""
+        },
+        "ToText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"to\""
+        },
+        "EmptyText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"No cards\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "SelectedKey": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "SelectedCard": {
+          "PropertyKind": "Output",
+          "DataType": "Record"
+        },
+        "CardCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "FullColumns": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "OnMove": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "CardKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "ToColumn",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "FromColumn",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnCardSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "CardKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "ClearSelection": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "kpi-card/component.yaml": {
+      "identifier": "lcsKpiCard",
+      "properties": {
+        "Label": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Open orders\""
+        },
+        "Value": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=128"
+        },
+        "Format": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Number\""
+        },
+        "CurrencySymbol": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"$\""
+        },
+        "Decimals": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=0"
+        },
+        "Previous": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=112"
+        },
+        "ChangeLabel": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"vs last week\""
+        },
+        "GoodWhen": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Up\""
+        },
+        "Target": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=120"
+        },
+        "Status": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Auto\""
+        },
+        "Icon": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Cart\""
+        },
+        "Caption": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "Change": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ChangePercent": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "Trend": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "TargetPercent": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "StatusShown": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "ValueText": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "OnSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false"
+        }
+      }
+    },
+    "month-calendar/component.yaml": {
+      "identifier": "lcsMonthCalendar",
+      "properties": {
+        "Events": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table({Key: \"e1\", Title: \"Fire drill\", Start: Today(), End: Today(), Color: \"#c50f1f\"}, {Key: \"e2\", Title: \"Site survey\", Start: DateAdd(Today(), 1, TimeUnit.Days), End: DateAdd(Today(), 1, TimeUnit.Days), Color: \"\"}, {Key: \"e3\", Title: \"Projector install\", Start: DateAdd(Today(), 3, TimeUnit.Days), End: DateAdd(Today(), 5, TimeUnit.Days), Color: \"#7c3aed\"}, {Key: \"e4\", Title: \"Board visit\", Start: DateAdd(Today(), -2, TimeUnit.Days), End: DateAdd(Today(), -2, TimeUnit.Days), Color: \"#107c10\"}, {Key: \"e5\", Title: \"Floor closed\", Start: DateAdd(Today(), 8, TimeUnit.Days), End: DateAdd(Today(), 9, TimeUnit.Days), Color: \"#c19c00\"}, {Key: \"e6\", Title: \"Audit\", Start: DateAdd(Today(), 1, TimeUnit.Days), End: DateAdd(Today(), 1, TimeUnit.Days), Color: \"#0e7490\"}, {Key: \"e7\", Title: \"Deliveries\", Start: DateAdd(Today(), 1, TimeUnit.Days), End: DateAdd(Today(), 1, TimeUnit.Days), Color: \"\"}, {Key: \"e8\", Title: \"Training\", Start: DateAdd(Today(), 1, TimeUnit.Days), End: DateAdd(Today(), 1, TimeUnit.Days), Color: \"#be185d\"})"
+        },
+        "DefaultMonth": {
+          "PropertyKind": "Input",
+          "DataType": "DateAndTime",
+          "Default": "=Today()"
+        },
+        "StartOfWeek": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Monday\""
+        },
+        "MaxPerDay": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=3"
+        },
+        "CellHeight": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=88"
+        },
+        "ShowToday": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "VisibleMonth": {
+          "PropertyKind": "Output",
+          "DataType": "DateAndTime"
+        },
+        "SelectedDate": {
+          "PropertyKind": "Output",
+          "DataType": "DateAndTime"
+        },
+        "EventsInMonth": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "OnSelectDay": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "SelectedDate",
+              "DataType": "DateAndTime",
+              "Default": "=Today()"
+            }
+          ]
+        },
+        "OnSelectEvent": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Key",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Title",
+              "DataType": "Text",
+              "Default": "=\"\""
+            },
+            {
+              "Name": "Start",
+              "DataType": "DateAndTime",
+              "Default": "=Today()"
+            }
+          ]
+        },
+        "OnMonthChange": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Month",
+              "DataType": "DateAndTime",
+              "Default": "=Today()"
+            }
+          ]
+        },
+        "Next": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Previous": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "GoToToday": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "GoToMonth": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "Month",
+              "DataType": "DateAndTime",
+              "Default": "=Today()"
+            }
+          ]
+        },
+        "Select": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "SelectedDate",
+              "DataType": "DateAndTime",
+              "Default": "=Today()"
+            }
+          ]
+        }
+      }
+    },
+    "navigation-shell/component.yaml": {
+      "identifier": "lcsNavShell",
+      "properties": {
+        "Items": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Key: \"home\", Label: \"Home\", Icon: \"Home\", Badge: \"\"},\n    {Key: \"orders\", Label: \"Orders\", Icon: \"Cart\", Badge: \"3\"},\n    {Key: \"customers\", Label: \"Customers\", Icon: \"People\", Badge: \"\"},\n    {Key: \"reports\", Label: \"Reports\", Icon: \"Document\", Badge: \"\"},\n    {Key: \"settings\", Label: \"Settings\", Icon: \"Settings\", Badge: \"\"}\n)"
+        },
+        "Title": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"My app\""
+        },
+        "CurrentKey": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "HiddenKeys": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "DisabledKeys": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "StartCollapsed": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=false"
+        },
+        "ScreenWidth": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=1366"
+        },
+        "ScreenHeight": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=768"
+        },
+        "BottomBarBelow": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=640"
+        },
+        "MaxBottomItems": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=5"
+        },
+        "ExpandedWidth": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=240"
+        },
+        "ShowToggle": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "MenuLabel": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Main menu\""
+        },
+        "CollapseText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Collapse the menu\""
+        },
+        "ExpandText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Expand the menu\""
+        },
+        "ShowUser": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "UserName": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Avery Brooks\""
+        },
+        "UserDetail": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Admin\""
+        },
+        "UserImage": {
+          "PropertyKind": "Input",
+          "DataType": "Image",
+          "Default": "=\"\""
+        },
+        "ShowThemeToggle": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "DarkText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Switch to dark theme\""
+        },
+        "LightText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Switch to light theme\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Look": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Standard\""
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "IsCollapsed": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "IsBottomBar": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "SelectedKey": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "CurrentTheme": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "ShellX": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ShellY": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ShellWidth": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ShellHeight": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ContentX": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ContentY": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ContentWidth": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "ContentHeight": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "OnNavigate": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "ItemKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnToggle": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "Collapsed",
+              "DataType": "Boolean",
+              "Default": "=false"
+            }
+          ]
+        },
+        "OnThemeChange": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "NewTheme",
+              "DataType": "Text",
+              "Default": "=\"Light\""
+            }
+          ]
+        },
+        "OnUserSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false"
+        },
+        "SetCollapsed": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "Collapsed",
+              "DataType": "Boolean",
+              "Default": "=false"
+            }
+          ]
+        }
+      }
+    },
+    "stepper/component.yaml": {
+      "identifier": "lcsStepper",
+      "properties": {
+        "Steps": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Title: \"Your details\", Description: \"Name and team\"},\n    {Title: \"What you need\", Description: \"Items and dates\"},\n    {Title: \"Approver\", Description: \"Who signs it off\"},\n    {Title: \"Review\", Description: \"Check and submit\"}\n)"
+        },
+        "Type": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Steps\""
+        },
+        "Health": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Green\""
+        },
+        "StatusText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "DefaultStep": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=1"
+        },
+        "Orientation": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Horizontal\""
+        },
+        "ShowDescriptions": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowButtons": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "AllowJumpBack": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "CanLeaveStep": {
+          "PropertyKind": "InputFunction",
+          "DataType": "Boolean",
+          "Default": "=true",
+          "Parameters": [
+            {
+              "Name": "Step",
+              "DataType": "Number",
+              "Default": "=1"
+            }
+          ]
+        },
+        "BackText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Back\""
+        },
+        "NextText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Next\""
+        },
+        "FinishText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Submit\""
+        },
+        "BlockedText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Complete this step to continue.\""
+        },
+        "StepText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Step {n} of {total}\""
+        },
+        "DoneText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"completed\""
+        },
+        "CurrentText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"current step\""
+        },
+        "Look": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Standard\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "CurrentStep": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "StepCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "CurrentTitle": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "IsFirst": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "IsLast": {
+          "PropertyKind": "Output",
+          "DataType": "Boolean"
+        },
+        "Progress": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "Status": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "OnStepChange": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "NewStep",
+              "DataType": "Number",
+              "Default": "=1"
+            },
+            {
+              "Name": "OldStep",
+              "DataType": "Number",
+              "Default": "=1"
+            }
+          ]
+        },
+        "OnFinish": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false"
+        },
+        "GoToStep": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "StepNumber",
+              "DataType": "Number",
+              "Default": "=1"
+            }
+          ]
+        },
+        "Next": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Back": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "Reset": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    },
+    "tree-view/component.yaml": {
+      "identifier": "lcsTreeView",
+      "properties": {
+        "Nodes": {
+          "PropertyKind": "Input",
+          "DataType": "Table",
+          "Default": "=Table(\n    {Key: \"docs\", ParentKey: \"\", Label: \"Documents\", Icon: \"Folder\", HasChildren: true},\n    {Key: \"plans\", ParentKey: \"docs\", Label: \"Plans\", Icon: \"Folder\", HasChildren: true},\n    {Key: \"q3\", ParentKey: \"plans\", Label: \"Q3 plan.docx\", Icon: \"Document\", HasChildren: false},\n    {Key: \"q4\", ParentKey: \"plans\", Label: \"Q4 plan.docx\", Icon: \"Document\", HasChildren: false},\n    {Key: \"budget\", ParentKey: \"docs\", Label: \"Budget.xlsx\", Icon: \"Document\", HasChildren: false},\n    {Key: \"images\", ParentKey: \"\", Label: \"Images\", Icon: \"Folder\", HasChildren: true},\n    {Key: \"logo\", ParentKey: \"images\", Label: \"Logo.png\", Icon: \"Document\", HasChildren: false},\n    {Key: \"archive\", ParentKey: \"\", Label: \"Archive\", Icon: \"Folder\", HasChildren: true}\n)"
+        },
+        "DefaultExpandedKeys": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"docs\""
+        },
+        "CurrentKey": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"\""
+        },
+        "Title": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Files\""
+        },
+        "ShowTitle": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowIcons": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowCounts": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "ShowGuides": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "Look": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Standard\""
+        },
+        "IndentSize": {
+          "PropertyKind": "Input",
+          "DataType": "Number",
+          "Default": "=20"
+        },
+        "TreeLabel": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Folders\""
+        },
+        "ExpandText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Expand\""
+        },
+        "CollapseText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Collapse\""
+        },
+        "LevelText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"level\""
+        },
+        "EmptyText": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Nothing here yet\""
+        },
+        "AccentColor": {
+          "PropertyKind": "Input",
+          "DataType": "Color",
+          "Default": "=RGBA(15, 108, 189, 1)"
+        },
+        "Theme": {
+          "PropertyKind": "Input",
+          "DataType": "Text",
+          "Default": "=\"Light\""
+        },
+        "Motion": {
+          "PropertyKind": "Input",
+          "DataType": "Boolean",
+          "Default": "=true"
+        },
+        "SelectedKey": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "SelectedNode": {
+          "PropertyKind": "Output",
+          "DataType": "Record"
+        },
+        "ExpandedKeys": {
+          "PropertyKind": "Output",
+          "DataType": "Text"
+        },
+        "VisibleCount": {
+          "PropertyKind": "Output",
+          "DataType": "Number"
+        },
+        "OnNodeSelect": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "NodeKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnExpand": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "NodeKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "OnCollapse": {
+          "PropertyKind": "Event",
+          "ReturnType": "None",
+          "Default": "=false",
+          "Parameters": [
+            {
+              "Name": "NodeKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "Expand": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "NodeKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "Collapse": {
+          "PropertyKind": "Action",
+          "ReturnType": "None",
+          "Parameters": [
+            {
+              "Name": "NodeKey",
+              "DataType": "Text",
+              "Default": "=\"\""
+            }
+          ]
+        },
+        "ExpandAll": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        },
+        "CollapseAll": {
+          "PropertyKind": "Action",
+          "ReturnType": "None"
+        }
+      }
+    }
+  }
+}

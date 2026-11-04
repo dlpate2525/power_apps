@@ -12,13 +12,29 @@ Run commands from the repository root.
 python -m pip install PyYAML==6.0.3
 ```
 
-2. Check the three new source contracts and gallery files.
+2. Check the 301 original public properties against the fixed baseline.
+
+```sh
+python scripts/check_compatibility.py
+```
+
+This check allows new properties and customized accent defaults. It rejects missing original properties and changes to their types, kinds, parameters, and other declared defaults. It does not execute their formulas.
+
+3. Check that the property reference matches the current source.
+
+```sh
+python scripts/component_reference.py --check
+```
+
+Regenerate the reference with `python scripts/component_reference.py --write` after reviewing an intentional source change.
+
+4. Check the three new source contracts and gallery files.
 
 ```sh
 python scripts/check_components.py
 ```
 
-3. Check the 32 documented light-palette pairs.
+5. Check the 32 documented light-palette pairs.
 
 ```sh
 python scripts/check_theme.py
