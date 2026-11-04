@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsFab:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks floating action button: the screen's main action as a round button, optionally extended with a label or opening a speed-dial menu of more actions."
+    Description: "floating action button: the screen's main action as a round button, optionally extended with a label or opening a speed-dial menu of more actions."
     CustomProperties:
       Icon:
         PropertyKind: Input
@@ -32,7 +32,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "The button's colour. Use your app's brand colour."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       ContentColor:
         PropertyKind: Input
         DisplayName: ContentColor

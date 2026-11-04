@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsButton:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks button: four looks, your brand colour, light or dark, a busy state, and an optional select-again-to-confirm for actions that can't be undone."
+    Description: "Button with pill or rounded corners, four appearances, a configurable accent, a busy state, and optional select-again confirmation."
     CustomProperties:
       Label:
         PropertyKind: Input
@@ -21,6 +21,18 @@ ComponentDefinitions:
         DataType: Text
         Description: "A Fluent icon name, such as Checkmark. Leave empty for no icon."
         Default: =""
+      Shape:
+        PropertyKind: Input
+        DisplayName: Shape
+        DataType: Text
+        Description: "Pill or Rounded. Pill uses half the smaller dimension; unknown values also use Pill."
+        Default: ="Pill"
+      CornerRadius:
+        PropertyKind: Input
+        DisplayName: CornerRadius
+        DataType: Number
+        Description: "Corner radius in pixels for Rounded. Blank uses 12; values are clamped from zero to half the smaller dimension. Ignored for Pill."
+        Default: =12
       IsBusy:
         PropertyKind: Input
         DisplayName: IsBusy
@@ -32,7 +44,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour. Primary buttons use it, and their hover and pressed colours are worked out from it."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme
@@ -136,6 +148,18 @@ ComponentDefinitions:
             Y: =0
             Width: =Parent.Width
             Height: =Parent.Height
+            RadiusTopLeft: |-
+              =With(
+                  {limit: Max(0, Min(Self.Width, Self.Height) / 2)},
+                  If(
+                      lcsButton.Shape = "Rounded",
+                      Min(limit, Max(0, Coalesce(lcsButton.CornerRadius, 12))),
+                      limit
+                  )
+              )
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
             Text: |-
               =If(
                   lcsButton.IsBusy, "Working…",
@@ -188,6 +212,6 @@ ComponentDefinitions:
             Visible: =lcsButton.IsBusy && lcsButton.Motion
             Image: |-
               =With(
-                  {w: RoundDown(Parent.Width, 0), h: RoundDown(Parent.Height, 0)},
-                  "data:image/svg+xml;utf8," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' width='" & w & "' height='" & h & "' viewBox='0 0 " & w & " " & h & "'><!--" & lcsButton.IsBusy & Rand() & "--><defs><linearGradient id='h' x1='0' x2='1'><stop offset='0' stop-color='#000000' stop-opacity='0'/><stop offset='.5' stop-color='#000000' stop-opacity='.1'/><stop offset='1' stop-color='#000000' stop-opacity='0'/></linearGradient><clipPath id='c'><rect width='" & w & "' height='" & h & "' rx='4'/></clipPath></defs><style>.s{animation:s 1.1s ease-in-out .1s both}@keyframes s{from{transform:translateX(-80px)}to{transform:translateX(" & w & "px)}}@media (prefers-reduced-motion:reduce){.s{animation:none;opacity:0}}</style><g clip-path='url(#c)'><rect class='s' width='80' height='" & h & "' fill='url(#h)'/></g></svg>")
+                  {w: Text(Max(0, btnMain.Width), "[$-en-US]0.############", "en-US"), h: Text(Max(0, btnMain.Height), "[$-en-US]0.############", "en-US")},
+                  "data:image/svg+xml;utf8," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' width='" & w & "' height='" & h & "' viewBox='0 0 " & w & " " & h & "'><!--" & lcsButton.IsBusy & Rand() & "--><defs><linearGradient id='h' x1='0' x2='1'><stop offset='0' stop-color='#000000' stop-opacity='0'/><stop offset='.5' stop-color='#000000' stop-opacity='.1'/><stop offset='1' stop-color='#000000' stop-opacity='0'/></linearGradient><clipPath id='c'><rect width='" & w & "' height='" & h & "' rx='" & Text(btnMain.RadiusTopLeft, "[$-en-US]0.############", "en-US") & "'/></clipPath></defs><style>.s{animation:s 1.1s ease-in-out .1s both}@keyframes s{from{transform:translateX(-80px)}to{transform:translateX(" & w & "px)}}@media (prefers-reduced-motion:reduce){.s{animation:none;opacity:0}}</style><g clip-path='url(#c)'><rect class='s' width='80' height='" & h & "' fill='url(#h)'/></g></svg>")
               )

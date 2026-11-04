@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsKanban:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks Kanban board: columns and cards from two tables, cards moved with buttons and the keyboard, work-in-progress limits that stop a full column taking more, and an OnMove event that tells your app what moved where."
+    Description: "Kanban board: columns and cards from two tables, cards moved with buttons and the keyboard, work-in-progress limits that stop a full column taking more, and an OnMove event that tells your app what moved where."
     CustomProperties:
       Columns:
         PropertyKind: Input
@@ -107,7 +107,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for tags, the selected card and the focus ring."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsAccordion:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks accordion: expandable sections from a table of titles and text, one open at a time or several, each row growing to fit its text, with OpenKeys and OnToggle, Toggle, ExpandAll and CollapseAll, light and dark, each section a rounded tile, and the open one's chevron circle popping in."
+    Description: "accordion: expandable sections from a table of titles and text, one open at a time or several, each row growing to fit its text, with OpenKeys and OnToggle, Toggle, ExpandAll and CollapseAll, light and dark, each section a rounded tile, and the open one's chevron circle popping in."
     CustomProperties:
       Items:
         PropertyKind: Input
@@ -33,7 +33,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for the open section's chevron circle and the focus ring."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

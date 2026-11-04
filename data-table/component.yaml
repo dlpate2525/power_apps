@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsDataTable:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks data table: table, card and list views of your rows, a row you select to open, coloured pills, segmented progress, sortable headers that tell your app, checkboxes with bulk actions, a row menu, and loading and empty states."
+    Description: "data table: table, card and list views of your rows, a row you select to open, coloured pills, segmented progress, sortable headers that tell your app, checkboxes with bulk actions, a row menu, and loading and empty states."
     CustomProperties:
       Columns:
         PropertyKind: Input
@@ -121,7 +121,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for progress, checkboxes and the selected rows."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

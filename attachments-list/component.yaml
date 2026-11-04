@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsAttachmentList:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks attachments: a drop card that adds files (choose or drag), each with a status and a reason when it can't go, the files already attached with Open and remove-and-undo, and one Upload button that hands everything to your app; light and dark, with motion."
+    Description: "attachments: a drop card that adds files (choose or drag), each with a status and a reason when it can't go, the files already attached with Open and remove-and-undo, and one Upload button that hands everything to your app; light and dark, with motion."
     AccessAppScope: true
     CustomProperties:
       Title:
@@ -88,7 +88,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for the drop card, the button, the focus rings and files of a type without a colour of its own."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme

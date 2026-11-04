@@ -1,0 +1,53 @@
+// Power Apps UI Kit - color palette
+// Format: #RRGGBB // Color name | use
+// Edit shared colors in examples/theme/App.Formulas.powerfx.
+// Bind control properties to the matching UiTheme fields.
+// Use additional shades when configuring individual controls.
+
+// PURPLES
+#463782 // Deep purple | UiTheme.Accent, UiTheme.Focus
+#362965 // Dark purple | UiTheme.AccentHover
+#ECEBF3 // Soft lavender | UiTheme.AccentSoft
+#C5BFD7 // Lavender gray | UiTheme.AccentBorder; decorative border
+
+// CORALS
+#D88777 // Muted coral | UiTheme.Secondary; use ink text on this fill
+#8D4538 // Dark coral | UiTheme.SecondaryText; text on light surfaces
+
+#FFF8F6 // Pale coral | Banner background
+#FBE8E3 // Soft coral | Icon background
+#F2D9D3 // Coral border | Decorative border on pale coral
+#843E34 // Deep coral | Heading and link text on pale coral
+#75534E // Muted coral ink | Supporting text on pale coral
+
+// REDS
+#A23D49 // Muted red | Error text on pale rose
+#FFF0F2 // Pale rose | Error message and badge backgrounds
+#EFCDD2 // Rose border | Decorative border on pale rose
+#B74856 // Rose red | Status indicator; pair with a label or icon
+
+// Fixed component colors: edit the component source to change these values.
+#C4314B // Confirmation red | Button confirmation palette seed
+#8C1D18 // Deep error red | KPI negative-status text
+#FFDAD6 // Soft error red | KPI negative-status background
+#C50F1F // Strong error red | KPI negative-status progress fill
+
+// GRAYS AND WHITE
+#FFFFFF // White | UiTheme.Background, UiTheme.OnAccent
+#F5F4F7 // Soft gray | UiTheme.Surface
+#DFDCE6 // Light gray | UiTheme.Border; decorative separator
+#625F69 // Muted ink | UiTheme.TextMuted, UiTheme.ControlBorder
+#292630 // Ink | UiTheme.Text, UiTheme.OnSecondary
+
+#625B70 // Gray badge text | Text on gray badge surfaces
+#F2F0F5 // Gray badge surface | Neutral badge background
+
+// Fixed Button colors in light mode: edit the component source to change them.
+#242424 // Charcoal | Secondary, Outline, and Subtle text
+#616161 // Disabled gray | Busy text
+#D1D1D1 // Button border gray | Secondary and Outline borders
+
+// Include text or icons with status colors.
+// Use ink #292630 on coral #D88777; white text on this coral is only 2.74:1.
+// Recheck foreground/background contrast after changing any color.
+// See docs/THEMING.md for setup and contrast checks.

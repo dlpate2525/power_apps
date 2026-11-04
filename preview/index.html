@@ -1,0 +1,1499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' file: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<link rel="icon" href="data:,">
+<title>Component gallery — Power Apps UI Kit</title>
+<style>
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #292630;
+  background: #F5F4F7;
+  --accent: #463782; --on-accent: #FFFFFF; --accent-ink: #463782;
+  --surface: #F5F4F7; --ink: #292630; --muted: #625F69;
+  --line: #DFDCE6; --control-border: #625F69;
+  --coral: #D88777; --coral-ink: #8D4538; --radius: 20px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; font-size: 14px; line-height: 1.5; }
+button, input, select, textarea { font: inherit; }
+button, summary { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+a { color: #463782; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid #463782; outline-offset: 3px; }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: clamp(26px, 3vw, 36px); line-height: 1.15; font-weight: 650; letter-spacing: -.8px; }
+h2 { font-size: 19px; line-height: 1.3; font-weight: 650; }
+h3 { font-size: 15px; font-weight: 600; }
+input[type="text"], input[type="search"], input[type="number"], select {
+  min-width: 0; max-width: 100%; min-height: 38px; border: 1px solid #8E879A;
+  border-radius: 6px; padding: 8px 10px; color: var(--ink); background: white;
+}
+input[type="checkbox"], input[type="radio"] { accent-color: #463782; width: 16px; height: 16px; }
+input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; border: 1px solid #8E879A; border-radius: 6px; background: white; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; z-index: 10; top: 8px; left: 8px; transform: translateY(-160%); padding: 10px 15px; background: white; }
+.skip-link:focus { transform: none; }
+.app-layout { display: grid; grid-template-columns: 226px minmax(0, 1fr); max-width: 1700px; margin: auto; }
+.catalog-rail { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 30px 18px; background: white; border-right: 1px solid var(--line); }
+.kit-brand { display: flex; gap: 12px; align-items: center; margin: 0 8px 30px; font-size: 15px; font-weight: 650; }
+.kit-mark { display: inline-block; flex: none; width: 24px; height: 13px; border-radius: 8px; background: #463782; box-shadow: 7px 4px 0 -1px #D88777; margin-right: 4px; }
+.catalog-nav { display: grid; gap: 4px; }
+.catalog-nav button { width: 100%; border: 0; background: transparent; color: var(--muted); text-align: left; padding: 10px 12px; min-height: 42px; border-radius: 6px; font-size: 13px; }
+.catalog-nav button:hover { background: #F5F4F7; }
+.catalog-nav button[aria-pressed="true"] { background: #ECEBF3; color: #463782; font-weight: 650; box-shadow: inset 3px 0 #463782; }
+.rail-links { display: grid; gap: 12px; border-top: 1px solid var(--line); margin: 24px 8px 0; padding-top: 20px; font-size: 12px; }
+.gallery-main { padding: 34px clamp(18px, 3vw, 42px) 40px; min-width: 0; }
+.gallery-header { display: flex; align-items: start; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.gallery-header p { max-width: 650px; color: var(--muted); margin-top: 11px; }
+.local-label { white-space: nowrap; border: 1px solid #C5BFD7; color: #463782; padding: 6px 11px; border-radius: 20px; font-size: 12px; background: #ECEBF3; }
+.preview-scope { padding: 12px 16px; border-left: 3px solid #D88777; background: white; color: var(--muted); font-size: 13px; margin-bottom: 22px; max-width: 100%; }
+.preview-scope strong { color: var(--ink); }
+.gallery-settings { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 17px 20px; margin-bottom: 24px; }
+.settings-fields { display: flex; align-items: end; flex-wrap: wrap; gap: 16px 22px; }
+.gallery-field { display: grid; gap: 6px; }
+.gallery-field>label { font-size: 12px; font-weight: 600; }
+.gallery-field .color-control { display: flex; gap: 7px; }
+.color-control input[type="text"] { width: 105px; }
+.search-field { flex: 1; min-width: 180px; }
+.gallery-field select { width: 140px; }
+.mobile-picker { display: none; }
+.settings-note { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #EEECF2; font-size: 12px; color: var(--muted); }
+.contrast-warning { color: #A23D49; font-weight: 600; }
+.input-error { font-size: 12px; color: #A23D49; margin-top: 10px; }
+.catalog-summary { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 13px; font-size: 13px; color: var(--muted); }
+.component-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
+.component-panel { min-width: 0; border: 1px solid var(--line); border-radius: 10px; background: white; overflow: hidden; scroll-margin-top: 20px; }
+.component-panel.wide, .component-grid.single-view .component-panel { grid-column: 1 / -1; }
+.component-heading { padding: 19px 22px 16px; display: flex; align-items: start; justify-content: space-between; gap: 16px; border-bottom: 1px solid #EEECF2; }
+.component-heading p { margin-top: 5px; color: var(--muted); font-size: 12px; max-width: 65ch; }
+.component-heading>a { flex: none; font-size: 12px; margin-top: 4px; }
+.component-demo { padding: 22px; min-width: 0; }
+.component-note { padding: 0 22px 18px; color: var(--muted); font-size: 12px; max-width: 95ch; }
+.recording-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 18px; padding: 10px 22px; border-bottom: 1px solid #EEECF2; font-size: 12px; }
+.recording-tools .recording-toggle { min-height: 36px; padding: 6px 12px; font-size: 12px; }
+.recording-toggle[aria-pressed="true"] { background: #ECEBF3; color: #463782; }
+.component-recording { margin: 0; padding: 18px 22px; }
+.component-recording img { display: block; width: 100%; max-width: 960px; height: auto; margin-inline: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.component-recording figcaption { color: var(--muted); font-size: 12px; margin-top: 10px; max-width: 80ch; }
+.demo-action, .secondary-action, .quiet-action {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 40px; border: 1px solid transparent; padding: 8px 17px;
+  border-radius: var(--radius); font-size: 13px; font-weight: 600; line-height: 1.4;
+}
+.demo-action { background: var(--accent); color: var(--on-accent); }
+.demo-action:hover:not(:disabled) { filter: brightness(.92); }
+.secondary-action { background: white; color: var(--ink); border-color: var(--control-border); }
+.secondary-action:hover:not(:disabled), .quiet-action:hover:not(:disabled) { background: var(--surface); }
+.quiet-action { color: var(--accent-ink); background: transparent; }
+.demo-action:disabled, .secondary-action:disabled, .quiet-action:disabled { background: #F0F0F0; color: #616161; border-color: transparent; }
+.status-label { display: inline-flex; align-items: center; padding: 3px 9px; background: #ECEBF3; color: #463782; border-radius: 5px; font-size: 12px; line-height: 1.5; }
+.no-results { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 30px; }
+.no-results p { margin: 8px 0 15px; color: var(--muted); }
+.gallery-references { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); }
+.gallery-references summary { color: #463782; font-weight: 600; }
+.gallery-references ul { padding-left: 20px; }
+.gallery-references li { margin: 9px 0; font-size: 13px; }
+.gallery-footer { color: var(--muted); margin-top: 22px; font-size: 12px; max-width: 90ch; }
+@media(max-width:1150px) {
+  .app-layout { grid-template-columns: 194px minmax(0,1fr); }
+  .catalog-rail { padding: 25px 12px; }
+  .component-grid { grid-template-columns: 1fr; }
+  .gallery-main { padding: 28px 22px; }
+}
+@media(max-width:760px) {
+  .app-layout { display: block; }
+  .catalog-rail { display: none; }
+  .gallery-main { padding: 24px 14px 35px; }
+  .gallery-header { gap: 12px; }
+  .local-label { display: none; }
+  .gallery-header p { font-size: 13px; }
+  .gallery-settings { padding: 15px; }
+  .settings-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .gallery-field { min-width: 0; }
+  .gallery-field select { width: 100%; }
+  .search-field, .mobile-picker { display: grid; grid-column: 1 / -1; min-width: 0; }
+  .color-control input[type="text"] { width: 100%; }
+  .settings-fields>.quiet-action { justify-self: start; }
+  .component-heading { padding: 17px; }
+  .component-demo { padding: 17px; }
+  .component-note { padding: 0 17px 17px; }
+  .recording-tools { padding: 10px 17px; }
+  .component-recording { padding: 17px; }
+}
+@media(max-width:370px) { .settings-fields { grid-template-columns: 1fr; } }
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+<style>
+
+  .action-controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:20px; font-size:13px; }
+  .action-controls label { display:flex; align-items:center; gap:7px; }
+  .action-controls select { min-height:36px; padding:6px 9px; color:var(--ink); background:white; border:1px solid var(--control-border); border-radius:6px; font:inherit; }
+  .action-controls input[type=checkbox] { accent-color:var(--accent-ink, #463782); width:16px; height:16px; }
+  .action-stage { display:flex; justify-content:center; align-items:center; min-height:110px; background:var(--surface); border-radius:8px; }
+  #g-button-live { min-width:160px; height:40px; padding:0 20px; border:1px solid transparent; border-radius:var(--radius); background:var(--accent); color:var(--on-accent); font:600 14px 'Segoe UI',sans-serif; cursor:pointer; }
+  #g-button-live[data-appearance=Secondary] { background:#f5f5f5; color:#242424; border-color:#d1d1d1; }
+  #g-button-live[data-appearance=Outline] { background:white; color:#242424; border-color:#d1d1d1; }
+  #g-button-live[data-appearance=Subtle] { background:transparent; color:#242424; }
+  #g-button-live[data-armed=true] { background:#c4314b; color:white; border-color:transparent; }
+  #g-button-live:disabled { background:#f0f0f0; color:#616161; border-color:transparent; cursor:not-allowed; }
+  .action-output { display:flex; gap:16px; justify-content:space-between; align-items:baseline; flex-wrap:wrap; margin-top:15px; font-size:12px; color:var(--muted); }
+  .action-output p { margin:0; }
+  .action-output strong { color:var(--ink); font-weight:600; }
+  .fab-stage { position:relative; min-height:245px; display:flex; align-items:flex-end; justify-content:flex-end; padding:18px; background:var(--surface); border-radius:8px; }
+  .fab-placeholder { position:absolute; top:20px; left:20px; right:20px; color:var(--muted); font-size:13px; }
+  .fab-placeholder strong { color:var(--ink); display:block; margin-bottom:7px; font-size:14px; }
+  .fab-stack { display:flex; flex-direction:column; align-items:flex-end; gap:12px; position:relative; }
+  #g-fab-menu { display:flex; flex-direction:column; align-items:stretch; gap:5px; padding:8px; background:white; border:1px solid var(--line); border-radius:9px; box-shadow:0 4px 16px #2926300c; }
+  #g-fab-menu[hidden] { display:none; }
+  #g-fab-menu button { min-height:38px; text-align:left; border:0; background:white; padding:8px 12px; color:var(--ink); cursor:pointer; border-radius:5px; font:inherit; font-size:13px; }
+  #g-fab-menu button:hover { background:var(--surface); }
+  #g-fab-toggle { display:flex; align-items:center; justify-content:center; gap:10px; width:56px; height:56px; border:0; border-radius:28px; background:var(--accent); color:var(--on-accent); cursor:pointer; font:600 14px 'Segoe UI',sans-serif; box-shadow:0 3px 8px #29263024; }
+  #g-fab-toggle[data-extended=true] { width:auto; min-width:152px; padding:0 20px; }
+  #g-fab-symbol { font-size:28px; line-height:1; font-weight:400; }
+  #g-fab-label[hidden] { display:none; }
+  .carousel-card { min-height:225px; display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start; padding:28px; border-radius:8px; background:var(--accent); color:var(--on-accent); }
+  .carousel-card[data-tone=coral] { background:var(--coral); color:var(--ink); }
+  .carousel-card[data-tone=neutral] { background:var(--surface); color:var(--ink); }
+  .carousel-card .slide-kicker { margin:0 0 12px; font-size:12px; font-weight:600; }
+  .carousel-card h3 { font-size:25px; line-height:1.2; margin:0 0 11px; font-weight:650; max-width:340px; }
+  .carousel-card p { max-width:42ch; font-size:14px; line-height:1.6; margin:0; }
+  .carousel-controls { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:16px; }
+  .carousel-dots { display:flex; align-items:center; gap:3px; }
+  .carousel-dots button { display:grid; place-items:center; width:28px; height:32px; padding:0; background:transparent; border:0; border-radius:5px; cursor:pointer; }
+  .carousel-dots button:before { content:''; width:7px; height:7px; border-radius:50%; border:1px solid var(--control-border); background:white; }
+  .carousel-dots button[aria-current=true]:before { background:var(--accent); border-color:var(--accent-ink, #463782); width:9px; height:9px; }
+  .calendar-layout { display:grid; grid-template-columns:minmax(0,1fr) 210px; gap:24px; }
+  .calendar-toolbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .calendar-toolbar h3 { margin:0; font-size:17px; }
+  .calendar-arrows { display:flex; gap:7px; }
+  .calendar-weekdays,.calendar-days { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
+  .calendar-weekdays span { text-align:center; padding:6px 0 10px; color:var(--muted); font-size:11px; }
+  .calendar-days button,.calendar-days .calendar-blank { min-width:0; height:46px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+  .calendar-days button { border:1px solid transparent; background:white; border-radius:8px; color:var(--ink); cursor:pointer; font:inherit; font-size:13px; }
+  .calendar-days button:hover { background:var(--surface); }
+  .calendar-days button[aria-pressed=true] { background:var(--accent); color:var(--on-accent); }
+  .calendar-days button[data-sample-today=true] { border-color:var(--accent-ink, #463782); }
+  .calendar-event-mark { width:4px; height:4px; border-radius:50%; background:currentColor; }
+  .calendar-event-mark.empty { opacity:0; }
+  .calendar-agenda { border-left:1px solid var(--line); padding-left:22px; }
+  .calendar-agenda h3 { font-size:14px; margin:2px 0 17px; }
+  .calendar-agenda ul { list-style:none; padding:0; margin:0; }
+  .calendar-agenda li { margin:0 0 12px; }
+  .calendar-event { text-align:left; width:100%; display:block; padding:12px; border:1px solid var(--line); border-left:3px solid var(--coral-ink); border-radius:6px; background:var(--surface); font:inherit; cursor:pointer; color:var(--ink); font-size:13px; line-height:1.5; }
+  .calendar-event small { display:block; color:var(--muted); margin-top:3px; font-size:11px; }
+  .calendar-empty { color:var(--muted); font-size:13px; line-height:1.6; }
+  @media(max-width:800px) { .calendar-layout { grid-template-columns:1fr; gap:18px; } .calendar-agenda { border-left:0; border-top:1px solid var(--line); padding:18px 0 0; } }
+  @media(max-width:420px) { .carousel-card { padding:22px; } .carousel-card h3 { font-size:22px; } .carousel-controls { flex-wrap:wrap; } .calendar-days { gap:2px; } .calendar-days button,.calendar-days .calendar-blank { height:40px; } .calendar-weekdays span { font-size:10px; } }
+
+
+  #data-table .gd-toolbar,
+  #kanban-board .gd-toolbar,
+  #attachments-list .gd-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: end;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .gd-field { display: grid; gap: 6px; min-width: 0; }
+  .gd-field > label { font-size: 12px; font-weight: 600; color: var(--ink); }
+  .gd-field input,
+  .gd-field select {
+    width: 100%; min-width: 0; min-height: 38px; padding: 8px 10px;
+    border: 1px solid var(--control-border); border-radius: 6px;
+    color: var(--ink); background: #fff; font: inherit; font-size: 13px;
+  }
+  #data-table .gd-search { flex: 1 1 190px; }
+  .gd-live { min-height: 22px; margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+  .gd-small { color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .gd-status {
+    display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 12px;
+    background: var(--surface); color: var(--ink); font-size: 11px; font-weight: 600;
+  }
+  .gd-status[data-status="Completed"],
+  .gd-status[data-status="Good"] { background: #d8f3dc; color: #0e5a26; }
+  .gd-status[data-status="In progress"],
+  .gd-status[data-status="Warning"] { background: #ffe8c7; color: #7a4100; }
+  .gd-status[data-status="On hold"],
+  .gd-status[data-status="Bad"] { background: #ffdad6; color: #8c1d18; }
+  #data-table .gd-table-scroll {
+    max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px;
+  }
+  #data-table table { width: 100%; min-width: 570px; border-collapse: collapse; text-align: left; }
+  #data-table th { padding: 11px 12px; background: var(--surface); color: var(--muted); font-size: 11px; font-weight: 600; }
+  #data-table td { padding: 13px 12px; border-top: 1px solid var(--line); font-size: 12px; vertical-align: middle; }
+  #data-table th:first-child, #data-table td:first-child { width: 42px; }
+  #data-table input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  #data-table tr[data-selected="true"] td { background: var(--surface); }
+  #data-table .gd-row-title { display: block; font-weight: 600; color: var(--ink); }
+  #data-table .gd-row-id { display: block; font-size: 10px; color: var(--muted); margin-top: 3px; }
+  #data-table .gd-progress { display: flex; align-items: center; gap: 7px; min-width: 100px; }
+  #data-table progress { width: 65px; height: 7px; accent-color: var(--accent); }
+  #data-table .gd-table-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+  #data-table .gd-sort { border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; padding: 3px 0; text-decoration: underline; text-underline-offset: 3px; }
+  #kanban-board .gd-board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
+  #kanban-board .gd-column { min-width: 0; background: var(--surface); border-radius: 9px; padding: 12px; min-height: 180px; }
+  #kanban-board .gd-column-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 12px; }
+  #kanban-board .gd-column h3 { margin: 0; color: var(--ink); font-size: 13px; }
+  #kanban-board .gd-column-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
+  #kanban-board .gd-task { background: white; border: 1px solid var(--line); border-radius: 7px; padding: 12px; margin-top: 10px; }
+  #kanban-board .gd-task h4 { margin: 9px 0 6px; font-size: 13px; line-height: 1.45; font-weight: 600; color: var(--ink); }
+  #kanban-board .gd-task p { margin: 0 0 12px; font-size: 11px; line-height: 1.5; color: var(--muted); }
+  #kanban-board .gd-task-tag { color: var(--accent); font-size: 10px; font-weight: 600; }
+  #kanban-board .gd-task .gd-field { margin-bottom: 9px; }
+  #kanban-board .gd-task .gd-field label { font-size: 10px; }
+  #kanban-board .gd-task select { font-size: 11px; padding: 7px; }
+  #kanban-board .gd-task .secondary-action { width: 100%; min-height: 34px; font-size: 11px; }
+  #kanban-board .gd-limits { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+  #kanban-board .gd-limits input { accent-color: var(--accent); width: 16px; height: 16px; }
+  #kpi-card .gd-kpi-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(140px, .7fr); gap: 18px; align-items: center; }
+  #kpi-card .gd-kpi-tile { width: 100%; min-height: 190px; text-align: left; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 20px; padding: 21px; cursor: pointer; font: inherit; }
+  #kpi-card .gd-kpi-heading { display: flex; gap: 8px; justify-content: space-between; align-items: flex-start; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  #kpi-card .gd-kpi-value { display: block; margin: 12px 0 7px; font-size: 38px; letter-spacing: -1px; line-height: 1.2; font-weight: 650; color: var(--ink); }
+  #kpi-card .gd-kpi-change { display: block; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  #kpi-card .gd-kpi-target { display: block; margin-top: 17px; }
+  #kpi-card .gd-kpi-target[hidden] { display: none; }
+  #kpi-card progress { display: block; width: 100%; height: 7px; accent-color: var(--accent); margin-bottom: 7px; }
+  #kpi-card .gd-kpi-inputs { display: grid; gap: 12px; }
+  #attachments-list .gd-stage-area { border: 1px dashed var(--control-border); border-radius: 12px; padding: 16px; background: var(--surface); }
+  #attachments-list .gd-stage-area .gd-field { flex: 1 1 180px; }
+  #attachments-list .gd-stage-area .gd-toolbar { margin-bottom: 8px; }
+  #attachments-list .gd-file-heading { margin: 20px 0 10px; font-size: 13px; color: var(--ink); }
+  #attachments-list .gd-file-list { list-style: none; padding: 0; margin: 0; }
+  #attachments-list .gd-file-row { display: flex; align-items: center; gap: 11px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  #attachments-list .gd-file-symbol { display: grid; place-items: center; width: 35px; height: 39px; flex: none; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--accent); font-size: 9px; font-weight: 700; }
+  #attachments-list .gd-file-meta { min-width: 0; flex: 1; }
+  #attachments-list .gd-file-name { display: block; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; color: var(--ink); }
+  #attachments-list .gd-file-meta small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+  #attachments-list .gd-file-row[data-removed="true"] .gd-file-name { text-decoration: line-through; }
+  #attachments-list .gd-file-row .quiet-action { font-size: 11px; flex: none; }
+  #attachments-list .gd-file-empty { padding: 12px 0; font-size: 12px; color: var(--muted); }
+  #attachments-list .gd-file-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+  #data-table :focus-visible, #kanban-board :focus-visible,
+  #kpi-card :focus-visible, #attachments-list :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  @media (max-width: 960px) { #kanban-board .gd-board { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 570px) {
+    #kanban-board .gd-board { grid-template-columns: 1fr; }
+    #kanban-board .gd-column { min-height: 120px; }
+    #kpi-card .gd-kpi-layout { grid-template-columns: 1fr; }
+    #kpi-card .gd-kpi-inputs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    #kpi-card .gd-field input { padding: 8px; }
+    #data-table .gd-toolbar > .gd-field { flex: 1 1 100%; }
+    #attachments-list .gd-file-row { gap: 8px; }
+  }
+
+
+  .gn-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:16px; }
+  .gn-toolbar label { display:inline-flex; align-items:center; gap:9px; min-height:44px; color:var(--ink); font-size:.875rem; }
+  .gn-toolbar input[type="checkbox"] { width:18px; height:18px; accent-color:var(--accent); }
+  .gn-output { margin:16px 0 0; color:var(--muted); font-size:.8125rem; line-height:1.6; overflow-wrap:anywhere; }
+  .gn-kicker { margin:0 0 6px; color:var(--muted); font-size:.6875rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+  .gn-button { font:inherit; cursor:pointer; }
+  .gn-button:focus-visible,
+  #accordion summary:focus-visible,
+  #accordion input:focus-visible,
+  #stepper input:focus-visible,
+  #stepper select:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+  .gn-accordion { display:grid; gap:9px; }
+  .gn-accordion details { min-width:0; border:1px solid var(--line); border-radius:16px; background:#fff; }
+  .gn-accordion summary { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:60px; padding:14px 18px; border-radius:15px; color:var(--ink); cursor:pointer; font-weight:650; list-style:none; }
+  .gn-accordion summary::-webkit-details-marker { display:none; }
+  .gn-accordion summary::after { content:"+"; flex:none; display:grid; place-items:center; width:28px; height:28px; border-radius:50%; color:var(--accent); font-size:1.25rem; font-weight:400; background:color-mix(in srgb,var(--accent) 8%,white); }
+  .gn-accordion details[open] summary::after { content:"−"; }
+  .gn-accordion details[open] summary { color:var(--accent); }
+  .gn-accordion-body { padding:0 18px 18px; font-size:.875rem; line-height:1.7; color:var(--muted); }
+  .gn-accordion-body p { margin:0; }
+  .gn-accordion-body strong { color:var(--ink); font-weight:600; }
+  .gn-nav-shell { display:grid; grid-template-columns:164px minmax(0,1fr); min-height:300px; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:#fff; }
+  .gn-nav-sidebar { display:flex; flex-direction:column; gap:20px; padding:18px 12px; background:var(--surface); border-right:1px solid var(--line); }
+  .gn-nav-brand { margin:0; padding:0 8px; color:var(--ink); font-size:.875rem; font-weight:700; }
+  .gn-nav-menu { display:grid; align-content:start; gap:6px; }
+  .gn-nav-choice { display:flex; align-items:center; gap:9px; min-width:0; min-height:44px; padding:10px; border:1px solid transparent; border-radius:10px; color:var(--muted); background:transparent; text-align:left; font-size:.8125rem; font-weight:550; }
+  .gn-nav-choice svg { flex:none; width:19px; height:19px; }
+  .gn-nav-choice:hover { background:#fff; }
+  .gn-nav-choice[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); background:#fff; font-weight:700; box-shadow:inset 3px 0 var(--accent); }
+  .gn-nav-count { display:grid; place-items:center; min-width:20px; height:20px; margin-left:auto; padding:0 5px; border-radius:10px; color:var(--ink); background:var(--line); font-size:.6875rem; }
+  .gn-nav-user { display:flex; align-items:center; gap:8px; margin: auto 0 0; padding:0 8px; color:var(--muted); font-size:.75rem; }
+  .gn-avatar { display:inline-grid; flex:none; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--accent); color:var(--on-accent); font-size:.6875rem; font-weight:700; }
+  .gn-nav-pane { min-width:0; padding:25px; }
+  .gn-nav-pane h3 { margin:0 0 8px; color:var(--ink); font-size:1.25rem; line-height:1.3; }
+  .gn-nav-intro { margin:0 0 20px; color:var(--muted); font-size:.875rem; line-height:1.6; }
+  .gn-nav-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:0; }
+  .gn-nav-metrics div { padding:15px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+  .gn-nav-metrics dt { margin-bottom:8px; color:var(--muted); font-size:.75rem; }
+  .gn-nav-metrics dd { margin:0; color:var(--ink); font-size:1rem; font-weight:650; }
+  .gn-nav-list { list-style:none; padding:0; margin:0; }
+  .gn-nav-list li { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:13px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:.8125rem; }
+  .gn-nav-list li:last-child { border-bottom:0; }
+  .gn-nav-list small { color:var(--muted); font-size:.75rem; }
+  .gn-nav-tag { display:inline-flex; align-items:center; min-height:25px; padding:3px 8px; border-radius:7px; color:var(--accent); background:color-mix(in srgb,var(--accent) 8%,white); font-size:.6875rem; font-weight:650; }
+  .gn-step-list { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; padding:0; margin:0 0 18px; list-style:none; }
+  .gn-step-link { display:flex; align-items:center; gap:8px; width:100%; min-height:48px; padding:9px; border:1px solid var(--line); border-radius:12px; color:var(--muted); background:#fff; font-size:.8125rem; text-align:left; }
+  .gn-step-number { display:inline-grid; flex:none; place-items:center; width:26px; height:26px; border:1px solid var(--control-border); border-radius:50%; font-size:.6875rem; font-weight:700; }
+  .gn-step-link[aria-current="step"] { border-color:var(--accent); color:var(--accent); font-weight:700; background:color-mix(in srgb,var(--accent) 5%,white); }
+  .gn-step-link[aria-current="step"] .gn-step-number,
+  .gn-step-link[data-complete="true"] .gn-step-number { border-color:var(--accent); background:var(--accent); color:var(--on-accent); }
+  .gn-step-link:disabled { cursor:default; }
+  .gn-step-progress-row { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .gn-step-progress-row progress { display:block; width:100%; height:6px; flex:1; min-width:0; border:0; border-radius:5px; overflow:hidden; appearance:none; background:var(--line); accent-color:var(--accent); }
+  .gn-step-progress-row progress::-webkit-progress-bar { background:var(--line); border-radius:5px; }
+  .gn-step-progress-row progress::-webkit-progress-value { background:var(--accent); border-radius:5px; }
+  .gn-step-progress-row progress::-moz-progress-bar { background:var(--accent); border-radius:5px; }
+  .gn-step-progress-row span { color:var(--muted); font-size:.75rem; white-space:nowrap; }
+  .gn-step-stage { min-height:195px; padding:22px; border:1px solid var(--line); border-radius:16px; background:var(--surface); }
+  .gn-step-stage h3 { margin:0 0 8px; color:var(--ink); font-size:1.125rem; }
+  .gn-step-stage h3:focus { outline:none; }
+  .gn-step-stage p { margin:0 0 18px; color:var(--muted); font-size:.875rem; line-height:1.6; }
+  .gn-field { display:grid; gap:7px; max-width:360px; }
+  .gn-field label { color:var(--ink); font-size:.8125rem; font-weight:650; }
+  .gn-field input,.gn-field select { width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--control-border); border-radius:9px; color:var(--ink); background:#fff; font:inherit; font-size:.875rem; }
+  .gn-field input[aria-invalid="true"],.gn-field select[aria-invalid="true"] { border:2px solid #A23D49; }
+  .gn-step-error { margin:12px 0 0; color:#A23D49; font-size:.8125rem; font-weight:600; }
+  .gn-step-actions { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-top:18px; }
+  .gn-step-actions button:disabled { opacity:.55; cursor:default; }
+  .gn-review { display:grid; gap:12px; margin:17px 0 0; }
+  .gn-review div { display:grid; grid-template-columns:76px minmax(0,1fr); gap:12px; }
+  .gn-review dt { color:var(--muted); font-size:.8125rem; }
+  .gn-review dd { margin:0; overflow-wrap:anywhere; color:var(--ink); font-size:.875rem; font-weight:600; }
+  .gn-step-done { display:inline-grid; place-items:center; width:34px; height:34px; margin-bottom:12px; border-radius:50%; color:var(--on-accent); background:var(--accent); font-size:1.125rem; }
+  .gn-tree-shell { padding:12px; border:1px solid var(--line); border-radius:16px; background:#fff; }
+  .gn-tree,.gn-tree ul { list-style:none; margin:0; padding:0; }
+  .gn-tree ul { margin-left:21px; padding-left:8px; border-left:1px solid var(--line); }
+  .gn-tree-row { display:flex; align-items:stretch; min-width:0; gap:2px; margin:2px 0; }
+  .gn-tree-toggle,.gn-tree-spacer { flex:none; width:38px; min-height:44px; }
+  .gn-tree-toggle { display:grid; place-items:center; border:0; border-radius:8px; color:var(--muted); background:transparent; font-size:1.125rem; }
+  .gn-tree-toggle:hover { color:var(--accent); background:var(--surface); }
+  .gn-tree-toggle span { display:block; line-height:1; }
+  .gn-tree-toggle[aria-expanded="true"] span { transform:rotate(90deg); }
+  .gn-tree-select { display:flex; align-items:center; gap:8px; min-width:0; min-height:44px; flex:1; padding:9px 10px; border:1px solid transparent; border-radius:9px; color:var(--ink); background:transparent; text-align:left; font-size:.8125rem; line-height:1.4; overflow-wrap:anywhere; }
+  .gn-tree-select:hover { background:var(--surface); }
+  .gn-tree-select[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); background:color-mix(in srgb,var(--accent) 6%,white); font-weight:650; }
+  .gn-tree-select svg { width:17px; height:17px; flex:none; color:var(--muted); }
+  .gn-tree-selection { padding:12px 14px; margin-top:12px; border-radius:12px; background:var(--surface); }
+  .gn-tree-selection strong { display:block; margin-bottom:3px; color:var(--ink); font-size:.8125rem; }
+  #accordion [hidden],#navigation-shell [hidden],#stepper [hidden],#tree-view [hidden] { display:none !important; }
+  @media (max-width:640px) {
+    .gn-nav-shell { display:flex; flex-direction:column; }
+    .gn-nav-sidebar { order:2; padding:8px; border-right:0; border-top:1px solid var(--line); }
+    .gn-nav-brand,.gn-nav-user { display:none; }
+    .gn-nav-menu { grid-template-columns:repeat(4,minmax(0,1fr)); gap:3px; }
+    .gn-nav-choice { position:relative; flex-direction:column; justify-content:center; gap:5px; min-height:62px; padding:7px 2px; text-align:center; font-size:.6875rem; }
+    .gn-nav-choice[aria-pressed="true"] { box-shadow:inset 0 -3px var(--accent); }
+    .gn-nav-count { position:absolute; top:3px; left:calc(50% + 7px); min-width:16px; height:16px; padding:0 3px; font-size:.625rem; }
+    .gn-nav-pane { padding:20px 16px; min-height:260px; }
+    .gn-step-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .gn-step-stage { padding:18px 15px; }
+  }
+  @media (max-width:380px) {
+    .gn-toolbar { gap:7px; }
+    .gn-nav-metrics { grid-template-columns:1fr; }
+    .gn-tree-shell { padding:7px; }
+    .gn-tree ul { margin-left:12px; padding-left:3px; }
+    .gn-tree-toggle,.gn-tree-spacer { width:30px; }
+    .gn-tree-select { gap:5px; padding:9px 6px; font-size:.75rem; }
+    .gn-step-link { padding:7px; gap:6px; font-size:.75rem; }
+  }
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#gallery-content">Skip to components</a>
+<div class="app-layout">
+  <aside class="catalog-rail" aria-label="Component catalog">
+    <div class="kit-brand"><span class="kit-mark" aria-hidden="true"></span>Power Apps UI Kit</div>
+    <nav class="catalog-nav" aria-label="Choose a component">
+      <button type="button" data-show="all" aria-pressed="true">All components <span aria-hidden="true">· 12</span></button>
+      <button type="button" data-show="button" aria-pressed="false">Button</button>
+<button type="button" data-show="floating-action-button" aria-pressed="false">Floating action button</button>
+<button type="button" data-show="kpi-card" aria-pressed="false">KPI card</button>
+<button type="button" data-show="attachments-list" aria-pressed="false">Attachments list</button>
+<button type="button" data-show="carousel" aria-pressed="false">Carousel</button>
+<button type="button" data-show="data-table" aria-pressed="false">Data table</button>
+<button type="button" data-show="kanban-board" aria-pressed="false">Kanban board</button>
+<button type="button" data-show="month-calendar" aria-pressed="false">Month calendar</button>
+<button type="button" data-show="accordion" aria-pressed="false">Accordion</button>
+<button type="button" data-show="tree-view" aria-pressed="false">Tree view</button>
+<button type="button" data-show="navigation-shell" aria-pressed="false">Navigation shell</button>
+<button type="button" data-show="stepper" aria-pressed="false">Stepper</button>
+    </nav>
+    <div class="rail-links">
+      <a href="../COLOR-PALETTE.txt">Color palette</a>
+      <a href="../examples/theme/App.Formulas.powerfx" download>Shared settings</a>
+      <a href="button.html">Button editor</a>
+      <a href="../LICENSE">License</a>
+    </div>
+  </aside>
+  <main class="gallery-main">
+    <header class="gallery-header">
+      <div><h1>Component gallery</h1><p>Explore the available components. Change the accent, try their controls, and compare your design before publishing.</p></div>
+      <span class="local-label">Local preview</span>
+    </header>
+    <p class="preview-scope"><strong>12 interactive HTML previews with sample data.</strong> These previews illustrate the component designs. They do not execute Power Fx. Validate native controls and imports in Power Apps Studio.</p>
+    <section class="gallery-settings" aria-label="Preview settings">
+      <div class="settings-fields">
+        <div class="gallery-field"><label for="gallery-accent-text">Accent color</label><div class="color-control"><input id="gallery-accent-picker" type="color" value="#463782" aria-label="Choose accent color"><input id="gallery-accent-text" type="text" value="#463782" spellcheck="false" autocomplete="off" aria-describedby="gallery-color-error"></div></div>
+        <div class="gallery-field"><label for="gallery-shape">Action button corners</label><select id="gallery-shape"><option value="Pill">Pill</option><option value="Rounded">Rounded · 12 px</option></select></div>
+        <div class="gallery-field search-field"><label for="gallery-search">Find a component</label><input id="gallery-search" type="search" placeholder="Search components" autocomplete="off"></div>
+        <div class="gallery-field mobile-picker"><label for="gallery-picker">Show components</label><select id="gallery-picker"><option value="all">All 12 components</option><option value="button">Button</option><option value="floating-action-button">Floating action button</option><option value="kpi-card">KPI card</option><option value="attachments-list">Attachments list</option><option value="carousel">Carousel</option><option value="data-table">Data table</option><option value="kanban-board">Kanban board</option><option value="month-calendar">Month calendar</option><option value="accordion">Accordion</option><option value="tree-view">Tree view</option><option value="navigation-shell">Navigation shell</option><option value="stepper">Stepper</option></select></div>
+        <button class="quiet-action" id="gallery-reset" type="button">Reset appearance</button>
+      </div>
+      <p class="input-error" id="gallery-color-error" hidden>Enter # and six hexadecimal digits. The preview keeps the last valid color.</p>
+      <div class="settings-note"><span id="gallery-contrast" role="status">White / accent: 9.86:1</span><span>Settings affect this preview. Use the source links to inspect each implementation.</span></div>
+    </section>
+    <div class="catalog-summary"><p id="gallery-count" role="status">Showing all 12 components</p><a href="../COLOR-PALETTE.txt">View palette</a></div>
+    <div id="gallery-content" tabindex="-1">
+      <div class="component-grid" id="component-grid">
+        <section class="component-panel" id="button" data-component="Button" aria-labelledby="button-title">
+  <header class="component-heading"><div><h2 id="button-title">Button</h2><p>A clear action with pill or rounded corners.</p></div><a href="../button/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="button" aria-pressed="false" aria-controls="recording-button">Play demo GIF</button>
+    <a href="../assets/previews/button.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-button" hidden>
+    <img src="../assets/previews/button.png" data-gif="../assets/previews/button.gif" data-poster="../assets/previews/button.png" alt="Animated browser demonstration of button interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="action-controls">
+      <label for="g-button-appearance">Appearance <select id="g-button-appearance"><option>Primary</option><option>Secondary</option><option>Outline</option><option>Subtle</option></select></label>
+      <label><input id="g-button-busy" type="checkbox">Busy</label>
+      <label><input id="g-button-confirm" type="checkbox">Require confirmation</label>
+    </div>
+    <div class="action-stage"><button id="g-button-live" type="button" data-appearance="Primary" data-armed="false">Save changes</button></div>
+    <div class="action-output"><p id="g-button-status" role="status">Select to simulate an action.</p><p>Click count: <strong id="g-button-count">0</strong></p></div>
+  </div>
+  <p class="component-note"><a href="button.html">Open the full Button editor</a> for custom corner radius and Power Fx settings.</p>
+</section>
+<section class="component-panel" id="floating-action-button" data-component="Floating action button" aria-labelledby="floating-action-button-title">
+  <header class="component-heading"><div><h2 id="floating-action-button-title">Floating action button</h2><p>Keep a main action close at hand.</p></div><a href="../floating-action-button/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="floating-action-button" aria-pressed="false" aria-controls="recording-floating-action-button">Play demo GIF</button>
+    <a href="../assets/previews/floating-action-button.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-floating-action-button" hidden>
+    <img src="../assets/previews/floating-action-button.png" data-gif="../assets/previews/floating-action-button.gif" data-poster="../assets/previews/floating-action-button.png" alt="Animated browser demonstration of floating action button interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="action-controls"><label><input id="g-fab-extended" type="checkbox">Show button label</label><span>Action menu enabled</span></div>
+    <div class="fab-stage">
+      <div class="fab-placeholder"><strong>Project workspace</strong><span>Create something without leaving the current view.</span></div>
+      <div class="fab-stack">
+        <div id="g-fab-menu" hidden aria-label="Create actions">
+          <button type="button" data-fab-action="note">New note</button>
+          <button type="button" data-fab-action="task">New task</button>
+          <button type="button" data-fab-action="request">New request</button>
+        </div>
+        <button id="g-fab-toggle" type="button" aria-expanded="false" aria-controls="g-fab-menu" aria-label="Open create actions" data-extended="false"><span id="g-fab-symbol" aria-hidden="true">+</span><span id="g-fab-label" hidden>Add new</span></button>
+      </div>
+    </div>
+    <div class="action-output"><p id="g-fab-status" role="status">Select the plus button to open its actions.</p></div>
+  </div>
+  <p class="component-note">Selections simulate an event; they do not create records.</p>
+</section>
+<section class="component-panel" id="kpi-card" data-component="KPI card" aria-labelledby="kpi-card-title">
+  <header class="component-heading">
+    <div><h2 id="kpi-card-title">KPI card</h2><p>Change the actual and target values to inspect progress and status.</p></div>
+    <a href="../kpi-card/component.yaml" download>Source</a>
+  </header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="kpi-card" aria-pressed="false" aria-controls="recording-kpi-card">Play demo GIF</button>
+    <a href="../assets/previews/kpi-card.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-kpi-card" hidden>
+    <img src="../assets/previews/kpi-card.png" data-gif="../assets/previews/kpi-card.gif" data-poster="../assets/previews/kpi-card.png" alt="Animated browser demonstration of kpi card interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gd-kpi-layout">
+      <button type="button" class="gd-kpi-tile" id="kpi-open" aria-describedby="kpi-scope">
+        <span class="gd-kpi-heading"><span>Review tasks complete</span><span class="gd-status" id="kpi-status" data-status="Warning">Warning</span></span>
+        <span class="gd-kpi-value" id="kpi-value">72</span>
+        <span class="gd-kpi-change" id="kpi-change">+8 (+12.5%) vs previous</span>
+        <span class="gd-kpi-target" id="kpi-target-area"><progress id="kpi-progress" max="100" value="72" aria-label="Progress toward target"></progress><span class="gd-small" id="kpi-target-text">72% of target 100</span></span>
+      </button>
+      <div class="gd-kpi-inputs">
+        <div class="gd-field"><label for="kpi-actual">Actual</label><input type="number" id="kpi-actual" value="72" step="1"></div>
+        <div class="gd-field"><label for="kpi-target">Target</label><input type="number" id="kpi-target" value="100" step="1"></div>
+        <div class="gd-field"><label for="kpi-previous">Previous</label><input type="number" id="kpi-previous" value="64" step="1"></div>
+      </div>
+    </div>
+    <p class="gd-live" id="kpi-message" role="status" aria-live="polite">Fictional counts. Select the card to simulate its OnSelect event.</p>
+  </div>
+  <p class="component-note" id="kpi-scope">Number format with automatic status: Good at target, Warning from 70%, otherwise Bad. A blank or nonpositive target is Neutral.</p>
+</section>
+<section class="component-panel" id="attachments-list" data-component="Attachments list" aria-labelledby="attachments-list-title">
+  <header class="component-heading">
+    <div><h2 id="attachments-list-title">Attachments list</h2><p>Stage sample file names and preview removal with undo.</p></div>
+    <a href="../attachments-list/component.yaml" download>Source</a>
+  </header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="attachments-list" aria-pressed="false" aria-controls="recording-attachments-list">Play demo GIF</button>
+    <a href="../assets/previews/attachments-list.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-attachments-list" hidden>
+    <img src="../assets/previews/attachments-list.png" data-gif="../assets/previews/attachments-list.gif" data-poster="../assets/previews/attachments-list.png" alt="Animated browser demonstration of attachments list interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gd-stage-area">
+      <div class="gd-toolbar"><div class="gd-field"><label for="att-sample">Choose sample metadata</label><select id="att-sample"><option value="notes">review-notes.pdf · 240 KB</option><option value="checklist">review-checklist.docx · 48 KB</option><option value="layout">layout-sample.png · 620 KB</option></select></div><button class="demo-action" type="button" id="att-add">Add sample</button></div>
+      <p class="gd-small">Up to 3 staged samples. No file picker, file contents, or upload.</p>
+    </div>
+    <h3 class="gd-file-heading">Staged samples <span class="gd-small" id="att-ready-count">(0 of 3)</span></h3>
+    <ul class="gd-file-list" id="att-staged" aria-label="Staged sample metadata"></ul>
+    <h3 class="gd-file-heading">Existing samples</h3>
+    <ul class="gd-file-list" id="att-existing" aria-label="Existing sample metadata"></ul>
+    <div class="gd-file-actions"><button type="button" class="demo-action" id="att-save" disabled>Preview save event</button><button type="button" class="secondary-action" id="att-reset">Reset changes</button></div>
+    <p class="gd-live" id="att-message" role="status" aria-live="polite">Sample metadata only. Nothing is read from or saved to your device.</p>
+  </div>
+  <p class="component-note">This demonstrates staging and removal states. Native upload, file validation, app-scope isolation, and storage are not implemented here.</p>
+</section>
+<section class="component-panel wide" id="carousel" data-component="Carousel" aria-labelledby="carousel-title">
+  <header class="component-heading"><div><h2 id="carousel-title">Carousel</h2><p>Present a short sequence of updates.</p></div><a href="../carousel/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="carousel" aria-pressed="false" aria-controls="recording-carousel">Play demo GIF</button>
+    <a href="../assets/previews/carousel.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-carousel" hidden>
+    <img src="../assets/previews/carousel.png" data-gif="../assets/previews/carousel.gif" data-poster="../assets/previews/carousel.png" alt="Animated browser demonstration of carousel interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="carousel-card" id="g-carousel-slide" data-tone="accent" aria-label="Slide content">
+      <p class="slide-kicker" id="g-carousel-kicker">Project update</p><h3 id="g-carousel-title">Workspace refresh</h3><p id="g-carousel-text">The plan is ready for review. Explore the next steps with your team.</p>
+    </div>
+    <div class="carousel-controls">
+      <button class="secondary-action" id="g-carousel-prev" type="button" aria-label="Previous slide">Previous</button>
+      <div class="carousel-dots" aria-label="Choose a slide"><button type="button" data-slide="0" aria-label="Show slide 1" aria-current="true"></button><button type="button" data-slide="1" aria-label="Show slide 2" aria-current="false"></button><button type="button" data-slide="2" aria-label="Show slide 3" aria-current="false"></button></div>
+      <button class="secondary-action" id="g-carousel-next" type="button" aria-label="Next slide">Next</button>
+    </div>
+    <div class="action-output"><p id="g-carousel-status" role="status">Slide 1 of 3: Workspace refresh</p><button class="quiet-action" type="button" id="g-carousel-select">Select slide</button></div>
+  </div>
+  <p class="component-note">Manual playback in this preview. Slides use sample colors and content.</p>
+</section>
+<section class="component-panel wide" id="data-table" data-component="Data table" aria-labelledby="data-table-title">
+  <header class="component-heading">
+    <div><h2 id="data-table-title">Data table</h2><p>Find project tasks, select rows, and preview a bulk update.</p></div>
+    <a href="../data-table/component.yaml" download>Source</a>
+  </header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="data-table" aria-pressed="false" aria-controls="recording-data-table">Play demo GIF</button>
+    <a href="../assets/previews/data-table.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-data-table" hidden>
+    <img src="../assets/previews/data-table.png" data-gif="../assets/previews/data-table.gif" data-poster="../assets/previews/data-table.png" alt="Animated browser demonstration of data table interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gd-toolbar">
+      <div class="gd-field gd-search"><label for="dt-search">Search fictional tasks</label><input id="dt-search" type="search" placeholder="Task, team, or status" autocomplete="off"></div>
+      <div class="gd-field"><label for="dt-status-filter">Status</label><select id="dt-status-filter"><option value="">All statuses</option><option>Not started</option><option>In progress</option><option>On hold</option><option>Completed</option></select></div>
+      <button class="demo-action" type="button" id="dt-complete" disabled>Mark selected complete</button>
+    </div>
+    <div class="gd-table-scroll" tabindex="0" role="region" aria-label="Fictional project tasks table; scroll horizontally on a narrow screen">
+      <table>
+        <caption class="sr-only">Fictional project tasks. Search and status changes run in memory.</caption>
+        <thead><tr><th scope="col"><input type="checkbox" id="dt-select-all" aria-label="Select all visible tasks"></th><th scope="col" id="dt-task-heading" aria-sort="none"><button type="button" class="gd-sort" id="dt-sort">Task ↕</button></th><th scope="col">Team</th><th scope="col">Status</th><th scope="col">Progress</th></tr></thead>
+        <tbody id="dt-body"></tbody>
+      </table>
+    </div>
+    <div class="gd-table-summary"><span class="gd-small" id="dt-selection-summary">0 selected</span><button type="button" class="quiet-action" id="dt-reset">Reset sample</button></div>
+    <p class="gd-live" id="dt-message" role="status" aria-live="polite">Four fictional tasks. No connected data source.</p>
+  </div>
+  <p class="component-note">Search, sorting, and status updates simulate host-app logic. This demo shows the table view only.</p>
+</section>
+<section class="component-panel wide" id="kanban-board" data-component="Kanban board" aria-labelledby="kanban-board-title">
+  <header class="component-heading">
+    <div><h2 id="kanban-board-title">Kanban board</h2><p>Move fictional work between stages using labeled controls.</p></div>
+    <a href="../kanban-board/component.yaml" download>Source</a>
+  </header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="kanban-board" aria-pressed="false" aria-controls="recording-kanban-board">Play demo GIF</button>
+    <a href="../assets/previews/kanban-board.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-kanban-board" hidden>
+    <img src="../assets/previews/kanban-board.png" data-gif="../assets/previews/kanban-board.gif" data-poster="../assets/previews/kanban-board.png" alt="Animated browser demonstration of kanban board interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gd-toolbar"><label class="gd-limits"><input type="checkbox" id="kb-limits" checked>Respect column limits</label><button type="button" class="quiet-action" id="kb-reset">Reset board</button></div>
+    <div class="gd-board" id="kb-columns" role="group" aria-label="Fictional project work board"></div>
+    <p class="gd-live" id="kb-message" role="status" aria-live="polite">Choose a destination, then select Move. In progress allows 3 cards; In review allows 2.</p>
+  </div>
+  <p class="component-note">Moves update this demo only. A Power Apps consumer handles OnMove and persists the changed card data.</p>
+</section>
+<section class="component-panel wide" id="month-calendar" data-component="Month calendar" aria-labelledby="month-calendar-title">
+  <header class="component-heading"><div><h2 id="month-calendar-title">Month calendar</h2><p>Connect dates with upcoming work.</p></div><a href="../month-calendar/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="month-calendar" aria-pressed="false" aria-controls="recording-month-calendar">Play demo GIF</button>
+    <a href="../assets/previews/month-calendar.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-month-calendar" hidden>
+    <img src="../assets/previews/month-calendar.png" data-gif="../assets/previews/month-calendar.gif" data-poster="../assets/previews/month-calendar.png" alt="Animated browser demonstration of month calendar interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="calendar-layout">
+      <div>
+        <div class="calendar-toolbar"><h3 id="g-calendar-month">November 2026</h3><div class="calendar-arrows"><button class="secondary-action" type="button" id="g-calendar-prev" aria-label="Previous month">‹</button><button class="quiet-action" type="button" id="g-calendar-reset">Sample month</button><button class="secondary-action" type="button" id="g-calendar-next" aria-label="Next month">›</button></div></div>
+        <div class="calendar-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="calendar-days" id="g-calendar-days" role="group" aria-label="Dates in November 2026"></div>
+      </div>
+      <aside class="calendar-agenda" aria-labelledby="g-calendar-date"><h3 id="g-calendar-date">Tuesday, November 3</h3><ul id="g-calendar-events"></ul></aside>
+    </div>
+    <div class="action-output"><p id="g-calendar-status" role="status">November 3 selected. Two sample events.</p></div>
+  </div>
+  <p class="component-note">Sample dates start in November 2026. Event dots and the agenda approximate the native calendar's event pills.</p>
+</section>
+<section class="component-panel" id="accordion" data-component="Accordion" aria-labelledby="accordion-title">
+  <header class="component-heading"><div><h2 id="accordion-title">Accordion</h2><p>Reveal details without losing the page.</p></div><a href="../accordion/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="accordion" aria-pressed="false" aria-controls="recording-accordion">Play demo GIF</button>
+    <a href="../assets/previews/accordion.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-accordion" hidden>
+    <img src="../assets/previews/accordion.png" data-gif="../assets/previews/accordion.gif" data-poster="../assets/previews/accordion.png" alt="Animated browser demonstration of accordion interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gn-toolbar">
+      <label><input id="gn-accordion-multiple" type="checkbox">Allow multiple open sections</label>
+      <button class="quiet-action gn-button" id="gn-accordion-expand" type="button">Expand</button>
+      <button class="quiet-action gn-button" id="gn-accordion-collapse" type="button">Collapse all</button>
+    </div>
+    <div class="gn-accordion" id="gn-accordion-items">
+      <details data-label="Project brief"><summary>Project brief</summary><div class="gn-accordion-body"><p><strong>Workspace refresh</strong> brings project notes, owners, and delivery dates into one place. The first release covers planning and team review.</p></div></details>
+      <details data-label="Owners and review"><summary>Owners and review</summary><div class="gn-accordion-body"><p><strong>Morgan Lee</strong> coordinates the project. Alex Chen reviews the interface, and Sam Rivera confirms the delivery checklist.</p></div></details>
+      <details data-label="Delivery dates"><summary>Delivery dates</summary><div class="gn-accordion-body"><p>Share the draft on <strong>December 1</strong>. Collect feedback by December 3, then prepare the reviewed version for December 4.</p></div></details>
+    </div>
+    <p class="gn-output" id="gn-accordion-output" role="status">Open sections: none (0 of 3).</p>
+  </div>
+  <p class="component-note">Expand opens the first section unless multiple sections are allowed.</p>
+</section>
+<section class="component-panel" id="tree-view" data-component="Tree view" aria-labelledby="tree-view-title">
+  <header class="component-heading"><div><h2 id="tree-view-title">Tree view</h2><p>Explore folders and select a project item.</p></div><a href="../tree-view/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="tree-view" aria-pressed="false" aria-controls="recording-tree-view">Play demo GIF</button>
+    <a href="../assets/previews/tree-view.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-tree-view" hidden>
+    <img src="../assets/previews/tree-view.png" data-gif="../assets/previews/tree-view.gif" data-poster="../assets/previews/tree-view.png" alt="Animated browser demonstration of tree view interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gn-toolbar"><button class="quiet-action gn-button" id="gn-tree-expand-all" type="button">Expand all</button><button class="quiet-action gn-button" id="gn-tree-collapse-all" type="button">Collapse all</button></div>
+    <div class="gn-tree-shell">
+      <ul class="gn-tree" aria-label="Sample project files">
+        <li><div class="gn-tree-row"><button class="gn-tree-toggle gn-button" type="button" data-gn-expand="gn-tree-projects" data-label="Projects" aria-label="Collapse Projects" aria-expanded="true" aria-controls="gn-tree-projects"><span aria-hidden="true">›</span></button><button class="gn-tree-select gn-button" type="button" data-gn-select="Projects" data-kind="folder" data-path="Projects" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 4h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg><span>Projects</span></button></div>
+          <ul id="gn-tree-projects">
+            <li><div class="gn-tree-row"><button class="gn-tree-toggle gn-button" type="button" data-gn-expand="gn-tree-workspace" data-label="Workspace refresh" aria-label="Expand Workspace refresh" aria-expanded="false" aria-controls="gn-tree-workspace"><span aria-hidden="true">›</span></button><button class="gn-tree-select gn-button" type="button" data-gn-select="Workspace refresh" data-kind="folder" data-path="Projects / Workspace refresh" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 4h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg><span>Workspace refresh</span></button></div>
+              <ul id="gn-tree-workspace" hidden>
+                <li><div class="gn-tree-row"><span class="gn-tree-spacer" aria-hidden="true"></span><button class="gn-tree-select gn-button" type="button" data-gn-select="Project brief.docx" data-kind="file" data-path="Projects / Workspace refresh / Project brief.docx" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 3h9l5 5v13H5V3ZM14 3v6h5M8 13h8M8 17h6"/></svg><span>Project brief.docx</span></button></div></li>
+                <li><div class="gn-tree-row"><span class="gn-tree-spacer" aria-hidden="true"></span><button class="gn-tree-select gn-button" type="button" data-gn-select="Delivery plan.xlsx" data-kind="file" data-path="Projects / Workspace refresh / Delivery plan.xlsx" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 3h9l5 5v13H5V3ZM14 3v6h5M8 13h8M8 17h6"/></svg><span>Delivery plan.xlsx</span></button></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><div class="gn-tree-row"><button class="gn-tree-toggle gn-button" type="button" data-gn-expand="gn-tree-assets" data-label="Shared assets" aria-label="Expand Shared assets" aria-expanded="false" aria-controls="gn-tree-assets"><span aria-hidden="true">›</span></button><button class="gn-tree-select gn-button" type="button" data-gn-select="Shared assets" data-kind="folder" data-path="Shared assets" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 4h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg><span>Shared assets</span></button></div><ul id="gn-tree-assets" hidden><li><div class="gn-tree-row"><span class="gn-tree-spacer" aria-hidden="true"></span><button class="gn-tree-select gn-button" type="button" data-gn-select="Review checklist.pdf" data-kind="file" data-path="Shared assets / Review checklist.pdf" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 3h9l5 5v13H5V3ZM14 3v6h5M8 13h8M8 17h6"/></svg><span>Review checklist.pdf</span></button></div></li></ul></li>
+        <li><div class="gn-tree-row"><button class="gn-tree-toggle gn-button" type="button" data-gn-expand="gn-tree-archive" data-label="Archive" aria-label="Expand Archive" aria-expanded="false" aria-controls="gn-tree-archive"><span aria-hidden="true">›</span></button><button class="gn-tree-select gn-button" type="button" data-gn-select="Archive" data-kind="folder" data-path="Archive" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 4h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg><span>Archive</span></button></div><ul id="gn-tree-archive" hidden><li><div class="gn-tree-row"><span class="gn-tree-spacer" aria-hidden="true"></span><button class="gn-tree-select gn-button" type="button" data-gn-select="Launch notes.docx" data-kind="file" data-path="Archive / Launch notes.docx" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 3h9l5 5v13H5V3ZM14 3v6h5M8 13h8M8 17h6"/></svg><span>Launch notes.docx</span></button></div></li></ul></li>
+      </ul>
+    </div>
+    <div class="gn-tree-selection"><strong>Selected item</strong><p class="gn-output" id="gn-tree-output" role="status" style="margin:0">Choose a folder or file.</p></div>
+  </div>
+  <p class="component-note">Expand a folder with its arrow. Select a name to show its path; sample files do not open.</p>
+</section>
+<section class="component-panel wide" id="navigation-shell" data-component="Navigation shell" aria-labelledby="navigation-shell-title">
+  <header class="component-heading"><div><h2 id="navigation-shell-title">Navigation shell</h2><p>Keep key views within reach.</p></div><a href="../navigation-shell/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="navigation-shell" aria-pressed="false" aria-controls="recording-navigation-shell">Play demo GIF</button>
+    <a href="../assets/previews/navigation-shell.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-navigation-shell" hidden>
+    <img src="../assets/previews/navigation-shell.png" data-gif="../assets/previews/navigation-shell.gif" data-poster="../assets/previews/navigation-shell.png" alt="Animated browser demonstration of navigation shell interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="gn-nav-shell">
+      <aside class="gn-nav-sidebar" aria-label="Sample workspace navigation">
+        <p class="gn-nav-brand">Project workspace</p>
+        <nav class="gn-nav-menu" aria-label="Preview views">
+          <button class="gn-nav-choice gn-button" type="button" data-gn-nav="overview" aria-pressed="true" aria-controls="gn-nav-pane"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Overview</span></button>
+          <button class="gn-nav-choice gn-button" type="button" data-gn-nav="tasks" aria-pressed="false" aria-controls="gn-nav-pane"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3 6 2 2 4-4M12 6h9M3 13l2 2 4-4M12 13h9M3 20l2 2 4-4M12 20h9"/></svg><span>Tasks</span><span class="gn-nav-count" aria-label="3 open tasks">3</span></button>
+          <button class="gn-nav-choice gn-button" type="button" data-gn-nav="files" aria-pressed="false" aria-controls="gn-nav-pane"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 4h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg><span>Files</span></button>
+          <button class="gn-nav-choice gn-button" type="button" data-gn-nav="team" aria-pressed="false" aria-controls="gn-nav-pane"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M21 21v-2a6 6 0 0 0-4-5.65"/></svg><span>Team</span></button>
+        </nav>
+        <p class="gn-nav-user"><span class="gn-avatar" aria-hidden="true">ML</span>Morgan Lee</p>
+      </aside>
+      <div class="gn-nav-pane" id="gn-nav-pane" role="region" aria-labelledby="gn-nav-view-title">
+        <p class="gn-kicker">Overview</p><h3 id="gn-nav-view-title">Workspace refresh</h3><p class="gn-nav-intro">A shared home for the next release.</p>
+        <dl class="gn-nav-metrics"><div><dt>Project stage</dt><dd>Team review</dd></div><div><dt>Open tasks</dt><dd>3 remaining</dd></div></dl>
+      </div>
+    </div>
+    <p class="gn-output" id="gn-nav-output" role="status">Selected view: Overview.</p>
+  </div>
+  <p class="component-note">Choose a view to change this sample pane. On narrow screens, the menu moves below it.</p>
+</section>
+<section class="component-panel wide" id="stepper" data-component="Stepper" aria-labelledby="stepper-title">
+  <header class="component-heading"><div><h2 id="stepper-title">Stepper</h2><p>Make a short workflow easy to follow.</p></div><a href="../stepper/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="stepper" aria-pressed="false" aria-controls="recording-stepper">Play demo GIF</button>
+    <a href="../assets/previews/stepper.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-stepper" hidden>
+    <img src="../assets/previews/stepper.png" data-gif="../assets/previews/stepper.gif" data-poster="../assets/previews/stepper.png" alt="Animated browser demonstration of stepper interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <ol class="gn-step-list" aria-label="Project setup steps">
+      <li><button class="gn-step-link gn-button" type="button" data-gn-step="0" aria-current="step" aria-controls="gn-step-stage"><span class="gn-step-number" aria-hidden="true">1</span><span>Brief</span><span class="sr-only gn-step-state">, current step</span></button></li>
+      <li><button class="gn-step-link gn-button" type="button" data-gn-step="1" aria-controls="gn-step-stage" disabled><span class="gn-step-number" aria-hidden="true">2</span><span>Team</span><span class="sr-only gn-step-state">, upcoming step</span></button></li>
+      <li><button class="gn-step-link gn-button" type="button" data-gn-step="2" aria-controls="gn-step-stage" disabled><span class="gn-step-number" aria-hidden="true">3</span><span>Timing</span><span class="sr-only gn-step-state">, upcoming step</span></button></li>
+      <li><button class="gn-step-link gn-button" type="button" data-gn-step="3" aria-controls="gn-step-stage" disabled><span class="gn-step-number" aria-hidden="true">4</span><span>Review</span><span class="sr-only gn-step-state">, upcoming step</span></button></li>
+    </ol>
+    <div class="gn-step-progress-row"><progress id="gn-step-progress" max="4" value="0" aria-label="Completed setup steps">0 of 4</progress><span id="gn-step-progress-text">0 of 4 complete</span></div>
+    <form id="gn-step-form" novalidate>
+      <div class="gn-step-stage" id="gn-step-stage">
+        <div data-gn-step-pane="0"><p class="gn-kicker">Step 1 of 4</p><h3 tabindex="-1">Start with a clear brief</h3><p>Give the project a name your team will recognize.</p><div class="gn-field"><label for="gn-project-name">Project name (required)</label><input id="gn-project-name" name="project" type="text" value="Workspace refresh" maxlength="80" required autocomplete="off" aria-describedby="gn-step-error"></div></div>
+        <div data-gn-step-pane="1" hidden><p class="gn-kicker">Step 2 of 4</p><h3 tabindex="-1">Choose an owner</h3><p>One person will coordinate the review.</p><div class="gn-field"><label for="gn-project-owner">Project owner (required)</label><select id="gn-project-owner" name="owner" required aria-describedby="gn-step-error"><option value="">Choose a teammate</option><option selected>Morgan Lee</option><option>Alex Chen</option><option>Sam Rivera</option></select></div></div>
+        <div data-gn-step-pane="2" hidden><p class="gn-kicker">Step 3 of 4</p><h3 tabindex="-1">Set a delivery date</h3><p>Pick a target for the reviewed version.</p><div class="gn-field"><label for="gn-project-date">Target date (required)</label><input id="gn-project-date" name="date" type="date" value="2026-12-04" required aria-describedby="gn-step-error"></div></div>
+        <div data-gn-step-pane="3" hidden><p class="gn-kicker">Step 4 of 4</p><h3 tabindex="-1">Review the plan</h3><p>Check these details before finishing the preview.</p><dl class="gn-review"><div><dt>Project</dt><dd id="gn-review-name">Workspace refresh</dd></div><div><dt>Owner</dt><dd id="gn-review-owner">Morgan Lee</dd></div><div><dt>Target</dt><dd id="gn-review-date">December 4, 2026</dd></div></dl></div>
+        <div id="gn-step-finished" hidden><span class="gn-step-done" aria-hidden="true">✓</span><h3 tabindex="-1">Ready for the team</h3><p>The sample workflow is complete. These details stay in this preview; nothing was submitted.</p></div>
+        <p class="gn-step-error" id="gn-step-error" role="alert" hidden></p>
+      </div>
+      <div class="gn-step-actions"><button class="secondary-action gn-button" id="gn-step-back" type="button" disabled>Back</button><button class="demo-action gn-button" id="gn-step-next" type="submit">Next</button><button class="secondary-action gn-button" id="gn-step-restart" type="button" hidden>Start again</button></div>
+    </form>
+    <p class="gn-output" id="gn-step-status" role="status">Step 1 of 4: Brief.</p>
+  </div>
+  <p class="component-note">Required fields demonstrate a step check. Form content and the completion screen belong to this sample.</p>
+</section>
+      </div>
+      <div class="no-results" id="gallery-empty" hidden><h2>No matching components</h2><p>Try a shorter name or show the full catalog.</p><button class="secondary-action" id="gallery-clear" type="button">Show all components</button></div>
+    </div>
+    <details class="gallery-references"><summary>References and shared files</summary><ul>
+      <li><a href="../COLOR-PALETTE.txt">Color palette: names, hex codes, and uses</a></li>
+      <li><a href="../examples/theme/App.Formulas.powerfx" download>Shared Power Fx settings</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/controls/modern-controls/modern-controls-reference" target="_blank" rel="noopener noreferrer">Microsoft: modern control reference</a></li>
+      <li><a href="https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/controls/modern-controls/modern-theming" target="_blank" rel="noopener noreferrer">Microsoft: modern themes</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" target="_blank" rel="noopener noreferrer">W3C: text contrast</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" target="_blank" rel="noopener noreferrer">W3C: visible keyboard focus</a></li>
+      <li><a href="https://github.com/mattpocock/skills/blob/main/docs/engineering/codebase-design.md" target="_blank" rel="noopener noreferrer">Matt Pocock: module design and small interfaces</a></li>
+    </ul></details>
+    <p class="gallery-footer">Sample interactions stay in this page and reset when you reload it. They do not save records or publish changes. Native appearance, events, accessibility, and library compatibility require Power Apps validation.</p>
+  </main>
+</div>
+<script>
+
+(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+
+  // Button: the first select arms confirmation; only the confirmed select counts.
+  let clicks = 0;
+  let armed = false;
+  let confirmationTimer;
+  const button = byId('g-button-live');
+  function renderButton() {
+    const busy = byId('g-button-busy').checked;
+    button.disabled = busy;
+    button.dataset.appearance = byId('g-button-appearance').value;
+    button.dataset.armed = String(armed);
+    button.textContent = busy ? 'Working…' : armed ? 'Select again' : 'Save changes';
+    byId('g-button-count').textContent = String(clicks);
+  }
+  byId('g-button-appearance').addEventListener('change', renderButton);
+  byId('g-button-busy').addEventListener('change', () => {
+    renderButton();
+    byId('g-button-status').textContent = button.disabled ? 'Busy. The action is disabled.' : 'Ready for selection.';
+  });
+  byId('g-button-confirm').addEventListener('change', () => {
+    renderButton();
+    const enabled = byId('g-button-confirm').checked;
+    byId('g-button-status').textContent = armed
+      ? `Confirmation ${enabled ? 'enabled' : 'disabled'}. The current armed state remains until selection or timeout.`
+      : enabled ? 'Select twice within four seconds to confirm.' : 'Confirmation disabled. Select to simulate an action.';
+  });
+  button.addEventListener('click', () => {
+    if (byId('g-button-confirm').checked && !armed) {
+      armed = true;
+      byId('g-button-status').textContent = 'Awaiting confirmation for four seconds.';
+      confirmationTimer = setTimeout(() => {
+        armed = false;
+        renderButton();
+        byId('g-button-status').textContent = 'Confirmation expired. No action ran.';
+      }, 4000);
+    } else {
+      clearTimeout(confirmationTimer);
+      armed = false;
+      clicks += 1;
+      byId('g-button-status').textContent = 'Action simulated. No data was saved.';
+    }
+    renderButton();
+  });
+
+  // Floating action button: standard buttons keep every action keyboard accessible.
+  const fab = byId('g-fab-toggle');
+  function setFabOpen(open) {
+    byId('g-fab-menu').hidden = !open;
+    fab.setAttribute('aria-expanded', String(open));
+    fab.setAttribute('aria-label', open ? 'Close create actions' : 'Open create actions');
+    byId('g-fab-symbol').textContent = open ? '×' : '+';
+  }
+  fab.addEventListener('click', () => {
+    const open = fab.getAttribute('aria-expanded') !== 'true';
+    setFabOpen(open);
+    if (open) byId('g-fab-menu').querySelector('button').focus();
+  });
+  byId('g-fab-extended').addEventListener('change', event => {
+    fab.dataset.extended = String(event.target.checked);
+    byId('g-fab-label').hidden = !event.target.checked;
+  });
+  document.querySelectorAll('[data-fab-action]').forEach(action => action.addEventListener('click', () => {
+    byId('g-fab-status').textContent = action.textContent + ' selected. Event simulated.';
+    setFabOpen(false);
+    fab.focus();
+  }));
+  byId('floating-action-button').addEventListener('keydown', event => {
+    if (event.key === 'Escape' && fab.getAttribute('aria-expanded') === 'true') {
+      setFabOpen(false);
+      fab.focus();
+    }
+  });
+
+  // Carousel: intentionally manual; users control every slide change.
+  const slides = [
+    { title:'Workspace refresh', kicker:'Project update', text:'The plan is ready for review. Explore the next steps with your team.', tone:'accent' },
+    { title:'Review the details', kicker:'Design review', text:'Check the proposed layout and share feedback before the next milestone.', tone:'coral' },
+    { title:'Ready for handoff', kicker:'Next milestone', text:'Confirm the final checklist and assign an owner for each remaining task.', tone:'neutral' }
+  ];
+  let slideIndex = 0;
+  function showSlide(index) {
+    slideIndex = (index + slides.length) % slides.length;
+    const slide = slides[slideIndex];
+    byId('g-carousel-slide').dataset.tone = slide.tone;
+    byId('g-carousel-kicker').textContent = slide.kicker;
+    byId('g-carousel-title').textContent = slide.title;
+    byId('g-carousel-text').textContent = slide.text;
+    byId('g-carousel-status').textContent = `Slide ${slideIndex + 1} of ${slides.length}: ${slide.title}`;
+    document.querySelectorAll('[data-slide]').forEach(dot => dot.setAttribute('aria-current', String(Number(dot.dataset.slide) === slideIndex)));
+  }
+  byId('g-carousel-prev').addEventListener('click', () => showSlide(slideIndex - 1));
+  byId('g-carousel-next').addEventListener('click', () => showSlide(slideIndex + 1));
+  document.querySelectorAll('[data-slide]').forEach(dot => dot.addEventListener('click', () => showSlide(Number(dot.dataset.slide))));
+  byId('g-carousel-select').addEventListener('click', () => {
+    byId('g-carousel-status').textContent = `${slides[slideIndex].title} selected. Event simulated.`;
+  });
+
+  // Calendar: Monday-first sample month, with dates selected through native buttons.
+  const events = [
+    { day:'2026-11-03', title:'Project kickoff', detail:'09:00 · Team planning' },
+    { day:'2026-11-03', title:'Design review', detail:'14:00 · Component library' },
+    { day:'2026-11-06', title:'Content review', detail:'11:00 · Sample screens' },
+    { day:'2026-11-12', title:'Accessibility review', detail:'10:00 · Keyboard and contrast' },
+    { day:'2026-11-18', title:'Progress check', detail:'13:00 · Delivery team' },
+    { day:'2026-11-24', title:'Milestone handoff', detail:'15:00 · Project review' }
+  ];
+  let calendarMonth = new Date(2026, 10, 1);
+  let selectedDate = '2026-11-03';
+  const dateKey = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+  function renderCalendar() {
+    const monthLabel = calendarMonth.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+    byId('g-calendar-month').textContent = monthLabel;
+    const dates = byId('g-calendar-days');
+    dates.setAttribute('aria-label', 'Dates in ' + monthLabel);
+    dates.replaceChildren();
+    const offset = (calendarMonth.getDay() + 6) % 7;
+    const count = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 0).getDate();
+    for (let cell = 0; cell < 42; cell += 1) {
+      const day = cell - offset + 1;
+      if (day < 1 || day > count) {
+        const blank = document.createElement('span');
+        blank.className = 'calendar-blank';
+        blank.setAttribute('aria-hidden', 'true');
+        dates.append(blank);
+        continue;
+      }
+      const date = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), day);
+      const key = dateKey(date);
+      const dayEvents = events.filter(event => event.day === key);
+      const dateButton = document.createElement('button');
+      dateButton.type = 'button';
+      dateButton.dataset.date = key;
+      dateButton.dataset.sampleToday = String(key === '2026-11-03');
+      dateButton.setAttribute('aria-pressed', String(selectedDate === key));
+      dateButton.setAttribute('aria-label', date.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' }) + (dayEvents.length ? `, ${dayEvents.length} sample event${dayEvents.length === 1 ? '' : 's'}` : ', no sample events'));
+      dateButton.append(document.createTextNode(String(day)));
+      const mark = document.createElement('span');
+      mark.className = 'calendar-event-mark' + (dayEvents.length ? '' : ' empty');
+      mark.setAttribute('aria-hidden', 'true');
+      dateButton.append(mark);
+      dateButton.addEventListener('click', () => {
+        selectedDate = key;
+        renderCalendar();
+        dates.querySelector(`[data-date="${key}"]`).focus();
+        byId('g-calendar-status').textContent = `${date.toLocaleDateString('en-US', { month:'long', day:'numeric' })} selected. ${dayEvents.length} sample event${dayEvents.length === 1 ? '' : 's'}.`;
+      });
+      dates.append(dateButton);
+    }
+    const list = byId('g-calendar-events');
+    list.replaceChildren();
+    if (!selectedDate) {
+      byId('g-calendar-date').textContent = 'Choose a date';
+    } else {
+      const [year, month, day] = selectedDate.split('-').map(Number);
+      byId('g-calendar-date').textContent = new Date(year, month - 1, day).toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+    }
+    const selectedEvents = events.filter(event => event.day === selectedDate);
+    if (!selectedEvents.length) {
+      const empty = document.createElement('li');
+      empty.className = 'calendar-empty';
+      empty.textContent = selectedDate ? 'No sample events on this date.' : 'Select a date to view its sample events.';
+      list.append(empty);
+    }
+    selectedEvents.forEach(event => {
+      const item = document.createElement('li');
+      const eventButton = document.createElement('button');
+      eventButton.type = 'button';
+      eventButton.className = 'calendar-event';
+      eventButton.append(document.createTextNode(event.title));
+      const detail = document.createElement('small');
+      detail.textContent = event.detail;
+      eventButton.append(detail);
+      eventButton.addEventListener('click', () => { byId('g-calendar-status').textContent = event.title + ' selected. Event simulated.'; });
+      item.append(eventButton);
+      list.append(item);
+    });
+  }
+  function moveMonth(offset) {
+    calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + offset, 1);
+    renderCalendar();
+    byId('g-calendar-status').textContent = byId('g-calendar-month').textContent + ' displayed. The selected date and agenda are retained.';
+  }
+  byId('g-calendar-prev').addEventListener('click', () => moveMonth(-1));
+  byId('g-calendar-next').addEventListener('click', () => moveMonth(1));
+  byId('g-calendar-reset').addEventListener('click', () => {
+    calendarMonth = new Date(2026, 10, 1);
+    selectedDate = '2026-11-03';
+    renderCalendar();
+    byId('g-calendar-status').textContent = 'Sample month restored. November 3 selected.';
+  });
+  renderCalendar();
+})();
+
+
+(() => {
+  'use strict';
+  const find = id => document.getElementById(id);
+  const make = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  };
+
+  // Data table: host filtering and updates are intentionally local simulations.
+  const initialRows = [
+    { id: 'DEMO-101', task: 'Review page layout', team: 'Design', status: 'In progress', done: 2, total: 4 },
+    { id: 'DEMO-102', task: 'Check keyboard navigation', team: 'Quality', status: 'Not started', done: 0, total: 5 },
+    { id: 'DEMO-103', task: 'Document color tokens', team: 'Build', status: 'Completed', done: 4, total: 4 },
+    { id: 'DEMO-104', task: 'Prepare release notes', team: 'Docs', status: 'On hold', done: 1, total: 3 }
+  ];
+  let tableRows = initialRows.map(row => ({ ...row }));
+  const selectedRows = new Set();
+  let sortDirection = 0;
+  function visibleRows() {
+    const query = find('dt-search').value.trim().toLowerCase();
+    const status = find('dt-status-filter').value;
+    const rows = tableRows.filter(row => (!status || row.status === status) &&
+      `${row.id} ${row.task} ${row.team} ${row.status}`.toLowerCase().includes(query));
+    if (sortDirection) rows.sort((a, b) => a.task.localeCompare(b.task) * sortDirection);
+    return rows;
+  }
+  function updateSelection() {
+    const visible = visibleRows();
+    const selectedVisible = visible.filter(row => selectedRows.has(row.id)).length;
+    find('dt-select-all').checked = visible.length > 0 && selectedVisible === visible.length;
+    find('dt-select-all').indeterminate = selectedVisible > 0 && selectedVisible < visible.length;
+    find('dt-select-all').disabled = visible.length === 0;
+    find('dt-complete').disabled = selectedRows.size === 0;
+    find('dt-selection-summary').textContent = `${visible.length} shown · ${selectedRows.size} selected (${selectedVisible} visible)`;
+  }
+  function renderTable() {
+    const body = find('dt-body');
+    body.replaceChildren();
+    const visible = visibleRows();
+    visible.forEach(row => {
+      const tr = make('tr');
+      tr.dataset.selected = String(selectedRows.has(row.id));
+      const selectCell = make('td');
+      const checkbox = make('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `dt-row-${row.id}`;
+      checkbox.checked = selectedRows.has(row.id);
+      checkbox.setAttribute('aria-label', `Select ${row.task}`);
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) selectedRows.add(row.id); else selectedRows.delete(row.id);
+        tr.dataset.selected = String(checkbox.checked);
+        updateSelection();
+      });
+      selectCell.append(checkbox);
+      const titleCell = make('td');
+      titleCell.append(make('span', 'gd-row-title', row.task), make('span', 'gd-row-id', row.id));
+      const statusCell = make('td');
+      const badge = make('span', 'gd-status', row.status);
+      badge.dataset.status = row.status;
+      statusCell.append(badge);
+      const progressCell = make('td');
+      const progressWrap = make('div', 'gd-progress');
+      const progress = make('progress');
+      progress.max = row.total;
+      progress.value = row.done;
+      progress.setAttribute('aria-label', `${row.task}: ${row.done} of ${row.total} steps`);
+      progressWrap.append(progress, make('span', '', `${row.done}/${row.total}`));
+      progressCell.append(progressWrap);
+      tr.append(selectCell, titleCell, make('td', '', row.team), statusCell, progressCell);
+      body.append(tr);
+    });
+    if (!visible.length) {
+      const row = make('tr');
+      const cell = make('td', '', 'No tasks match. Change the search or status filter.');
+      cell.colSpan = 5;
+      row.append(cell);
+      body.append(row);
+    }
+    find('dt-task-heading').setAttribute('aria-sort', sortDirection === 1 ? 'ascending' : sortDirection === -1 ? 'descending' : 'none');
+    find('dt-sort').textContent = `Task ${sortDirection === 1 ? '↑' : sortDirection === -1 ? '↓' : '↕'}`;
+    updateSelection();
+  }
+  ['dt-search', 'dt-status-filter'].forEach(id => find(id).addEventListener(id === 'dt-search' ? 'input' : 'change', () => {
+    renderTable();
+    find('dt-message').textContent = `${visibleRows().length} matching fictional tasks. Selection is retained while filtering.`;
+  }));
+  find('dt-select-all').addEventListener('change', event => {
+    visibleRows().forEach(row => event.target.checked ? selectedRows.add(row.id) : selectedRows.delete(row.id));
+    renderTable();
+  });
+  find('dt-sort').addEventListener('click', () => { sortDirection = sortDirection === 1 ? -1 : 1; renderTable(); });
+  find('dt-complete').addEventListener('click', () => {
+    const count = selectedRows.size;
+    tableRows.forEach(row => { if (selectedRows.has(row.id)) { row.status = 'Completed'; row.done = row.total; } });
+    selectedRows.clear();
+    renderTable();
+    find('dt-message').textContent = `${count} fictional task${count === 1 ? '' : 's'} marked completed. No external update was made.`;
+  });
+  find('dt-reset').addEventListener('click', () => {
+    tableRows = initialRows.map(row => ({ ...row })); selectedRows.clear(); sortDirection = 0;
+    find('dt-search').value = ''; find('dt-status-filter').value = ''; renderTable();
+    find('dt-message').textContent = 'The four fictional tasks and their original statuses are restored.';
+  });
+  renderTable();
+
+  // Kanban: the local host simulation applies the same sample column limits.
+  const columns = [
+    { key: 'todo', title: 'To do', limit: 0 },
+    { key: 'doing', title: 'In progress', limit: 3 },
+    { key: 'review', title: 'In review', limit: 2 },
+    { key: 'done', title: 'Done', limit: 0 }
+  ];
+  const initialCards = [
+    { key: 'plan', column: 'todo', title: 'Sketch the intake form', detail: 'Define the essential fields', tag: 'Design' },
+    { key: 'labels', column: 'todo', title: 'Review action labels', detail: 'Use clear, consistent verbs', tag: 'Content' },
+    { key: 'navigation', column: 'doing', title: 'Build the navigation', detail: 'Check narrow and wide layouts', tag: 'Build' },
+    { key: 'focus', column: 'review', title: 'Check focus visibility', detail: 'Review every interactive state', tag: 'Quality' },
+    { key: 'notes', column: 'done', title: 'Record sample assumptions', detail: 'Keep fictional data explicit', tag: 'Docs' }
+  ];
+  let cards = initialCards.map(card => ({ ...card }));
+  function destinationFull(key) {
+    const column = columns.find(item => item.key === key);
+    return find('kb-limits').checked && column.limit > 0 && cards.filter(card => card.column === key).length >= column.limit;
+  }
+  function renderBoard(focusKey) {
+    const board = find('kb-columns');
+    board.replaceChildren();
+    columns.forEach((column, columnIndex) => {
+      const columnCards = cards.filter(card => card.column === column.key);
+      const section = make('section', 'gd-column');
+      section.setAttribute('aria-labelledby', `kb-heading-${column.key}`);
+      const heading = make('div', 'gd-column-heading');
+      const title = make('h3', '', column.title); title.id = `kb-heading-${column.key}`;
+      const count = `${columnCards.length}${column.limit ? '/' + column.limit : ''}${destinationFull(column.key) ? ' · Full' : ''}`;
+      heading.append(title, make('span', 'gd-column-count', count));
+      section.append(heading);
+      columnCards.forEach(card => {
+        const article = make('article', 'gd-task'); article.id = `kb-card-${card.key}`;
+        article.append(make('span', 'gd-task-tag', card.tag), make('h4', '', card.title), make('p', '', card.detail));
+        const field = make('div', 'gd-field');
+        const label = make('label', '', 'Move to'); label.htmlFor = `kb-dest-${card.key}`;
+        const select = make('select'); select.id = `kb-dest-${card.key}`;
+        select.setAttribute('aria-label', `Destination for ${card.title}`);
+        columns.forEach(destination => {
+          const option = make('option', '', destination.title + (destination.key !== card.column && destinationFull(destination.key) ? ' (full)' : ''));
+          option.value = destination.key;
+          option.disabled = destination.key !== card.column && destinationFull(destination.key);
+          select.append(option);
+        });
+        const next = columns[Math.min(columns.length - 1, columnIndex + 1)].key;
+        select.value = next !== card.column && !destinationFull(next) ? next : card.column;
+        field.append(label, select);
+        const move = make('button', 'secondary-action', 'Move'); move.type = 'button'; move.id = `kb-move-${card.key}`;
+        move.setAttribute('aria-label', `Move ${card.title}`);
+        move.disabled = select.value === card.column;
+        select.addEventListener('change', () => { move.disabled = select.value === card.column || destinationFull(select.value); });
+        move.addEventListener('click', () => {
+          const destination = columns.find(item => item.key === select.value);
+          if (destination.key === card.column || destinationFull(destination.key)) return;
+          const from = columns.find(item => item.key === card.column).title;
+          card.column = destination.key;
+          renderBoard(card.key);
+          find('kb-message').textContent = `Moved “${card.title}” from ${from} to ${destination.title}. Demo state only.`;
+        });
+        article.append(field, move); section.append(article);
+      });
+      if (!columnCards.length) section.append(make('p', 'gd-small', 'No cards'));
+      board.append(section);
+    });
+    if (focusKey) find(`kb-dest-${focusKey}`).focus();
+  }
+  find('kb-limits').addEventListener('change', () => {
+    renderBoard(); find('kb-message').textContent = find('kb-limits').checked ? 'Column limits are enforced for new moves.' : 'Column limits are advisory in this local demo.';
+  });
+  find('kb-reset').addEventListener('click', () => { cards = initialCards.map(card => ({ ...card })); find('kb-limits').checked = true; renderBoard(); find('kb-message').textContent = 'The five fictional cards are restored to their original stages.'; });
+  renderBoard();
+
+  // KPI: match the source's Number format, target clamping, and Auto thresholds.
+  const numberFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+  const percentFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 });
+  function numericInput(id) {
+    const input = find(id);
+    return input.value.trim() === '' || !Number.isFinite(input.valueAsNumber) ? null : input.valueAsNumber;
+  }
+  function renderKpi() {
+    const actual = numericInput('kpi-actual') ?? 0;
+    const target = numericInput('kpi-target');
+    const previous = numericInput('kpi-previous');
+    const validTarget = target !== null && target > 0;
+    const progress = validTarget ? Math.min(1, Math.max(0, actual / target)) : 0;
+    const status = !validTarget ? 'Neutral' : actual >= target ? 'Good' : actual >= target * .7 ? 'Warning' : 'Bad';
+    find('kpi-value').textContent = numberFormat.format(actual);
+    find('kpi-status').textContent = status; find('kpi-status').dataset.status = status;
+    find('kpi-progress').value = progress * 100;
+    find('kpi-progress').setAttribute('aria-label', `Target progress ${percentFormat.format(progress * 100)} percent`);
+    find('kpi-target-area').hidden = !validTarget;
+    find('kpi-target-text').textContent = `${percentFormat.format(progress * 100)}% of target ${numberFormat.format(target ?? 0)}`;
+    if (previous === null) {
+      find('kpi-change').textContent = 'No previous value';
+    } else {
+      const change = actual - previous;
+      const percent = previous === 0 ? 0 : change / Math.abs(previous) * 100;
+      const sign = change > 0 ? '+' : '';
+      find('kpi-change').textContent = `${sign}${numberFormat.format(change)} (${percent > 0 ? '+' : ''}${percentFormat.format(percent)}%) vs previous${previous === 0 ? ' · percentage defaults to 0' : ''}`;
+    }
+    find('kpi-open').setAttribute('aria-label', `Review tasks complete: ${numberFormat.format(actual)}. Status ${status}. Select to simulate opening details.`);
+    return { actual, target, status };
+  }
+  ['kpi-actual', 'kpi-target', 'kpi-previous'].forEach(id => find(id).addEventListener('input', () => {
+    const result = renderKpi();
+    find('kpi-message').textContent = `Preview updated. Actual ${numberFormat.format(result.actual)}; status ${result.status}.`;
+  }));
+  find('kpi-open').addEventListener('click', () => { find('kpi-message').textContent = 'OnSelect simulated. A real app could open the task list here.'; });
+  renderKpi();
+
+  // Attachment metadata only: never read files, upload, or persist changes.
+  const samples = [
+    { key: 'notes', name: 'review-notes.pdf', size: '240 KB', type: 'PDF' },
+    { key: 'checklist', name: 'review-checklist.docx', size: '48 KB', type: 'DOCX' },
+    { key: 'layout', name: 'layout-sample.png', size: '620 KB', type: 'PNG' }
+  ];
+  const existingFiles = [
+    { key: 'brief', name: 'project-brief.pdf', size: '180 KB', type: 'PDF' },
+    { key: 'plan', name: 'sample-plan.docx', size: '32 KB', type: 'DOCX' }
+  ];
+  const staged = new Set();
+  const removed = new Set();
+  function fileRow(file, stage) {
+    const item = make('li', 'gd-file-row');
+    item.id = `att-${stage ? 'staged' : 'existing'}-${file.key}`;
+    item.dataset.removed = String(!stage && removed.has(file.key));
+    const meta = make('div', 'gd-file-meta');
+    meta.append(make('span', 'gd-file-name', file.name), make('small', '', `${file.size} · ${stage ? 'Ready (sample)' : removed.has(file.key) ? 'Marked for removal' : 'Existing sample'}`));
+    const button = make('button', 'quiet-action', !stage && removed.has(file.key) ? 'Undo' : 'Remove'); button.type = 'button';
+    button.id = `att-${stage ? 'remove-staged' : 'toggle'}-${file.key}`;
+    button.setAttribute('aria-label', `${button.textContent} ${file.name}`);
+    button.addEventListener('click', () => {
+      let message;
+      if (stage) { staged.delete(file.key); message = `${file.name} removed from staging.`; }
+      else if (removed.has(file.key)) { removed.delete(file.key); message = `${file.name} restored in the sample list.`; }
+      else { removed.add(file.key); message = `${file.name} marked for removal. Use Undo to restore it.`; }
+      renderFiles();
+      find('att-message').textContent = message;
+      if (!stage) find(`att-toggle-${file.key}`).focus(); else find('att-add').focus();
+    });
+    item.append(make('span', 'gd-file-symbol', file.type), meta, button);
+    return item;
+  }
+  function renderFiles() {
+    const stagedList = find('att-staged'); stagedList.replaceChildren();
+    samples.filter(file => staged.has(file.key)).forEach(file => stagedList.append(fileRow(file, true)));
+    if (!staged.size) stagedList.append(make('li', 'gd-file-empty', 'No samples staged. Choose one above.'));
+    const existingList = find('att-existing'); existingList.replaceChildren();
+    existingFiles.forEach(file => existingList.append(fileRow(file, false)));
+    [...find('att-sample').options].forEach(option => { option.disabled = staged.has(option.value); });
+    if (!find('att-sample').value || staged.has(find('att-sample').value)) {
+      const available = samples.find(file => !staged.has(file.key));
+      find('att-sample').value = available ? available.key : '';
+    }
+    find('att-add').disabled = staged.size >= 3 || !find('att-sample').value;
+    find('att-save').disabled = staged.size + removed.size === 0;
+    find('att-ready-count').textContent = `(${staged.size} of 3)`;
+  }
+  find('att-sample').addEventListener('change', () => { find('att-add').disabled = staged.size >= 3 || !find('att-sample').value; });
+  find('att-add').addEventListener('click', () => {
+    const file = samples.find(item => item.key === find('att-sample').value);
+    if (!file || staged.has(file.key) || staged.size >= 3) return;
+    staged.add(file.key); renderFiles();
+    find('att-message').textContent = `${file.name} staged as sample metadata. No file was opened.`;
+  });
+  find('att-save').addEventListener('click', () => {
+    find('att-message').textContent = `OnSave preview: Ready = ${staged.size}; Removed = ${removed.size}. Nothing was uploaded or deleted.`;
+  });
+  find('att-reset').addEventListener('click', () => {
+    staged.clear(); removed.clear(); find('att-sample').value = samples[0].key; renderFiles();
+    find('att-message').textContent = 'Staging and removal marks cleared. Existing sample metadata is restored.';
+  });
+  renderFiles();
+})();
+
+
+(() => {
+  const accordion = document.getElementById('gn-accordion-items');
+  if (!accordion || accordion.dataset.ready) return;
+  accordion.dataset.ready = 'true';
+  const details = Array.from(accordion.querySelectorAll('details'));
+  const multiple = document.getElementById('gn-accordion-multiple');
+  const accordionOutput = document.getElementById('gn-accordion-output');
+  const expandButton = document.getElementById('gn-accordion-expand');
+  const updateAccordion = () => {
+    const open = details.filter(item => item.open);
+    accordionOutput.textContent = `Open sections: ${open.length ? open.map(item => item.dataset.label).join(', ') : 'none'} (${open.length} of ${details.length}).`;
+    expandButton.textContent = multiple.checked ? 'Expand all' : 'Expand first';
+  };
+  details.forEach(item => item.addEventListener('toggle', () => {
+    if (item.open && !multiple.checked) details.forEach(other => { if (other !== item) other.open = false; });
+    updateAccordion();
+  }));
+  multiple.addEventListener('change', () => {
+    if (!multiple.checked) details.filter(item => item.open).slice(1).forEach(item => { item.open = false; });
+    updateAccordion();
+  });
+  expandButton.addEventListener('click', () => { details.forEach((item, index) => { item.open = multiple.checked || index === 0; }); updateAccordion(); });
+  document.getElementById('gn-accordion-collapse').addEventListener('click', () => { details.forEach(item => { item.open = false; }); updateAccordion(); });
+  updateAccordion();
+
+  const navViews = {
+    overview: { label:'Overview', body:'<p class="gn-kicker">Overview</p><h3 id="gn-nav-view-title">Workspace refresh</h3><p class="gn-nav-intro">A shared home for the next release.</p><dl class="gn-nav-metrics"><div><dt>Project stage</dt><dd>Team review</dd></div><div><dt>Open tasks</dt><dd>3 remaining</dd></div></dl>' },
+    tasks: { label:'Tasks', body:'<p class="gn-kicker">Tasks</p><h3 id="gn-nav-view-title">What happens next</h3><p class="gn-nav-intro">Three small steps before the team review.</p><ul class="gn-nav-list"><li><span>Confirm the project brief</span><span class="gn-nav-tag">In progress</span></li><li><span>Review the screen layouts</span><small>Alex Chen</small></li><li><span>Check the delivery plan</span><small>Sam Rivera</small></li></ul>' },
+    files: { label:'Files', body:'<p class="gn-kicker">Files</p><h3 id="gn-nav-view-title">Working documents</h3><p class="gn-nav-intro">Sample references for the next review.</p><ul class="gn-nav-list"><li><span>Project brief.docx</span><small>Brief · version 2</small></li><li><span>Delivery plan.xlsx</span><small>Plan · version 1</small></li><li><span>Review checklist.pdf</span><small>Guide · version 1</small></li></ul>' },
+    team: { label:'Team', body:'<p class="gn-kicker">Team</p><h3 id="gn-nav-view-title">People behind the project</h3><p class="gn-nav-intro">Clear roles keep the review moving.</p><ul class="gn-nav-list"><li><span>Morgan Lee</span><span class="gn-nav-tag">Project owner</span></li><li><span>Alex Chen</span><small>Interface review</small></li><li><span>Sam Rivera</span><small>Delivery review</small></li></ul>' }
+  };
+  const navButtons = Array.from(document.querySelectorAll('#navigation-shell [data-gn-nav]'));
+  navButtons.forEach(button => button.addEventListener('click', () => {
+    const view = navViews[button.dataset.gnNav];
+    navButtons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    document.getElementById('gn-nav-pane').innerHTML = view.body;
+    document.getElementById('gn-nav-output').textContent = `Selected view: ${view.label}.`;
+  }));
+
+  const stepTitles = ['Brief', 'Team', 'Timing', 'Review'];
+  const stepButtons = Array.from(document.querySelectorAll('#stepper [data-gn-step]'));
+  const stepPanes = Array.from(document.querySelectorAll('#stepper [data-gn-step-pane]'));
+  const stepBack = document.getElementById('gn-step-back');
+  const stepNext = document.getElementById('gn-step-next');
+  const stepRestart = document.getElementById('gn-step-restart');
+  const stepError = document.getElementById('gn-step-error');
+  const stepFinished = document.getElementById('gn-step-finished');
+  const projectName = document.getElementById('gn-project-name');
+  const projectOwner = document.getElementById('gn-project-owner');
+  const projectDate = document.getElementById('gn-project-date');
+  const stepFields = [projectName, projectOwner, projectDate];
+  let step = 0;
+  let finished = false;
+  const clearError = () => { stepError.hidden = true; stepError.textContent = ''; stepFields.forEach(field => field.removeAttribute('aria-invalid')); };
+  const renderStep = (moveFocus = true) => {
+    clearError();
+    stepPanes.forEach((pane, index) => { pane.hidden = finished || index !== step; });
+    stepFinished.hidden = !finished;
+    stepButtons.forEach((button, index) => {
+      button.disabled = finished || index > step;
+      if (index === step && !finished) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current');
+      button.dataset.complete = String(finished || index < step);
+      button.querySelector('.gn-step-number').textContent = finished || index < step ? '✓' : String(index + 1);
+      button.querySelector('.gn-step-state').textContent = finished || index < step ? ', completed step' : index === step ? ', current step' : ', upcoming step';
+    });
+    const count = finished ? 4 : step;
+    document.getElementById('gn-step-progress').value = count;
+    document.getElementById('gn-step-progress').textContent = `${count} of 4`;
+    document.getElementById('gn-step-progress-text').textContent = `${count} of 4 complete`;
+    stepBack.disabled = step === 0;
+    stepBack.hidden = finished;
+    stepNext.hidden = finished;
+    stepNext.textContent = step === 3 ? 'Finish preview' : 'Next';
+    stepRestart.hidden = !finished;
+    document.getElementById('gn-review-name').textContent = projectName.value.trim();
+    document.getElementById('gn-review-owner').textContent = projectOwner.value;
+    const date = projectDate.value ? new Date(`${projectDate.value}T12:00:00`) : null;
+    document.getElementById('gn-review-date').textContent = date && !Number.isNaN(date.getTime()) ? date.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) : 'Not set';
+    document.getElementById('gn-step-status').textContent = finished ? 'All 4 steps complete. No details were submitted.' : `Step ${step + 1} of 4: ${stepTitles[step]}.`;
+    if (moveFocus) (finished ? stepFinished : stepPanes[step]).querySelector('h3').focus();
+  };
+  document.getElementById('gn-step-form').addEventListener('submit', event => {
+    event.preventDefault();
+    if (finished) return;
+    const field = stepFields[step];
+    if (field && (!field.checkValidity() || !field.value.trim())) {
+      stepError.textContent = ['Enter a project name to continue.', 'Choose a project owner to continue.', 'Choose a valid target date to continue.'][step];
+      stepError.hidden = false;
+      field.setAttribute('aria-invalid', 'true');
+      field.focus();
+      return;
+    }
+    if (step < 3) step += 1; else finished = true;
+    renderStep();
+  });
+  stepBack.addEventListener('click', () => { if (step > 0) { step -= 1; renderStep(); } });
+  stepButtons.forEach((button, index) => button.addEventListener('click', () => { if (!finished && index <= step) { step = index; renderStep(); } }));
+  stepRestart.addEventListener('click', () => { step = 0; finished = false; renderStep(); });
+  stepFields.forEach(field => field.addEventListener('input', clearError));
+  renderStep(false);
+
+  const treeToggles = Array.from(document.querySelectorAll('#tree-view [data-gn-expand]'));
+  const setExpanded = (button, expanded) => {
+    button.setAttribute('aria-expanded', String(expanded));
+    button.setAttribute('aria-label', `${expanded ? 'Collapse' : 'Expand'} ${button.dataset.label}`);
+    document.getElementById(button.dataset.gnExpand).hidden = !expanded;
+  };
+  treeToggles.forEach(button => button.addEventListener('click', () => setExpanded(button, button.getAttribute('aria-expanded') !== 'true')));
+  document.getElementById('gn-tree-expand-all').addEventListener('click', () => treeToggles.forEach(button => setExpanded(button, true)));
+  document.getElementById('gn-tree-collapse-all').addEventListener('click', () => treeToggles.forEach(button => setExpanded(button, false)));
+  const treeSelections = Array.from(document.querySelectorAll('#tree-view [data-gn-select]'));
+  treeSelections.forEach(button => button.addEventListener('click', () => {
+    treeSelections.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    document.getElementById('gn-tree-output').textContent = `Selected ${button.dataset.kind}: ${button.dataset.path}.`;
+  }));
+})();
+
+</script>
+<script>
+(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const panels = [...document.querySelectorAll('[data-component]')];
+  const navigation = [...document.querySelectorAll('[data-show]')];
+  let selected = 'all';
+  let activeRecording = null;
+  const recordingStates = new WeakMap();
+
+  // GIF playback starts only after selection. Stop returns to the live component.
+  // Assigning the poster releases the animated image rather than claiming frame pause.
+  function stopRecording(panel) {
+    const state = recordingStates.get(panel);
+    if (!state) return;
+    state.image.src = state.image.dataset.poster;
+    state.figure.hidden = true;
+    state.button.textContent = 'Play demo GIF';
+    state.button.setAttribute('aria-pressed', 'false');
+    state.button.setAttribute('aria-label', `Play ${panel.dataset.component} demo GIF`);
+    state.liveNodes.forEach(({ node, wasHidden }) => { node.hidden = wasHidden; });
+    recordingStates.delete(panel);
+    if (activeRecording === panel) activeRecording = null;
+  }
+  function playRecording(panel, button) {
+    const figure = byId(button.getAttribute('aria-controls'));
+    const image = figure && figure.querySelector('img[data-gif][data-poster]');
+    if (!figure || !image) return;
+    if (activeRecording) stopRecording(activeRecording);
+    const liveNodes = [...panel.children]
+      .filter(node => node.classList.contains('component-demo') || node.classList.contains('component-note'))
+      .map(node => ({ node, wasHidden: node.hidden }));
+    recordingStates.set(panel, { button, figure, image, liveNodes });
+    liveNodes.forEach(({ node }) => { node.hidden = true; });
+    image.src = image.dataset.gif;
+    figure.hidden = false;
+    button.textContent = 'Stop GIF';
+    button.setAttribute('aria-pressed', 'true');
+    button.setAttribute('aria-label', `Stop ${panel.dataset.component} GIF and return to the live component`);
+    activeRecording = panel;
+  }
+  document.querySelectorAll('.recording-toggle[data-recording]').forEach(button => {
+    const panel = button.closest('[data-component]');
+    if (!panel) return;
+    button.setAttribute('aria-label', `Play ${panel.dataset.component} demo GIF`);
+    button.addEventListener('click', () => {
+      if (activeRecording === panel) stopRecording(panel);
+      else playRecording(panel, button);
+    });
+  });
+
+  function filter() {
+    const query = byId('gallery-search').value.trim().toLowerCase();
+    let visible = 0;
+    panels.forEach(panel => {
+      const text = panel.dataset.component + ' ' + panel.querySelector('.component-heading p').textContent;
+      panel.hidden = (selected !== 'all' && panel.id !== selected) || !text.toLowerCase().includes(query);
+      if (panel.hidden) stopRecording(panel);
+      if (!panel.hidden) visible++;
+    });
+    byId('gallery-count').textContent = visible === 12 ? 'Showing all 12 components' : `Showing ${visible} of 12 components`;
+    byId('gallery-empty').hidden = visible > 0;
+    byId('component-grid').classList.toggle('single-view', visible === 1);
+    navigation.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.show === selected)));
+    byId('gallery-picker').value = selected;
+  }
+  function choose(id, focusPreview = false) {
+    selected = id; byId('gallery-search').value = ''; filter();
+    if (id !== 'all' && focusPreview) {
+      const heading = byId(id).querySelector('h2');
+      heading.setAttribute('tabindex', '-1');
+      heading.focus();
+    }
+  }
+  navigation.forEach(button => button.addEventListener('click', () => choose(button.dataset.show, true)));
+  byId('gallery-picker').addEventListener('change', event => choose(event.target.value));
+  byId('gallery-search').addEventListener('input', () => { selected = 'all'; filter(); });
+  byId('gallery-clear').addEventListener('click', () => { choose('all'); byId('gallery-search').focus(); });
+  function luminance(hex) {
+    const channels = [1,3,5].map(i => parseInt(hex.slice(i, i+2), 16) / 255)
+      .map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
+    return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
+  }
+  function setAccent(hex) {
+    const value = hex.toUpperCase();
+    document.documentElement.style.setProperty('--accent', value);
+    byId('gallery-accent-picker').value = value;
+    byId('gallery-accent-text').value = value;
+    byId('gallery-accent-text').setAttribute('aria-invalid', 'false');
+    byId('gallery-color-error').hidden = true;
+    const ratio = 1.05 / (luminance(value) + .05);
+    byId('gallery-contrast').textContent = `White / accent: ${ratio.toFixed(2)}:1. ` + (ratio < 4.5 ? 'Below 4.5:1 for normal text; choose a darker accent.' : 'Meets 4.5:1 for this pair.');
+    byId('gallery-contrast').classList.toggle('contrast-warning', ratio < 4.5);
+  }
+  byId('gallery-accent-picker').addEventListener('input', event => setAccent(event.target.value));
+  byId('gallery-accent-text').addEventListener('input', event => {
+    const value = event.target.value.trim();
+    if (/^#[0-9a-f]{6}$/i.test(value)) setAccent(value);
+    else { event.target.setAttribute('aria-invalid', 'true'); byId('gallery-color-error').hidden = false; }
+  });
+  byId('gallery-shape').addEventListener('change', event => document.documentElement.style.setProperty('--radius', event.target.value === 'Pill' ? '20px' : '12px'));
+  byId('gallery-reset').addEventListener('click', () => {
+    setAccent('#463782'); byId('gallery-shape').value = 'Pill'; document.documentElement.style.setProperty('--radius', '20px');
+  });
+  setAccent('#463782');
+  filter();
+})();
+</script>
+</body>
+</html>

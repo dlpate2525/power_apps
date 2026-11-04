@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsKpiCard:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks KPI card: one number with its label, the change against a previous value with an arrow coloured by whether up is good, progress toward a target, a status you set or that follows the target, and OnSelect to open the detail behind it."
+    Description: "KPI card: one number with its label, the change against a previous value with an arrow coloured by whether up is good, progress toward a target, a status you set or that follows the target, and OnSelect to open the detail behind it."
     CustomProperties:
       Label:
         PropertyKind: Input
@@ -80,7 +80,7 @@ ComponentDefinitions:
         DisplayName: AccentColor
         DataType: Color
         Description: "Your brand colour, for the icon, the target bar and the focus ring."
-        Default: =RGBA(15, 108, 189, 1)
+        Default: =ColorValue("#463782")
       Theme:
         PropertyKind: Input
         DisplayName: Theme
