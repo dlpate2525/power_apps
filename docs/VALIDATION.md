@@ -46,7 +46,7 @@ npx playwright install chromium
 node scripts/check_gallery.cjs
 ```
 
-The script checks validation, combined filters, banner actions, keyboard activation, GIF controls, and all 15 layouts at 1440, 390, and 320 pixels. It rejects JavaScript errors and external network requests.
+The script checks validation, combined filters, banner actions, keyboard activation, GIF controls, and all 15 layouts at 1440, 390, and 320 pixels. It also checks that the banner icon keeps clear of status text when text sizes double. It rejects JavaScript errors and external network requests.
 
 Screenshots go to a temporary directory. Set `ARTIFACT_DIR` to save them elsewhere. Set `BROWSER_EXECUTABLE` to use an installed Chrome or Chromium browser.
 

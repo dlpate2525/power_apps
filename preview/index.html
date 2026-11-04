@@ -468,8 +468,8 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
   #message-banner .mb-banner[data-intent="Success"] { --mb-state: var(--success); --mb-surface: var(--success-surface); }
   #message-banner .mb-banner[data-intent="Warning"] { --mb-state: var(--warning); --mb-surface: var(--warning-surface); }
   #message-banner .mb-banner[data-intent="Error"] { --mb-state: var(--error); --mb-surface: var(--error-surface); }
-  #message-banner .mb-content { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: start; }
-  #message-banner .mb-icon { width: 24px; height: 24px; display: grid; place-items: center; color: var(--mb-state); font-size: 21px; line-height: 1; font-weight: 650; }
+  #message-banner .mb-content { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px; align-items: start; }
+  #message-banner .mb-icon { width: 1.15em; height: 1.15em; display: grid; place-items: center; color: var(--mb-state); font-size: 21px; line-height: 1; font-weight: 650; }
   #message-banner .mb-copy { min-width: 0; overflow-wrap: anywhere; }
   #message-banner .mb-copy p { white-space: pre-wrap; }
   #message-banner .mb-state { color: var(--mb-state); font-weight: 650; }

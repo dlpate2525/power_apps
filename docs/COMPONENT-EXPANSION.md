@@ -32,6 +32,7 @@ Checked November 3, 2026, against the local review snapshot.
 - All 15 GIFs load; playback is explicit, exclusive, and stoppable.
 - Gallery and Markdown local references resolve.
 - No JavaScript errors or external network requests occurred during the preview checks.
+- Matt Pocock's Standards and Spec review found no actionable issues in the changed source. A separate visual review found and fixed banner icon crowding at doubled text size; a regression check now covers it.
 - The original 12 component definitions and media, plus LICENSE, are unchanged from merged PR #1.
 
 Read [Local validation](VALIDATION.md) in the repository for repeatable checks. Modern Dropdown is a preview dependency. Native checks above remain open.

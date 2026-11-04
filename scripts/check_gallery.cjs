@@ -109,6 +109,24 @@ const { pathToFileURL } = require('node:url');
     await page.locator('#mb-reset').click();
     await page.locator('#message-banner').screenshot({ path: path.join(artifacts, 'message-banner-preview.png') });
 
+    // Enlarge text independently of the viewport. Icons must not crowd status text.
+    await page.locator('#mb-banner').evaluate(banner => {
+      const nodes = [banner, ...banner.querySelectorAll('*')];
+      const sizes = nodes.map(node => parseFloat(getComputedStyle(node).fontSize));
+      nodes.forEach((node, index) => { node.style.fontSize = `${sizes[index] * 2}px`; });
+    });
+    const enlargedIcon = await page.locator('#mb-icon').evaluate(icon => {
+      const glyph = document.createRange();
+      glyph.selectNodeContents(icon);
+      return { glyphRight: glyph.getBoundingClientRect().right,
+        textLeft: document.getElementById('mb-announcement').getBoundingClientRect().left };
+    });
+    assert.ok(enlargedIcon.textLeft - enlargedIcon.glyphRight >= 4, 'Enlarged banner icon needs space before the status text');
+    await page.locator('#mb-banner').screenshot({ path: path.join(artifacts, 'message-banner-enlarged-text.png') });
+    await page.locator('#mb-banner').evaluate(banner => {
+      [banner, ...banner.querySelectorAll('*')].forEach(node => node.style.removeProperty('font-size'));
+    });
+
     // Every component must remain readable at narrow and wide page widths.
     for (const width of [1440, 390, 320]) {
       await page.setViewportSize({ width, height: 1050 });
