@@ -12,6 +12,8 @@ Display columns and cards from two tables. Expose move events for the host app t
 
 The fork uses a configurable purple accent default. The original baseline version identifies the component's starting point.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#kanban-board) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

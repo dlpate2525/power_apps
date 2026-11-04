@@ -14,6 +14,8 @@ The fork uses a configurable purple accent default. The original baseline versio
 
 The sample uses shared app collections. Validate two-instance behavior and host save handling before reuse.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#attachments-list) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

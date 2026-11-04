@@ -12,6 +12,8 @@ Display rows as a table, cards, or a list. Provide selection, sorting events, ro
 
 The fork uses a configurable purple accent default. The original baseline version identifies the component's starting point.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#data-table) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

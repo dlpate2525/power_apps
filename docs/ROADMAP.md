@@ -2,7 +2,9 @@
 
 The goal is a reusable Power Apps library with shared design settings and evidence that each published component works.
 
-The current change provides documentation, shared theme settings, and purple accent defaults in the original 12 definitions. Button also supports pill and rounded corners. Broader component styling and packaged library delivery remain planned work.
+The library contains 15 samples, shared theme settings, and pill/rounded Button options. Broader component styling and packaged library delivery remain planned work.
+
+The [component deep dive](COMPONENT-DEEP-DIVE.md) supplies the detailed findings, priorities, dependencies, and acceptance tests. Follow its work order below. The review found compatibility and behavior gaps that precede the earlier theme pilot.
 
 The [local gallery](../preview/index.html) provides interactive HTML previews of all 15 components. Use it to review the design before Studio validation. It does not execute the component definitions.
 
@@ -10,17 +12,39 @@ The [component expansion checklist](COMPONENT-EXPANSION.md) tracks Form field, S
 
 ## 1. Validate the baseline
 
-Start with Button and KPI card. They provide a small action pattern and a richer data-display pattern.
+Create a small native validation app for all 15 components. Use Button and KPI card as initial examples, then cover every affected definition.
 
-1. Import both samples into a clean development app.
+1. Import the samples into a clean development app.
 2. Record the Studio version and enabled features.
 3. Verify the shared theme setup in [THEMING.md](THEMING.md).
 4. Capture any import failures and unsupported properties.
-5. Record expected events, outputs, and layout limits.
+5. Resolve behavior-only JSON usage in declarative properties before native release.
+6. Choose a supported attachment workflow and an accessible Data table implementation.
+7. Record expected events, outputs, layout limits, and two-instance results.
 
-**Exit condition:** another maker can follow the documented steps and reproduce the observed behavior.
+**Exit condition:** another maker can reproduce each recorded result. Components with unresolved import or upload behavior remain explicitly unvalidated. See work items W00–W02T in the deep dive.
 
-## 2. Implement the theme pilot
+## 2. Correct behavior and state
+
+1. Correct Data table, KPI, and Stepper progress calculations.
+2. Handle empty data, invalid keys, disabled actions, and input changes.
+3. Define action/event policy before changing callback counts.
+4. Verify attachment save completeness and state isolation.
+5. Test timers, resets, loaded-row counts, and Calendar event placement.
+
+**Exit condition:** outputs, visible results, and event arguments agree with the documented behavior. See W03–W05.
+
+## 3. Complete accessibility and responsive layouts
+
+1. Align accessible names with visible labels.
+2. Verify live announcements, selected-state labels, focus, and reduced motion.
+3. Implement the chosen Data table accessibility approach.
+4. Fix narrow layouts and provide access to overflow content.
+5. Test keyboard use and screen-reader output in the native player.
+
+**Exit condition:** each demonstrated task remains usable at supported widths and with the required assistive technology. See W06–W07.
+
+## 4. Implement and extend the theme pilot
 
 Use one explicit style input where it reduces repeated configuration. Keep inputs small enough that an app maker can understand them without inspecting child controls.
 
@@ -30,12 +54,14 @@ Use one explicit style input where it reduces repeated configuration. Keep input
 4. Preserve native modern-control behavior where it meets the requirement.
 5. Remove duplicate styling decisions from the two implementations.
 6. Test existing consumers and the new theme input.
+7. Extend the proven pattern to small groups of components.
+8. Refresh browser previews after the native behavior is verified.
 
-**Exit condition:** one host-app change updates both components for each supported shared setting. Existing behavior follows a documented compatibility policy.
+**Exit condition:** one host-app change updates Button and KPI card for each supported shared setting. Existing behavior follows a documented compatibility policy. See W08–W09.
 
 Do not introduce a generic rendering engine, external configuration service, or code-component dependency without a demonstrated requirement.
 
-## 3. Package a reusable library
+## 5. Package a reusable library
 
 Microsoft recommends [component libraries](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/component-library) for reuse across apps.
 
@@ -46,20 +72,20 @@ Microsoft recommends [component libraries](https://learn.microsoft.com/en-us/pow
 5. Package the library and sample through the applicable solution workflow.
 6. Document versions, dependencies, imports, and consumer updates.
 
-**Exit condition:** a second development environment can import the package, run the sample, and accept a library update. Follow Microsoft's [component library ALM guidance](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/component-library-alm).
+**Exit condition:** a second development environment can import the package, run the sample, and accept a library update. See W10 and Microsoft's [component library ALM guidance](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/component-library-alm).
 
 The Attachments list must remain an app-level sample or be redesigned before library distribution. It enables app scope and uses shared collections. Library readiness cannot be inferred from a standalone app demo.
 
-## 4. Expand the catalog
+## Later catalog expansion
 
-Apply the validated pattern to the remaining components in small groups. Select each group by user need and implementation risk.
+Add further components only after the relevant native pattern is established. Select each addition by user need and implementation risk.
 
 | Group | Main checks |
 | --- | --- |
-| Navigation shell, Stepper, Accordion | Focus order, state ownership, resizing, and events |
-| Data table, Kanban board, Tree view | Data contracts, empty states, selection, and multiple instances |
-| Floating action button, Carousel, Month calendar | Keyboard interaction, motion, overlays, and narrow layouts |
-| Attachments list | Supported upload behavior, state isolation, save errors, and library constraints |
+| Navigation patterns | Focus order, state ownership, resizing, and events |
+| Data patterns | Data contracts, empty states, selection, and multiple instances |
+| Actions and feedback | Keyboard interaction, motion, announcements, and narrow layouts |
+| File workflows | Supported upload behavior, state isolation, save errors, and library constraints |
 
 Modern control replacement requires behavior checks. A newer control name alone does not prove equivalent behavior or accessibility.
 

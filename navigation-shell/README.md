@@ -14,6 +14,8 @@ The fork uses a configurable purple accent default. The original baseline versio
 
 For the shared theme starter, set `ShowThemeToggle` to `false` on a fresh instance. The internal toggle can override `Theme`.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#navigation-shell) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

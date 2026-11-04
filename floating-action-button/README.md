@@ -12,6 +12,8 @@ Provide a main action button with an optional label or a menu of related actions
 
 The fork uses a configurable purple accent default. The original baseline version identifies the component's starting point.
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#floating-action-button) for inputs, defaults, outputs, events, and actions.
+
 ## Browser demo
 
 Recorded HTML demo with sample data. Native appearance and behavior still need Power Apps Studio validation.

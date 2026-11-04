@@ -18,6 +18,8 @@ The original 12 component `AccentColor` defaults use `#463782`. Defaults are ind
 
 The new Form field, Search and filter bar, and Message banner use a `Design` record instead of the older style inputs. Set their `Design` property to the complete `UiTheme` record.
 
+Use the [property reference](COMPONENT-PROPERTIES.md) for all component-specific inputs, output values, events, actions, and table defaults. The [preservation review](COMPONENT-PRESERVATION.md) records which original interfaces remain unchanged.
+
 ## Set up the starter
 
 For an existing app, enable **Settings > Updates > New > Modern controls and themes** if required by its controls.

@@ -8,7 +8,9 @@ A purple action button with **pill corners by default** and an optional rounded 
 
 Static design reference, not a Power Apps screenshot. Native appearance, focus, and interaction states still need Studio validation.
 
-Use the [Button editor](../preview/button.html) to compare shapes and try color and state changes before publishing. Open the [component gallery](../preview/index.html) to explore all 12 components. Download the repository, then open either HTML file in a browser. These previews do not change the YAML source.
+Use the [Button editor](../preview/button.html) to compare shapes and try color and state changes before publishing. Open the [component gallery](../preview/index.html) to explore all 15 components. Download the repository, then open either HTML file in a browser. These previews do not change the YAML source.
+
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#button) for inputs, defaults, outputs, events, and actions.
 
 ## Browser demo
 

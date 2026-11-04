@@ -17,6 +17,8 @@ Recorded from the HTML preview with sample data. Native Power Apps validation is
 
 </details>
 
+See the [complete property reference](../docs/COMPONENT-PROPERTIES.md#message-banner) for inputs, defaults, outputs, events, and actions.
+
 ## Interface
 
 | Property | Type | Contract |
