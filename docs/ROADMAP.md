@@ -2,7 +2,9 @@
 
 The goal is a reusable Power Apps library with shared design settings and evidence that each published component works.
 
-The current change provides documentation, a host-app theme starter, and purple accent defaults in all 12 component definitions. Broader component styling and packaged library delivery remain planned work.
+The current change provides documentation, shared theme settings, and purple accent defaults in all 12 definitions. Button also supports pill and rounded corners. Broader component styling and packaged library delivery remain planned work.
+
+The [local gallery](../preview/index.html) provides interactive HTML previews of all 12 components. Use it to review the design before Studio validation. It does not execute the component definitions.
 
 ## 1. Validate the baseline
 
@@ -90,4 +92,4 @@ Repository checks can catch broken links and inconsistent metadata. They cannot 
 4. Include before-and-after behavior and verification evidence.
 5. Identify any breaking changes or preview dependencies.
 
-Retain upstream copyright and license notices. Label upstream demo links clearly when the fork's implementation differs.
+Retain copyright and license notices in LICENSE. Keep component documentation focused on this fork's implementation and validation status.

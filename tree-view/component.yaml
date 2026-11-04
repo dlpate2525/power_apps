@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsTreeView:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks tree view: nested folders or categories from one flat table, in one gallery, with nodes that open and close, children you load when a node opens, and selection."
+    Description: "tree view: nested folders or categories from one flat table, in one gallery, with nodes that open and close, children you load when a node opens, and selection."
     CustomProperties:
       Nodes:
         PropertyKind: Input

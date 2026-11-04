@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsCarousel:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks carousel: slides from a table, each a picture or a colour with a title and text, advancing on a timer with a pause control, dots and arrows, looping or stopping at the end, with OnChange and OnSelect, Next, Previous, GoTo, Play and Pause, light and dark, and each slide fading in."
+    Description: "carousel: slides from a table, each a picture or a colour with a title and text, advancing on a timer with a pause control, dots and arrows, looping or stopping at the end, with OnChange and OnSelect, Next, Previous, GoTo, Play and Pause, light and dark, and each slide fading in."
     CustomProperties:
       Items:
         PropertyKind: Input

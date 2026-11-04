@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsAttachmentList:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks attachments: a drop card that adds files (choose or drag), each with a status and a reason when it can't go, the files already attached with Open and remove-and-undo, and one Upload button that hands everything to your app; light and dark, with motion."
+    Description: "attachments: a drop card that adds files (choose or drag), each with a status and a reason when it can't go, the files already attached with Open and remove-and-undo, and one Upload button that hands everything to your app; light and dark, with motion."
     AccessAppScope: true
     CustomProperties:
       Title:

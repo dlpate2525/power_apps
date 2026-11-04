@@ -1,23 +1,26 @@
 // Add this named formula to the host canvas app's App.Formulas property.
 // Formula separators may differ with the Power Apps authoring language.
-// Edit these shared values to customize the default Wells Fargo-inspired palette.
+// Edit these shared values to customize the palette.
 // Light palette only. Color checks do not replace Power Apps Studio validation.
+// See ../../COLOR-PALETTE.txt for named colors, including red and coral status shades.
 UiTheme = {
-    Accent: ColorValue("#463782"),
-    OnAccent: ColorValue("#FFFFFF"),
-    AccentHover: ColorValue("#362965"),
-    AccentSoft: ColorValue("#ECEBF3"),
-    AccentBorder: ColorValue("#C5BFD7"),
-    Secondary: ColorValue("#D88777"),
-    OnSecondary: ColorValue("#292630"),
-    SecondaryText: ColorValue("#8D4538"),
-    Background: ColorValue("#FFFFFF"),
-    Surface: ColorValue("#F5F4F7"),
-    Text: ColorValue("#292630"),
-    TextMuted: ColorValue("#625F69"),
-    Border: ColorValue("#DFDCE6"),
-    ControlBorder: ColorValue("#625F69"),
-    Focus: ColorValue("#463782"),
+    Accent: ColorValue("#463782"), // Deep purple - primary action
+    OnAccent: ColorValue("#FFFFFF"), // White - text on purple
+    AccentHover: ColorValue("#362965"), // Dark purple - hover
+    AccentSoft: ColorValue("#ECEBF3"), // Soft lavender - accent surface
+    AccentBorder: ColorValue("#C5BFD7"), // Lavender gray - decorative border
+    Secondary: ColorValue("#D88777"), // Muted coral - secondary accent
+    OnSecondary: ColorValue("#292630"), // Ink - text on coral
+    SecondaryText: ColorValue("#8D4538"), // Dark coral - text on light surfaces
+    Background: ColorValue("#FFFFFF"), // White - main background
+    Surface: ColorValue("#F5F4F7"), // Soft gray - secondary surface
+    Text: ColorValue("#292630"), // Ink - main text
+    TextMuted: ColorValue("#625F69"), // Muted ink - supporting text
+    Border: ColorValue("#DFDCE6"), // Light gray - decorative separator
+    ControlBorder: ColorValue("#625F69"), // Muted ink - necessary control outline
+    Focus: ColorValue("#463782"), // Deep purple - focus indicator
+    ButtonShape: "Pill",
+    ButtonCornerRadius: 12,
     Mode: "Light",
     Motion: false
 };

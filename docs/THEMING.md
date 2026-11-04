@@ -28,12 +28,16 @@ For an existing app, enable **Settings > Updates > New > Modern controls and the
 6. Set its `Motion` property to `UiTheme.Motion`.
 7. Set its `Theme` property to `UiTheme.Mode`, if available.
 8. Set the floating action button's `ContentColor` property to `UiTheme.OnAccent`, if used.
+9. Set the Button's `Shape` property to `UiTheme.ButtonShape`, if used.
+10. Set the Button's `CornerRadius` property to `UiTheme.ButtonCornerRadius`, if used.
 
 Keep existing named formulas. Use another name if the app already defines `UiTheme`. Adjust formula separators for your authoring language.
 
 The formulas belong on the host app and component instances. Inside reusable definitions, read the component's own inputs. Libraries cannot access host app scope. See [component scope](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/create-component#scope).
 
 ## Edit the palette in one place
+
+Use [COLOR-PALETTE.txt](../COLOR-PALETTE.txt) to look up color names, hex codes, and uses. Its comments identify shared settings and fixed component colors. The editable formula also includes color-name comments.
 
 Change color values in `UiTheme`, then verify every affected foreground/background pair. The starter defines these roles:
 
@@ -49,8 +53,11 @@ Change color values in `UiTheme`, then verify every affected foreground/backgrou
 | Borders | `Border` `#DFDCE6`; `ControlBorder` `#625F69` | Decorative separators versus necessary control outlines |
 | Focus | `Focus` `#463782` | A visible focus indicator on light backgrounds |
 | Preferences | `Mode` `"Light"`; `Motion` `false` | Existing component inputs |
+| Button corners | `ButtonShape` `"Pill"`; `ButtonCornerRadius` `12` | Pill default or adjustable rounded corners |
 
-Only `Accent`, `OnAccent`, `Mode`, and `Motion` have the component bindings listed above. Other fields are for host controls until a broader component interface is implemented.
+The component bindings above use `Accent`, `OnAccent`, `Mode`, `Motion`, `ButtonShape`, and `ButtonCornerRadius`. Other fields are for host controls until a broader component interface is implemented.
+
+Set `ButtonShape` to `"Rounded"` to use the editable radius. Pill ignores `ButtonCornerRadius` and uses half the smaller dimension. See the [Button guide](../button/README.md).
 
 For host screens, set `Fill` to `UiTheme.Background`. For supported containers, set `Fill` to `UiTheme.Surface`. Bind text and interaction properties only where the chosen control exposes them. Defining a token does not apply it automatically.
 

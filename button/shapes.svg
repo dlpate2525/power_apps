@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="280" viewBox="0 0 900 280" role="img" aria-labelledby="title description">
+  <title id="title">Pill and rounded Button options</title>
+  <desc id="description">Static design reference. Purple primary, outline, and subtle buttons shown with a 20-pixel pill radius and a 12-pixel rounded radius. This is not a Power Apps screenshot.</desc>
+  <rect width="900" height="280" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="24" y="35" fill="#292630" font-size="24" font-weight="600">Button shape options</text>
+    <text x="24" y="60" fill="#625F69" font-size="14">Purple palette · 160 × 40 px</text>
+    <g fill="#625F69" font-size="13" text-anchor="middle">
+      <text x="270" y="97">Primary</text>
+      <text x="470" y="97">Outline</text>
+      <text x="670" y="97">Subtle</text>
+    </g>
+    <text x="24" y="137" fill="#292630" font-size="16" font-weight="600">Pill</text>
+    <text x="24" y="156" fill="#625F69" font-size="12">Default · 20 px</text>
+    <rect x="190" y="116" width="160" height="40" rx="20" fill="#463782"/>
+    <rect x="390" y="116" width="160" height="40" rx="20" fill="#FFFFFF" stroke="#D1D1D1" stroke-width="1"/>
+    <rect x="590" y="116" width="160" height="40" rx="20" fill="#FFFFFF"/>
+    <g font-size="14" font-weight="600" text-anchor="middle">
+      <text x="270" y="141" fill="#FFFFFF">Save changes</text>
+      <text x="470" y="141" fill="#242424">Save changes</text>
+      <text x="670" y="141" fill="#242424">Save changes</text>
+    </g>
+    <text x="24" y="205" fill="#292630" font-size="16" font-weight="600">Rounded</text>
+    <text x="24" y="224" fill="#625F69" font-size="12">Adjustable · 12 px</text>
+    <rect x="190" y="184" width="160" height="40" rx="12" fill="#463782"/>
+    <rect x="390" y="184" width="160" height="40" rx="12" fill="#FFFFFF" stroke="#D1D1D1" stroke-width="1"/>
+    <rect x="590" y="184" width="160" height="40" rx="12" fill="#FFFFFF"/>
+    <g font-size="14" font-weight="600" text-anchor="middle">
+      <text x="270" y="209" fill="#FFFFFF">Save changes</text>
+      <text x="470" y="209" fill="#242424">Save changes</text>
+      <text x="670" y="209" fill="#242424">Save changes</text>
+    </g>
+    <text x="24" y="260" fill="#625F69" font-size="12">Design reference · Power Apps rendering must be checked in Studio.</text>
+  </g>
+</svg>

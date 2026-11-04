@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsStepper:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks stepper: the steps of a form or wizard with progress, a check before each step that stops users skipping what's required, Back and Next, and a step to go to; or project stages and approval chains in the standard status colours."
+    Description: "stepper: the steps of a form or wizard with progress, a check before each step that stops users skipping what's required, Back and Next, and a step to go to; or project stages and approval chains in the standard status colours."
     CustomProperties:
       Steps:
         PropertyKind: Input

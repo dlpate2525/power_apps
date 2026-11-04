@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsFab:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks floating action button: the screen's main action as a round button, optionally extended with a label or opening a speed-dial menu of more actions."
+    Description: "floating action button: the screen's main action as a round button, optionally extended with a label or opening a speed-dial menu of more actions."
     CustomProperties:
       Icon:
         PropertyKind: Input

@@ -50,8 +50,12 @@ def main():
             mode = 'Light'
         elif re.fullmatch(r'Motion\s*:\s*(true|false)', field) and motion is None:
             motion = field
+        elif re.fullmatch(r'ButtonShape\s*:\s*"(Pill|Rounded)"', field):
+            pass
+        elif re.fullmatch(r'ButtonCornerRadius\s*:\s*-?\d+(?:\.\d+)?', field):
+            pass
         else:
-            parser.error(f'Cannot evaluate {field!r}. This check supports literal hex colors and light mode only.')
+            parser.error(f'Cannot evaluate {field!r}. Use literal hex colors, light mode, and literal button settings for this check.')
     if mode != 'Light' or motion is None:
         parser.error('The default record must include Mode: "Light" and a Boolean Motion value.')
 

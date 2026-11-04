@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsMonthCalendar:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks month calendar: a month grid from the first of the month and your start of week, events from a table drawn as pills that run across the days they span, +N more past a limit, today marked, a day or an event selectable with OnSelectDay and OnSelectEvent, previous, next and Today, light and dark, and the pills drawing in when the month changes."
+    Description: "month calendar: a month grid from the first of the month and your start of week, events from a table drawn as pills that run across the days they span, +N more past a limit, today marked, a day or an event selectable with OnSelectDay and OnSelectEvent, previous, next and Today, light and dark, and the pills drawing in when the month changes."
     CustomProperties:
       Events:
         PropertyKind: Input

@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsNavShell:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks navigation shell: a side menu on wide screens and a bottom bar on phones, from one items table, with badges, items hidden or disabled by key, the current screen from your app, and a collapse state as an output."
+    Description: "navigation shell: a side menu on wide screens and a bottom bar on phones, from one items table, with badges, items hidden or disabled by key, the current screen from your app, and a collapse state as an output."
     CustomProperties:
       Items:
         PropertyKind: Input

@@ -1,7 +1,7 @@
 ComponentDefinitions:
   lcsKanban:
     DefinitionType: CanvasComponent
-    Description: "LowCodeStacks Kanban board: columns and cards from two tables, cards moved with buttons and the keyboard, work-in-progress limits that stop a full column taking more, and an OnMove event that tells your app what moved where."
+    Description: "Kanban board: columns and cards from two tables, cards moved with buttons and the keyboard, work-in-progress limits that stop a full column taking more, and an OnMove event that tells your app what moved where."
     CustomProperties:
       Columns:
         PropertyKind: Input

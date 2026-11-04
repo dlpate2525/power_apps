@@ -8,13 +8,13 @@ Build consistent Power Apps screens with ready-made UI patterns. This fork aims 
 
 > **Current status:** 12 component samples with a purple accent default, an editable shared palette, and a modernization plan. This fork has not yet completed its own Power Apps Studio validation.
 
-This project builds on [LowCodeStacks / power-apps-components](https://github.com/posiauday/power-apps-components), under the [MIT License](LICENSE). Original names, previews, and attribution are retained.
+The project is available under the [MIT License](LICENSE). Source copyright notices are retained there.
 
 ## The goal
 
 Create a practical library of modern Power Apps components that makers can reuse across business applications.
 
-- Start with the previously selected Wells Fargo-inspired purple/coral palette and change it through shared settings.
+- Use the purple, coral, red, and gray palette through shared settings and documented control colors.
 - Use Microsoft modern controls and themes where their behavior fits.
 - Keep each component's inputs, outputs, and events easy to understand.
 - Support keyboard use, readable contrast, and responsive layouts.
@@ -32,13 +32,16 @@ A **design token** is a named value for a shared style, such as a brand color or
 | `Motion` | All 12 components | Optional animations controlled by that property |
 | `Theme` | 11 components | The component's own `"Light"` or `"Dark"` palette |
 | `ContentColor` | Floating action button | Its main icon and label color |
+| `Shape`, `CornerRadius` | Button | Pill by default, or rounded corners with an editable radius |
 | Spacing, corners, typography, status colors | Partial, component-specific | A complete shared contract is planned |
 
 `Theme` is currently a text input. It is not Microsoft's `App.Theme` object. Changing `AccentColor` does not replace every internal color.
 
 ### Default palette
 
-The defaults reuse our selected Wells Fargo-inspired palette: white and quiet gray surfaces, deep purple actions, and restrained coral accents. These are project design choices, not an official Wells Fargo brand specification.
+Use white and quiet gray surfaces, deep purple actions, and restrained coral accents. Reserve reds for status and confirmation cues.
+
+Open [COLOR-PALETTE.txt](COLOR-PALETTE.txt) for hex codes with `//` color-name comments and practical usage notes.
 
 | Role | Default | Shared value |
 | --- | --- | --- |
@@ -59,21 +62,23 @@ Add the complete [theme formula](examples/theme/App.Formulas.powerfx) to **App.F
 
 ```powerfx
 UiTheme = {
-    Accent: ColorValue("#463782"),
-    OnAccent: ColorValue("#FFFFFF"),
-    AccentHover: ColorValue("#362965"),
-    AccentSoft: ColorValue("#ECEBF3"),
-    AccentBorder: ColorValue("#C5BFD7"),
-    Secondary: ColorValue("#D88777"),
-    OnSecondary: ColorValue("#292630"),
-    SecondaryText: ColorValue("#8D4538"),
-    Background: ColorValue("#FFFFFF"),
-    Surface: ColorValue("#F5F4F7"),
-    Text: ColorValue("#292630"),
-    TextMuted: ColorValue("#625F69"),
-    Border: ColorValue("#DFDCE6"),
-    ControlBorder: ColorValue("#625F69"),
-    Focus: ColorValue("#463782"),
+    Accent: ColorValue("#463782"), // Deep purple - primary action
+    OnAccent: ColorValue("#FFFFFF"), // White - text on purple
+    AccentHover: ColorValue("#362965"), // Dark purple - hover
+    AccentSoft: ColorValue("#ECEBF3"), // Soft lavender - accent surface
+    AccentBorder: ColorValue("#C5BFD7"), // Lavender gray - decorative border
+    Secondary: ColorValue("#D88777"), // Muted coral - secondary accent
+    OnSecondary: ColorValue("#292630"), // Ink - text on coral
+    SecondaryText: ColorValue("#8D4538"), // Dark coral - text on light surfaces
+    Background: ColorValue("#FFFFFF"), // White - main background
+    Surface: ColorValue("#F5F4F7"), // Soft gray - secondary surface
+    Text: ColorValue("#292630"), // Ink - main text
+    TextMuted: ColorValue("#625F69"), // Muted ink - supporting text
+    Border: ColorValue("#DFDCE6"), // Light gray - decorative separator
+    ControlBorder: ColorValue("#625F69"), // Muted ink - necessary control outline
+    Focus: ColorValue("#463782"), // Deep purple - focus indicator
+    ButtonShape: "Pill",
+    ButtonCornerRadius: 12,
     Mode: "Light",
     Motion: false
 };
@@ -87,6 +92,8 @@ Set each inserted component's supported properties in Studio:
 | `Theme`, where available | `UiTheme.Mode` |
 | `Motion` | `UiTheme.Motion` |
 | Floating action button `ContentColor` | `UiTheme.OnAccent` |
+| Button `Shape` | `UiTheme.ButtonShape` |
+| Button `CornerRadius` | `UiTheme.ButtonCornerRadius` |
 
 For host controls, bind screen `Fill` to `UiTheme.Background` and text `Color` to `UiTheme.Text`. Use `UiTheme.OnSecondary` for text placed on coral.
 
@@ -102,11 +109,11 @@ The starter has been checked against the declared properties and Microsoft docum
 
 ## Component catalog
 
-Versions below identify the upstream baselines. This fork changes their accent defaults to purple; the existing behavior remains based on those versions. Links open the source and its original setup guide.
+Versions below identify the source baselines. This fork adds purple accent defaults and Button shape options. Links open each component's source and setup guide.
 
 | Component | Use | Version | Studio name |
 | --- | --- | --- | --- |
-| [Button](button/) | Primary, secondary, outline, and subtle actions | `0.3.1` | `lcsButton` |
+| [Button](button/) | Pill or rounded corners; four action appearances | `0.3.1` | `lcsButton` |
 | [Floating action button](floating-action-button/) | Main action and optional action menu | `0.3.0` | `lcsFab` |
 | [KPI card](kpi-card/) | Value, comparison, and target progress | `0.1.0` | `lcsKpiCard` |
 | [Data table](data-table/) | Table, cards, list, and row actions | `0.2.1` | `lcsDataTable` |
@@ -119,15 +126,47 @@ Versions below identify the upstream baselines. This fork changes their accent d
 | [Stepper](stepper/) | Form steps and progress | `0.3.1` | `lcsStepper` |
 | [Tree view](tree-view/) | Expandable hierarchical items | `0.2.0` | `lcsTreeView` |
 
-### Upstream previews
+### Button shapes
 
-These previews show the original LowCodeStacks samples, including their original colors. They do not show this fork's new purple defaults.
+![Pill and rounded button design reference](button/shapes.svg)
 
-| Button | KPI card |
+Static design reference, not a Power Apps screenshot. Pill is the default. Set `UiTheme.ButtonShape` to `"Rounded"` and adjust `UiTheme.ButtonCornerRadius` for rounded corners. See the [Button guide](button/README.md).
+
+### Animated previews
+
+These GIFs record the HTML gallery with sample data. They do not show native Power Apps controls; Studio validation remains pending.
+
+Collapse the catalog below to hide motion. For interactions you control, download the repository and open the [browser gallery](preview/index.html) locally.
+
+<details open>
+<summary>Show or hide animated previews</summary>
+
+| Component demo | Component demo |
 | --- | --- |
-| [![Original Button preview](assets/previews/button.gif)](button/) | [![Original KPI card preview](assets/previews/kpi-card.gif)](kpi-card/) |
+| [**Button**](button/)<br><img src="assets/previews/button.gif" alt="Button HTML demo" width="420"> | [**Floating action button**](floating-action-button/)<br><img src="assets/previews/floating-action-button.gif" alt="Floating action button HTML demo" width="420"> |
+| [**KPI card**](kpi-card/)<br><img src="assets/previews/kpi-card.gif" alt="KPI card HTML demo" width="420"> | [**Data table**](data-table/)<br><img src="assets/previews/data-table.gif" alt="Data table HTML demo" width="420"> |
+| [**Kanban board**](kanban-board/)<br><img src="assets/previews/kanban-board.gif" alt="Kanban board HTML demo" width="420"> | [**Month calendar**](month-calendar/)<br><img src="assets/previews/month-calendar.gif" alt="Month calendar HTML demo" width="420"> |
+| [**Attachments list**](attachments-list/)<br><img src="assets/previews/attachments-list.gif" alt="Attachments list HTML demo" width="420"> | [**Accordion**](accordion/)<br><img src="assets/previews/accordion.gif" alt="Accordion HTML demo" width="420"> |
+| [**Carousel**](carousel/)<br><img src="assets/previews/carousel.gif" alt="Carousel HTML demo" width="420"> | [**Navigation shell**](navigation-shell/)<br><img src="assets/previews/navigation-shell.gif" alt="Navigation shell HTML demo" width="420"> |
+| [**Stepper**](stepper/)<br><img src="assets/previews/stepper.gif" alt="Stepper HTML demo" width="420"> | [**Tree view**](tree-view/)<br><img src="assets/previews/tree-view.gif" alt="Tree view HTML demo" width="420"> |
 
-Explore all original demos at [LowCodeStacks](https://lowcodestacks.com/components).
+</details>
+
+## Preview before publishing
+
+The [component gallery](preview/index.html) renders interactive HTML previews of all 12 components with sample data. Select a component, change the accent, and try its controls. Each preview links to its YAML source.
+
+1. Download or clone this branch.
+2. Open `preview/index.html` in your browser.
+3. Select a component or search the catalog.
+4. Adjust the controls and check the contrast result.
+5. Validate the selected design in a development Power Apps app.
+
+GitHub shows HTML source; open the downloaded file to run it. The preview runs locally without a build or publication step. Its controls change the preview only.
+
+The gallery includes button states, action menus, KPI values, table selection, Kanban moves, calendar dates, sample attachments, accordions, slides, navigation, steps, and tree selection. The [Button editor](preview/button.html) provides more detailed shape and color controls.
+
+These HTML approximations do not execute Power Fx or render Microsoft's native controls. Generated palettes, focus behavior, events, and component imports still need Studio validation. Sample interactions stay in the page and do not save records.
 
 ## Try a sample
 
@@ -172,7 +211,7 @@ The attachments sample enables app-scope access and uses shared collections. Tre
 
 The source license is MIT. Power Apps, connectors, data sources, and environments have separate licensing requirements.
 
-Fork-specific feedback belongs in this fork's [pull requests](https://github.com/dlpate2525/power_apps/pulls). Its issue tracker is currently disabled. Original component questions can use the upstream project's support channels.
+Feedback belongs in this fork's [pull requests](https://github.com/dlpate2525/power_apps/pulls). Its issue tracker is currently disabled.
 
 ## Sources and attribution
 
@@ -184,6 +223,6 @@ Microsoft guidance was reviewed on **November 2, 2026**. Feature availability ca
 - [Power Apps code view](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/code-view)
 - [Detailed findings and sources](docs/FORK-REVIEW.md)
 
-Original component code and preview assets: **LowCodeStacks**, copyright 2026. See [LICENSE](LICENSE).
+Copyright and permission notices are preserved in [LICENSE](LICENSE).
 
 This is an independent community fork. It is not affiliated with or endorsed by Microsoft or Matt Pocock.
