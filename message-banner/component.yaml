@@ -1,0 +1,192 @@
+ComponentDefinitions:
+  uiMessageBanner:
+    DefinitionType: CanvasComponent
+    Description: "Persistent message banner with a shared Design record, four intents, an optional action, and host-owned dismissal."
+    AccessAppScope: false
+    CustomProperties:
+      Title:
+        PropertyKind: Input
+        DisplayName: Title
+        DataType: Text
+        Description: "Optional short heading. Put the main point first."
+        Default: ="Review the sample project"
+      Message:
+        PropertyKind: Input
+        DisplayName: Message
+        DataType: Text
+        Description: "Required message body. Text wraps and increases ContentHeight."
+        Default: ="This page uses fictional data. Review the sample details before continuing."
+      Intent:
+        PropertyKind: Input
+        DisplayName: Intent
+        DataType: Text
+        Description: "Info, Success, Warning, or Error. Unknown and blank values use Info."
+        Default: ="Info"
+      ActionLabel:
+        PropertyKind: Input
+        DisplayName: ActionLabel
+        DataType: Text
+        Description: "Optional action label. Blank hides the action. Use a short verb phrase that addresses the message."
+        Default: =""
+      Dismissible:
+        PropertyKind: Input
+        DisplayName: Dismissible
+        DataType: Boolean
+        Description: "Show the Dismiss button. OnDismiss asks the host to hide the instance; it does not resolve the condition."
+        Default: =true
+      Design:
+        PropertyKind: Input
+        DisplayName: Design
+        DataType: Record
+        Description: "Complete shared UiTheme record. Status colors, surfaces, and corner settings are read from this record."
+        Default: |-
+          ={
+              Accent: ColorValue("#463782"),
+              OnAccent: ColorValue("#FFFFFF"),
+              AccentHover: ColorValue("#362965"),
+              AccentSoft: ColorValue("#ECEBF3"),
+              AccentBorder: ColorValue("#C5BFD7"),
+              Secondary: ColorValue("#D88777"),
+              OnSecondary: ColorValue("#292630"),
+              SecondaryText: ColorValue("#8D4538"),
+              Background: ColorValue("#FFFFFF"),
+              Surface: ColorValue("#F5F4F7"),
+              Text: ColorValue("#292630"),
+              TextMuted: ColorValue("#625F69"),
+              Border: ColorValue("#DFDCE6"),
+              ControlBorder: ColorValue("#625F69"),
+              Focus: ColorValue("#463782"),
+              ButtonShape: "Pill",
+              ButtonCornerRadius: 12,
+              Mode: "Light",
+              Motion: false,
+              Error: ColorValue("#A23D49"),
+              ErrorSurface: ColorValue("#FFF0F2"),
+              Warning: ColorValue("#8D4538"),
+              WarningSurface: ColorValue("#FBE8E3"),
+              Success: ColorValue("#463782"),
+              SuccessSurface: ColorValue("#ECEBF3"),
+              Info: ColorValue("#625B70"),
+              InfoSurface: ColorValue("#F2F0F5"),
+              CornerRadius: 12
+          }
+      ContentHeight:
+        PropertyKind: Output
+        DisplayName: ContentHeight
+        DataType: Number
+        Description: "Measured content height including padding. Bind the instance Height to Self.ContentHeight. Measurement updates while visible."
+      OnAction:
+        PropertyKind: Event
+        DisplayName: OnAction
+        ReturnType: None
+        Description: "Run the host action. The host owns validation, resolution, navigation, and changes to this banner's inputs."
+        Default: =false
+      OnDismiss:
+        PropertyKind: Event
+        DisplayName: OnDismiss
+        ReturnType: None
+        Description: "Request dismissal. The host sets this instance's Visible property and restores focus. No condition is resolved automatically."
+        Default: =false
+    Properties:
+      Width: =640
+      Height: =uiMessageBanner.ContentHeight
+      Fill: =RGBA(0, 0, 0, 0)
+      ContentHeight: |-
+        =Max(
+            lblMessage.Y + lblMessage.Height,
+            If(btnAction.Visible, btnAction.Y + btnAction.Height, 0),
+            If(btnDismiss.Visible, btnDismiss.Y + btnDismiss.Height, 0)
+        ) + 16
+    Children:
+      - conSurface:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            X: =0
+            Y: =0
+            Width: =Parent.Width
+            Height: =Parent.Height
+            Fill: =Switch(uiMessageBanner.Intent, "Error", uiMessageBanner.Design.ErrorSurface, "Warning", uiMessageBanner.Design.WarningSurface, "Success", uiMessageBanner.Design.SuccessSurface, uiMessageBanner.Design.InfoSurface)
+            BorderColor: =Switch(uiMessageBanner.Intent, "Error", uiMessageBanner.Design.Error, "Warning", uiMessageBanner.Design.Warning, "Success", uiMessageBanner.Design.Success, uiMessageBanner.Design.Info)
+            BorderThickness: =1
+            DropShadow: =DropShadow.None
+            RadiusTopLeft: =Min(Max(0, Min(Self.Width, Self.Height) / 2), Max(0, Coalesce(uiMessageBanner.Design.CornerRadius, 12)))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+      - icoIntent:
+          Control: ModernIcon@1.1.0
+          Properties:
+            X: =16
+            Y: =16
+            Width: =24
+            Height: =24
+            Icon: =Switch(uiMessageBanner.Intent, "Error", "ErrorCircle", "Warning", "Warning", "Success", "CheckmarkCircle", "Info")
+            IconColor: =conSurface.BorderColor
+            IconStyle: =IconStyle.Outline
+            AccessibleLabel: =""
+      - lblMessage:
+          Control: Label@2.5.1
+          Properties:
+            X: =52
+            Y: =16
+            Width: =Max(1, Parent.Width - 68)
+            Height: =40
+            AutoHeight: =true
+            Wrap: =true
+            Text: |-
+              =Switch(uiMessageBanner.Intent, "Error", "Error", "Warning", "Warning", "Success", "Success", "Info") &
+              If(IsBlank(Trim(uiMessageBanner.Title)), "", ": " & Trim(uiMessageBanner.Title)) &
+              If(IsBlank(uiMessageBanner.Message), "", Char(10) & uiMessageBanner.Message)
+            Live: =If(uiMessageBanner.Intent in ["Warning", "Error"], Live.Assertive, Live.Polite)
+            Color: =uiMessageBanner.Design.Text
+            Font: =Font.'Segoe UI'
+            Size: =11
+            FontWeight: =FontWeight.Normal
+            VerticalAlign: =VerticalAlign.Top
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PaddingBottom: =0
+            TabIndex: =-1
+      - btnAction:
+          Control: ModernButton@1.0.0
+          Properties:
+            X: =16
+            Y: =lblMessage.Y + lblMessage.Height + 12
+            Width: =If(Parent.Width < 480, Max(1, Parent.Width - 32), Min(240, Max(120, Len(Trim(uiMessageBanner.ActionLabel)) * 8 + 32)))
+            Height: =44
+            Visible: =!IsBlank(Trim(uiMessageBanner.ActionLabel))
+            Text: =Trim(uiMessageBanner.ActionLabel)
+            AccessibleLabel: =Trim(uiMessageBanner.ActionLabel)
+            Appearance: =ButtonAppearance.Primary
+            BasePaletteColor: =uiMessageBanner.Design.Accent
+            Color: =uiMessageBanner.Design.OnAccent
+            BorderThickness: =0
+            RadiusTopLeft: =If(uiMessageBanner.Design.ButtonShape = "Rounded", Min(Max(0, Min(Self.Width, Self.Height) / 2), Max(0, Coalesce(uiMessageBanner.Design.ButtonCornerRadius, 12))), Max(0, Min(Self.Width, Self.Height) / 2))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            OnSelect: =uiMessageBanner.OnAction()
+      - btnDismiss:
+          Control: ModernButton@1.0.0
+          Properties:
+            X: =If(Parent.Width < 480 || !btnAction.Visible, 16, btnAction.X + btnAction.Width + 8)
+            Y: =If(Parent.Width < 480 && btnAction.Visible, btnAction.Y + btnAction.Height + 8, lblMessage.Y + lblMessage.Height + 12)
+            Width: =If(Parent.Width < 480, Max(1, Parent.Width - 32), 120)
+            Height: =44
+            Visible: =uiMessageBanner.Dismissible
+            Text: ="Dismiss"
+            AccessibleLabel: |-
+              ="Dismiss message: " & uiMessageBanner.Title
+            Icon: ="Dismiss"
+            Appearance: =ButtonAppearance.Outline
+            BasePaletteColor: =uiMessageBanner.Design.Accent
+            Color: =uiMessageBanner.Design.Text
+            BorderColor: =uiMessageBanner.Design.ControlBorder
+            BorderThickness: =1
+            RadiusTopLeft: =If(uiMessageBanner.Design.ButtonShape = "Rounded", Min(Max(0, Min(Self.Width, Self.Height) / 2), Max(0, Coalesce(uiMessageBanner.Design.ButtonCornerRadius, 12))), Max(0, Min(Self.Width, Self.Height) / 2))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            OnSelect: =uiMessageBanner.OnDismiss()

@@ -15,6 +15,11 @@
   --surface: #F5F4F7; --ink: #292630; --muted: #625F69;
   --line: #DFDCE6; --control-border: #625F69;
   --coral: #D88777; --coral-ink: #8D4538; --radius: 20px;
+  --field-radius: 12px;
+  --error: #A23D49; --error-surface: #FFF0F2;
+  --warning: #8D4538; --warning-surface: #FBE8E3;
+  --success: #463782; --success-surface: #ECEBF3;
+  --info: #625B70; --info-surface: #F2F0F5;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -399,6 +404,90 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
     .gn-step-link { padding:7px; gap:6px; font-size:.75rem; }
   }
 
+
+  #form-field .ff-controls { display:flex; flex-wrap:wrap; align-items:center; gap:8px 17px; margin-bottom:19px; }
+  #form-field .ff-controls label { display:inline-flex; align-items:center; gap:7px; min-height:38px; font-size:12px; color:var(--muted); }
+  #form-field .ff-controls input { accent-color:var(--accent); }
+  #form-field .ff-stage { padding:20px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+  #form-field .ff-label { display:block; margin-bottom:8px; color:var(--ink); font-size:14px; font-weight:650; }
+  #form-field .ff-required { font-weight:400; font-size:12px; }
+  #form-field #ff-input { display:block; width:100%; min-width:0; min-height:44px; border:1px solid var(--control-border); border-radius:clamp(0px, var(--field-radius, 12px), 22px); padding:10px 12px; background:#fff; color:var(--ink); font:inherit; font-size:14px; }
+  #form-field #ff-input[aria-invalid="true"] { border:2px solid var(--error,#A23D49); padding:9px 11px; }
+  #form-field #ff-input:disabled { background:#F0F0F0; color:#616161; cursor:not-allowed; }
+  #form-field #ff-input:focus-visible { outline:3px solid var(--accent-ink,#463782); outline-offset:3px; }
+  #form-field .ff-help { margin:9px 0 0; color:var(--muted); font-size:12px; line-height:1.6; }
+  #form-field .ff-error { margin:8px 0 0; border-radius:5px; color:var(--error,#A23D49); background:var(--error-surface,#FFF0F2); font-size:12px; line-height:1.6; overflow-wrap:anywhere; }
+  #form-field .ff-error:not(:empty) { padding:6px 8px; }
+  #form-field .ff-readout { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; margin-top:14px; padding-top:13px; border-top:1px solid var(--line); font-size:12px; color:var(--muted); }
+  #form-field .ff-readout p { margin:0; min-width:0; overflow-wrap:anywhere; }
+  #form-field .ff-readout strong { color:var(--ink); font-weight:600; }
+  #form-field .ff-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:15px; }
+  #form-field .ff-event { margin:14px 0 0; color:var(--muted); font-size:12px; line-height:1.6; overflow-wrap:anywhere; }
+  @media(max-width:380px) { #form-field .ff-stage { padding:15px; } #form-field .ff-readout { grid-template-columns:1fr; gap:6px; } }
+
+
+  #search-filter-bar .sf-fields { display:grid; grid-template-columns:2fr 1fr 1fr; gap:12px; }
+  #search-filter-bar .sf-field { display:grid; gap:7px; min-width:0; }
+  #search-filter-bar .sf-field label { font-size:12px; font-weight:600; color:var(--ink); }
+  #search-filter-bar .sf-field input,
+  #search-filter-bar .sf-field select { width:100%; min-width:0; min-height:40px; border:1px solid var(--control-border); border-radius:var(--field-radius,12px); color:var(--ink); background:white; font:inherit; font-size:13px; padding:8px 10px; }
+  #search-filter-bar .sf-field input:focus-visible,
+  #search-filter-bar .sf-field select:focus-visible { outline:3px solid var(--accent-ink,#463782); outline-offset:2px; }
+  #search-filter-bar .sf-summary { display:flex; align-items:center; justify-content:space-between; gap:15px; margin:16px 0; }
+  #search-filter-bar .sf-summary p { font-size:12px; color:var(--muted); }
+  #search-filter-bar .sf-summary strong { color:var(--ink); }
+  #search-filter-bar .sf-active { display:flex; gap:7px; flex-wrap:wrap; min-height:0; margin:0 0 14px; }
+  #search-filter-bar .sf-active:empty { display:none; }
+  #search-filter-bar .sf-chip { display:inline-block; padding:4px 9px; border:1px solid var(--line); border-radius:6px; background:var(--surface); color:var(--ink); font-size:12px; overflow-wrap:anywhere; max-width:100%; }
+  #search-filter-bar .sf-results { list-style:none; padding:0; margin:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  #search-filter-bar .sf-results li { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:13px 15px; }
+  #search-filter-bar .sf-results li+li { border-top:1px solid var(--line); }
+  #search-filter-bar .sf-task { min-width:0; }
+  #search-filter-bar .sf-task strong { display:block; color:var(--ink); font-size:13px; font-weight:600; }
+  #search-filter-bar .sf-task small { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
+  #search-filter-bar .sf-task-status { display:inline-flex; padding:4px 8px; border-radius:5px; background:var(--surface); color:var(--ink); font-size:11px; line-height:1.4; flex:none; }
+  #search-filter-bar .sf-task-status[data-status="In progress"] { color:var(--info,#625B70); background:var(--info-surface,#F2F0F5); }
+  #search-filter-bar .sf-task-status[data-status="Completed"] { color:var(--success,#463782); background:var(--success-surface,#ECEBF3); }
+  #search-filter-bar .sf-empty { border:1px solid var(--line); border-radius:8px; padding:24px; text-align:center; background:var(--surface); }
+  #search-filter-bar .sf-empty h3 { margin:0 0 7px; font-size:15px; color:var(--ink); }
+  #search-filter-bar .sf-empty p { font-size:13px; color:var(--muted); }
+  #search-filter-bar .sf-event { margin-top:12px; font-size:12px; color:var(--muted); min-height:18px; }
+  @media(max-width:1000px) { #search-filter-bar .sf-fields { grid-template-columns:1fr; } }
+  @media(max-width:420px) { #search-filter-bar .sf-summary { align-items:flex-start; flex-wrap:wrap; } #search-filter-bar .sf-results li { align-items:flex-start; flex-direction:column; gap:8px; } }
+
+
+  #message-banner .mb-settings { display: grid; gap: 12px; margin-bottom: 18px; }
+  #message-banner .mb-field { display: grid; gap: 5px; min-width: 0; }
+  #message-banner .mb-field > label { font-size: 12px; font-weight: 600; }
+  #message-banner .mb-top-settings { display: flex; align-items: end; flex-wrap: wrap; gap: 12px 18px; }
+  #message-banner .mb-top-settings select { min-width: 130px; }
+  #message-banner .mb-check { display: flex; align-items: center; gap: 7px; min-height: 38px; font-size: 13px; }
+  #message-banner textarea { width: 100%; min-height: 76px; resize: vertical; border: 1px solid var(--control-border); border-radius: 6px; padding: 9px 10px; background: white; color: var(--ink); line-height: 1.5; }
+  #message-banner .mb-banner { padding: 16px; border: 1px solid var(--mb-state); border-radius: var(--corner-radius, 12px); background: var(--mb-surface); color: var(--ink); }
+  #message-banner .mb-banner[data-intent="Info"] { --mb-state: var(--info); --mb-surface: var(--info-surface); }
+  #message-banner .mb-banner[data-intent="Success"] { --mb-state: var(--success); --mb-surface: var(--success-surface); }
+  #message-banner .mb-banner[data-intent="Warning"] { --mb-state: var(--warning); --mb-surface: var(--warning-surface); }
+  #message-banner .mb-banner[data-intent="Error"] { --mb-state: var(--error); --mb-surface: var(--error-surface); }
+  #message-banner .mb-content { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px; align-items: start; }
+  #message-banner .mb-icon { width: 1.15em; height: 1.15em; display: grid; place-items: center; color: var(--mb-state); font-size: 21px; line-height: 1; font-weight: 650; }
+  #message-banner .mb-copy { min-width: 0; overflow-wrap: anywhere; }
+  #message-banner .mb-copy p { white-space: pre-wrap; }
+  #message-banner .mb-state { color: var(--mb-state); font-weight: 650; }
+  #message-banner .mb-title { font-weight: 650; }
+  #message-banner .mb-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  #message-banner .mb-actions button { min-height: 44px; max-width: 100%; overflow-wrap: anywhere; }
+  #message-banner .mb-actions .secondary-action { background: transparent; }
+  #message-banner .mb-after { margin-top: 13px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; }
+  #message-banner .mb-after p { font-size: 12px; color: var(--muted); }
+  #message-banner .mb-detail { margin-top: 12px; padding: 12px; background: var(--surface); border-radius: 6px; font-size: 13px; }
+  #message-banner .mb-detail p + p { margin-top: 5px; }
+  #message-banner .mb-reset { margin-top: 14px; }
+  @media (max-width: 570px) {
+    #message-banner .mb-actions { flex-direction: column; }
+    #message-banner .mb-actions button { width: 100%; }
+    #message-banner .mb-top-settings { align-items: start; }
+  }
+
 </style>
 </head>
 <body>
@@ -407,7 +496,7 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
   <aside class="catalog-rail" aria-label="Component catalog">
     <div class="kit-brand"><span class="kit-mark" aria-hidden="true"></span>Power Apps UI Kit</div>
     <nav class="catalog-nav" aria-label="Choose a component">
-      <button type="button" data-show="all" aria-pressed="true">All components <span aria-hidden="true">· 12</span></button>
+      <button type="button" data-show="all" aria-pressed="true">All components <span aria-hidden="true">· 15</span></button>
       <button type="button" data-show="button" aria-pressed="false">Button</button>
 <button type="button" data-show="floating-action-button" aria-pressed="false">Floating action button</button>
 <button type="button" data-show="kpi-card" aria-pressed="false">KPI card</button>
@@ -420,6 +509,9 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
 <button type="button" data-show="tree-view" aria-pressed="false">Tree view</button>
 <button type="button" data-show="navigation-shell" aria-pressed="false">Navigation shell</button>
 <button type="button" data-show="stepper" aria-pressed="false">Stepper</button>
+<button type="button" data-show="form-field" aria-pressed="false">Form field</button>
+<button type="button" data-show="search-filter-bar" aria-pressed="false">Search and filter bar</button>
+<button type="button" data-show="message-banner" aria-pressed="false">Message banner</button>
     </nav>
     <div class="rail-links">
       <a href="../COLOR-PALETTE.txt">Color palette</a>
@@ -433,19 +525,19 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
       <div><h1>Component gallery</h1><p>Explore the available components. Change the accent, try their controls, and compare your design before publishing.</p></div>
       <span class="local-label">Local preview</span>
     </header>
-    <p class="preview-scope"><strong>12 interactive HTML previews with sample data.</strong> These previews illustrate the component designs. They do not execute Power Fx. Validate native controls and imports in Power Apps Studio.</p>
+    <p class="preview-scope"><strong>15 interactive HTML previews with sample data.</strong> These previews illustrate the component designs. They do not execute Power Fx. Validate native controls and imports in Power Apps Studio.</p>
     <section class="gallery-settings" aria-label="Preview settings">
       <div class="settings-fields">
         <div class="gallery-field"><label for="gallery-accent-text">Accent color</label><div class="color-control"><input id="gallery-accent-picker" type="color" value="#463782" aria-label="Choose accent color"><input id="gallery-accent-text" type="text" value="#463782" spellcheck="false" autocomplete="off" aria-describedby="gallery-color-error"></div></div>
         <div class="gallery-field"><label for="gallery-shape">Action button corners</label><select id="gallery-shape"><option value="Pill">Pill</option><option value="Rounded">Rounded · 12 px</option></select></div>
         <div class="gallery-field search-field"><label for="gallery-search">Find a component</label><input id="gallery-search" type="search" placeholder="Search components" autocomplete="off"></div>
-        <div class="gallery-field mobile-picker"><label for="gallery-picker">Show components</label><select id="gallery-picker"><option value="all">All 12 components</option><option value="button">Button</option><option value="floating-action-button">Floating action button</option><option value="kpi-card">KPI card</option><option value="attachments-list">Attachments list</option><option value="carousel">Carousel</option><option value="data-table">Data table</option><option value="kanban-board">Kanban board</option><option value="month-calendar">Month calendar</option><option value="accordion">Accordion</option><option value="tree-view">Tree view</option><option value="navigation-shell">Navigation shell</option><option value="stepper">Stepper</option></select></div>
+        <div class="gallery-field mobile-picker"><label for="gallery-picker">Show components</label><select id="gallery-picker"><option value="all">All 15 components</option><option value="button">Button</option><option value="floating-action-button">Floating action button</option><option value="kpi-card">KPI card</option><option value="attachments-list">Attachments list</option><option value="carousel">Carousel</option><option value="data-table">Data table</option><option value="kanban-board">Kanban board</option><option value="month-calendar">Month calendar</option><option value="accordion">Accordion</option><option value="tree-view">Tree view</option><option value="navigation-shell">Navigation shell</option><option value="stepper">Stepper</option><option value="form-field">Form field</option><option value="search-filter-bar">Search and filter bar</option><option value="message-banner">Message banner</option></select></div>
         <button class="quiet-action" id="gallery-reset" type="button">Reset appearance</button>
       </div>
       <p class="input-error" id="gallery-color-error" hidden>Enter # and six hexadecimal digits. The preview keeps the last valid color.</p>
       <div class="settings-note"><span id="gallery-contrast" role="status">White / accent: 9.86:1</span><span>Settings affect this preview. Use the source links to inspect each implementation.</span></div>
     </section>
-    <div class="catalog-summary"><p id="gallery-count" role="status">Showing all 12 components</p><a href="../COLOR-PALETTE.txt">View palette</a></div>
+    <div class="catalog-summary"><p id="gallery-count" role="status">Showing all 15 components</p><a href="../COLOR-PALETTE.txt">View palette</a></div>
     <div id="gallery-content" tabindex="-1">
       <div class="component-grid" id="component-grid">
         <section class="component-panel" id="button" data-component="Button" aria-labelledby="button-title">
@@ -771,6 +863,109 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
     <p class="gn-output" id="gn-step-status" role="status">Step 1 of 4: Brief.</p>
   </div>
   <p class="component-note">Required fields demonstrate a step check. Form content and the completion screen belong to this sample.</p>
+</section>
+<section class="component-panel" id="form-field" data-component="Form field" aria-labelledby="form-field-title">
+  <header class="component-heading"><div><h2 id="form-field-title">Form field</h2><p>Capture a clear value and explain what needs attention.</p></div><a href="../form-field/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="form-field" aria-pressed="false" aria-controls="recording-form-field">Play demo GIF</button>
+    <a href="../assets/previews/form-field.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-form-field" hidden>
+    <img src="../assets/previews/form-field.png" data-gif="../assets/previews/form-field.gif" data-poster="../assets/previews/form-field.png" alt="Animated browser demonstration of form field interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="ff-controls">
+      <label><input id="ff-required" type="checkbox" checked>Required</label>
+      <label><input id="ff-disabled" type="checkbox">Disabled</label>
+      <label><input id="ff-show-validation" type="checkbox">Show validation</label>
+      <label><input id="ff-host-error" type="checkbox">Sample business error</label>
+    </div>
+    <div class="ff-stage">
+      <label class="ff-label" for="ff-input">Project name <span class="ff-required" id="ff-required-label">(required)</span></label>
+      <input id="ff-input" type="text" value="" required autocomplete="off" aria-describedby="ff-help ff-error" aria-invalid="false">
+      <p class="ff-help" id="ff-help">Use a short name your team will recognize.</p>
+      <p class="ff-error" id="ff-error" aria-live="polite" aria-atomic="true"></p>
+      <div class="ff-readout"><p>Current value: <strong id="ff-value">Empty</strong></p><p>Valid: <strong id="ff-valid">No</strong></p></div>
+    </div>
+    <div class="ff-actions"><button class="secondary-action" id="ff-reset" type="button">Reset field</button></div>
+    <p class="ff-event" id="ff-event" role="status">Edit the name, then leave the field to emit a change.</p>
+  </div>
+  <p class="component-note">Required errors wait for a changed blur or Show validation. Reset clears the text and interaction state; host settings stay unchanged. Nothing is saved.</p>
+</section>
+<section class="component-panel wide" id="search-filter-bar" data-component="Search and filter bar" aria-labelledby="search-filter-bar-title">
+  <header class="component-heading"><div><h2 id="search-filter-bar-title">Search and filter bar</h2><p>Combine a title search with status and owner filters.</p></div><a href="../search-filter-bar/component.yaml" download>Source</a></header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="search-filter-bar" aria-pressed="false" aria-controls="recording-search-filter-bar">Play demo GIF</button>
+    <a href="../assets/previews/search-filter-bar.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-search-filter-bar" hidden>
+    <img src="../assets/previews/search-filter-bar.png" data-gif="../assets/previews/search-filter-bar.gif" data-poster="../assets/previews/search-filter-bar.png" alt="Animated browser demonstration of search and filter bar interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="sf-fields">
+      <div class="sf-field"><label for="sf-query">Search</label><input id="sf-query" type="search" placeholder="Search by title" autocomplete="off" aria-describedby="sf-search-help"></div>
+      <div class="sf-field"><label for="sf-status">Status</label><select id="sf-status"><option value="">All statuses</option><option>Not started</option><option>In progress</option><option>Completed</option></select></div>
+      <div class="sf-field"><label for="sf-owner">Owner</label><select id="sf-owner"><option value="">All owners</option><option>Alex</option><option>Jordan</option><option>Morgan</option></select></div>
+    </div>
+    <p class="sr-only" id="sf-search-help">Search matches the start of a task title. All selected filters must match.</p>
+    <div class="sf-summary"><p id="sf-summary" role="status" aria-live="polite"><strong>6 results</strong> · No active filters</p><button type="button" class="secondary-action" id="sf-clear">Clear all</button></div>
+    <div class="sf-active" id="sf-active" aria-label="Active filters"></div>
+    <ul class="sf-results" id="sf-results" aria-label="Matching sample tasks"></ul>
+    <div class="sf-empty" id="sf-empty" hidden><h3>No tasks match</h3><p>Change a filter or select Clear all to show every task.</p></div>
+    <p class="sf-event" id="sf-event">Results update as you type. Search change events run when you leave the field.</p>
+  </div>
+  <p class="component-note">This demo filters six sample tasks. In Power Apps, bind the host results to the component's Query, Status, and Owner outputs.</p>
+</section>
+<section class="component-panel" id="message-banner" data-component="Message banner" aria-labelledby="message-banner-title">
+  <header class="component-heading">
+    <div><h2 id="message-banner-title">Message banner</h2><p>Keep useful information and resolution actions close to the work.</p></div>
+    <a href="../message-banner/component.yaml" download>Source</a>
+  </header>
+  <div class="recording-tools">
+    <button type="button" class="quiet-action recording-toggle" data-recording="message-banner" aria-pressed="false" aria-controls="recording-message-banner">Play demo GIF</button>
+    <a href="../assets/previews/message-banner.gif" download>Download GIF</a>
+  </div>
+  <figure class="component-recording" id="recording-message-banner" hidden>
+    <img src="../assets/previews/message-banner.png" data-gif="../assets/previews/message-banner.gif" data-poster="../assets/previews/message-banner.png" alt="Animated browser demonstration of message banner interactions with sample data" loading="lazy">
+    <figcaption>Browser demonstration with sample data. Recorded with default settings; live color changes do not alter this GIF.</figcaption>
+  </figure>
+  <div class="component-demo">
+    <div class="mb-settings">
+      <div class="mb-top-settings">
+        <div class="mb-field"><label for="mb-intent">Message intent</label><select id="mb-intent"><option>Info</option><option>Success</option><option>Warning</option><option>Error</option></select></div>
+        <label class="mb-check" for="mb-dismissible"><input id="mb-dismissible" type="checkbox" checked> Allow dismissal</label>
+      </div>
+      <div class="mb-field"><label for="mb-message-input">Message body</label><textarea id="mb-message-input" rows="3">This page uses fictional data. Review the sample details before continuing.</textarea></div>
+      <div><button class="secondary-action" id="mb-apply" type="button">Apply message</button></div>
+    </div>
+
+    <div class="mb-banner" id="mb-banner" data-intent="Info">
+      <div class="mb-content">
+        <span class="mb-icon" id="mb-icon" aria-hidden="true">ⓘ</span>
+        <div class="mb-copy" id="mb-announcement" aria-live="polite" aria-atomic="true">
+          <p><span class="mb-state" id="mb-state">Info</span><span aria-hidden="true">: </span><strong class="mb-title" id="mb-title">Review the sample project</strong></p>
+          <p id="mb-message">This page uses fictional data. Review the sample details before continuing.</p>
+        </div>
+      </div>
+      <div class="mb-actions">
+        <button class="demo-action" id="mb-action" type="button">View sample details</button>
+        <button class="secondary-action" id="mb-dismiss" type="button" aria-label="Dismiss message: Review the sample project">Dismiss</button>
+      </div>
+    </div>
+
+    <div class="mb-after">
+      <button class="secondary-action" id="mb-show" type="button" hidden>Show message again</button>
+      <p id="mb-host-status" role="status" aria-live="polite">Preview only. No records are saved.</p>
+    </div>
+    <div class="mb-detail" id="mb-detail" hidden tabindex="-1">
+      <p><strong>Fictional project details</strong></p>
+      <p id="mb-detail-text">Demo review is a local sample project. No external service is connected.</p>
+    </div>
+    <div class="mb-reset"><button class="quiet-action" id="mb-reset" type="button">Reset sample</button></div>
+  </div>
+  <p class="component-note">HTML approximation. The host app owns resolution and visibility. Messages persist; there is no timer. Validate announcements and focus in Power Apps Studio.</p>
 </section>
       </div>
       <div class="no-results" id="gallery-empty" hidden><h2>No matching components</h2><p>Try a shorter name or show the full catalog.</p><button class="secondary-action" id="gallery-clear" type="button">Show all components</button></div>
@@ -1386,6 +1581,224 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
   }));
 })();
 
+
+(() => {
+  const root = document.getElementById('form-field');
+  if (!root || root.dataset.ffReady) return;
+  root.dataset.ffReady = 'true';
+  const byId = id => document.getElementById(id);
+  const input = byId('ff-input');
+  const required = byId('ff-required');
+  const disabled = byId('ff-disabled');
+  const showValidation = byId('ff-show-validation');
+  const hostError = byId('ff-host-error');
+  let touched = false;
+  let committedText = '';
+  let changes = 0;
+  function render() {
+    const missing = required.checked && !input.value.trim();
+    const error = hostError.checked ? 'Error: This project name is already in use.' : missing && (touched || showValidation.checked) ? 'Error: Project name is required.' : '';
+    input.required = required.checked;
+    input.disabled = disabled.checked;
+    input.setAttribute('aria-invalid', String(Boolean(error)));
+    byId('ff-required-label').textContent = required.checked ? '(required)' : '(optional)';
+    const liveError = byId('ff-error');
+    if (liveError.textContent !== error) liveError.textContent = error;
+    byId('ff-value').textContent = input.value || 'Empty';
+    byId('ff-valid').textContent = missing || hostError.checked ? 'No' : 'Yes';
+  }
+  input.addEventListener('input', render);
+  input.addEventListener('blur', () => {
+    if (input.value !== committedText) {
+      touched = true;
+      committedText = input.value;
+      changes += 1;
+      byId('ff-event').textContent = `Change ${changes} emitted after blur: ${input.value ? '“' + input.value + '”' : 'empty text'}. Nothing was saved.`;
+    }
+    render();
+  });
+  [required, disabled, showValidation, hostError].forEach(control => control.addEventListener('change', render));
+  byId('ff-reset').addEventListener('click', () => {
+    input.value = '';
+    committedText = '';
+    touched = false;
+    render();
+    byId('ff-event').textContent = 'Field reset to its empty default. Required, Disabled, Show validation, and business-error settings are unchanged.';
+  });
+  render();
+})();
+
+
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const tasks = [
+    { title:'Review button styles', status:'In progress', owner:'Alex' },
+    { title:'Review navigation', status:'Not started', owner:'Jordan' },
+    { title:'Test keyboard access', status:'In progress', owner:'Morgan' },
+    { title:'Write setup guide', status:'Completed', owner:'Alex' },
+    { title:'Review contrast', status:'Completed', owner:'Jordan' },
+    { title:'Prepare sample app', status:'Not started', owner:'Morgan' }
+  ];
+  function render() {
+    const query = $('sf-query').value.trim();
+    const status = $('sf-status').value;
+    const owner = $('sf-owner').value;
+    const filters = [query, status, owner].filter(Boolean).length;
+    const results = tasks.filter(task => (!query || task.title.toLocaleLowerCase('en-US').startsWith(query.toLocaleLowerCase('en-US'))) && (!status || task.status === status) && (!owner || task.owner === owner));
+    const count = document.createElement('strong');
+    count.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+    $('sf-summary').replaceChildren(count, document.createTextNode(` · ${filters ? `${filters} active filter${filters === 1 ? '' : 's'}` : 'No active filters'}`));
+    $('sf-active').replaceChildren();
+    for (const [name, value] of [['Search',query],['Status',status],['Owner',owner]]) {
+      if (!value) continue;
+      const chip = document.createElement('span');
+      chip.className = 'sf-chip';
+      chip.textContent = `${name}: ${value}`;
+      $('sf-active').append(chip);
+    }
+    $('sf-results').replaceChildren();
+    results.forEach(task => {
+      const row = document.createElement('li');
+      const detail = document.createElement('div');
+      detail.className = 'sf-task';
+      const title = document.createElement('strong');
+      title.textContent = task.title;
+      const ownerText = document.createElement('small');
+      ownerText.textContent = `Owner: ${task.owner}`;
+      detail.append(title, ownerText);
+      const statusText = document.createElement('span');
+      statusText.className = 'sf-task-status';
+      statusText.dataset.status = task.status;
+      statusText.textContent = task.status;
+      row.append(detail, statusText);
+      $('sf-results').append(row);
+    });
+    $('sf-results').hidden = results.length === 0;
+    $('sf-empty').hidden = results.length !== 0;
+  }
+  $('sf-query').addEventListener('input', render);
+  $('sf-query').addEventListener('change', () => { $('sf-event').textContent = 'Search change event simulated after leaving the field.'; });
+  ['sf-status','sf-owner'].forEach(id => $(id).addEventListener('change', () => {
+    render();
+    $('sf-event').textContent = 'Filter change event simulated. Results use all selected filters.';
+  }));
+  $('sf-clear').addEventListener('click', () => {
+    $('sf-query').value = '';
+    $('sf-status').value = '';
+    $('sf-owner').value = '';
+    render();
+    $('sf-event').textContent = 'All filters cleared. Clear event simulated.';
+    $('sf-query').focus();
+  });
+  render();
+})();
+
+
+(() => {
+  const get = id => document.getElementById(id);
+  const samples = {
+    Info: {
+      title: 'Review the sample project',
+      message: 'This page uses fictional data. Review the sample details before continuing.',
+      action: 'View sample details', icon: 'ⓘ'
+    },
+    Success: {
+      title: 'Sample review complete',
+      message: 'The fictional project review is complete. View its sample details when needed.',
+      action: 'View sample details', icon: '✓'
+    },
+    Warning: {
+      title: 'Sample review needs attention',
+      message: 'The fictional checklist has not been reviewed. Complete the sample review before continuing.',
+      action: 'Complete sample review', icon: '⚠'
+    },
+    Error: {
+      title: 'Sample project name is missing',
+      message: 'The fictional project needs a name. Add a sample name to resolve this example.',
+      action: 'Add sample name', icon: '⊗'
+    }
+  };
+  let intent = 'Info';
+  let title = samples.Info.title;
+  let message = samples.Info.message;
+  let action = samples.Info.action;
+  let visible = true;
+  let sampleName = '';
+
+  function render() {
+    const knownIntent = Object.hasOwn(samples, intent) ? intent : 'Info';
+    get('mb-banner').hidden = !visible;
+    get('mb-banner').dataset.intent = knownIntent;
+    get('mb-announcement').setAttribute('aria-live', ['Warning', 'Error'].includes(knownIntent) ? 'assertive' : 'polite');
+    get('mb-state').textContent = knownIntent;
+    get('mb-title').textContent = title;
+    get('mb-message').textContent = message;
+    get('mb-icon').textContent = samples[knownIntent].icon;
+    get('mb-action').textContent = action;
+    get('mb-action').hidden = !action.trim();
+    get('mb-dismiss').hidden = !get('mb-dismissible').checked;
+    get('mb-dismiss').setAttribute('aria-label', 'Dismiss message: ' + title);
+    get('mb-show').hidden = visible;
+  }
+
+  function chooseIntent(next) {
+    intent = Object.hasOwn(samples, next) ? next : 'Info';
+    ({title, message, action} = samples[intent]);
+    visible = true;
+    sampleName = '';
+    get('mb-intent').value = intent;
+    get('mb-message-input').value = message;
+    get('mb-detail').hidden = true;
+    render();
+    get('mb-host-status').textContent = 'Preview only. No records are saved.';
+  }
+
+  get('mb-intent').addEventListener('change', event => chooseIntent(event.target.value));
+  get('mb-dismissible').addEventListener('change', render);
+  get('mb-apply').addEventListener('click', () => {
+    message = get('mb-message-input').value;
+    render();
+    if (!visible) get('mb-host-status').textContent = 'Message updated while hidden. Select Show message again to view it.';
+  });
+  get('mb-dismiss').addEventListener('click', () => {
+    visible = false;
+    render();
+    get('mb-host-status').textContent = 'OnDismiss preview: the host hid the message. The underlying sample condition is unchanged.';
+    get('mb-show').focus();
+  });
+  get('mb-show').addEventListener('click', () => {
+    visible = true;
+    render();
+    get('mb-host-status').textContent = 'The host shows the same message again.';
+    get('mb-action').focus();
+  });
+  get('mb-action').addEventListener('click', () => {
+    if (intent === 'Error' || intent === 'Warning') {
+      const resolvedError = intent === 'Error';
+      if (resolvedError) sampleName = 'Demo review';
+      intent = 'Success';
+      title = resolvedError ? 'Sample project name added' : 'Sample review complete';
+      message = resolvedError ? 'The local sample project is named Demo review. No record was saved.' : 'The local sample checklist is marked reviewed. No record was saved.';
+      action = 'View sample details';
+      get('mb-intent').value = intent;
+      get('mb-message-input').value = message;
+      render();
+      get('mb-host-status').textContent = 'OnAction preview: the host changed the sample data and banner inputs.';
+      return;
+    }
+    get('mb-detail-text').textContent = sampleName ? 'Project name: ' + sampleName + '. This is a local example; no external service is connected.' : 'This fictional project is a local example. No external service is connected.';
+    get('mb-detail').hidden = false;
+    get('mb-detail').focus();
+    get('mb-host-status').textContent = 'OnAction preview: sample details opened below the message.';
+  });
+  get('mb-reset').addEventListener('click', () => {
+    get('mb-dismissible').checked = true;
+    chooseIntent('Info');
+  });
+  render();
+})();
+
 </script>
 <script>
 (() => {
@@ -1447,7 +1860,7 @@ input[type="color"] { width: 40px; min-width: 40px; height: 38px; padding: 3px; 
       if (panel.hidden) stopRecording(panel);
       if (!panel.hidden) visible++;
     });
-    byId('gallery-count').textContent = visible === 12 ? 'Showing all 12 components' : `Showing ${visible} of 12 components`;
+    byId('gallery-count').textContent = visible === panels.length ? `Showing all ${panels.length} components` : `Showing ${visible} of ${panels.length} components`;
     byId('gallery-empty').hidden = visible > 0;
     byId('component-grid').classList.toggle('single-view', visible === 1);
     navigation.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.show === selected)));

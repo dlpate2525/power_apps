@@ -1,0 +1,273 @@
+ComponentDefinitions:
+  uiSearchFilter:
+    DefinitionType: CanvasComponent
+    AccessAppScope: false
+    Description: "Search and single-select status/owner filters. Native controls own their values; the host app owns data filtering."
+    CustomProperties:
+      StatusOptions:
+        PropertyKind: Input
+        DisplayName: StatusOptions
+        DataType: Table
+        Description: "Distinct status choices with one Value text column. An empty All statuses choice is added automatically."
+        Default: |-
+          =Table({Value: "Not started"}, {Value: "In progress"}, {Value: "Completed"})
+      OwnerOptions:
+        PropertyKind: Input
+        DisplayName: OwnerOptions
+        DataType: Table
+        Description: "Distinct owner choices with one Value text column. An empty All owners choice is added automatically."
+        Default: |-
+          =Table({Value: "Alex"}, {Value: "Jordan"}, {Value: "Morgan"})
+      SearchPlaceholder:
+        PropertyKind: Input
+        DisplayName: SearchPlaceholder
+        DataType: Text
+        Description: "Hint for the host app's search rule. The visible label remains Search."
+        Default: ="Search by title"
+      ResultCount:
+        PropertyKind: Input
+        DisplayName: ResultCount
+        DataType: Number
+        Description: "The host app's complete filtered result count. A negative number hides the result count."
+        Default: =-1
+      Disabled:
+        PropertyKind: Input
+        DisplayName: Disabled
+        DataType: Boolean
+        Description: "Disables search, both dropdowns, and Clear all without discarding their values."
+        Default: =false
+      Design:
+        PropertyKind: Input
+        DisplayName: Design
+        DataType: Record
+        Description: "Complete shared UiTheme record. This component reads Accent, Background, Text, TextMuted, ControlBorder, CornerRadius, ButtonShape, and ButtonCornerRadius."
+        Default: |-
+          ={
+              Accent: ColorValue("#463782"),
+              OnAccent: ColorValue("#FFFFFF"),
+              AccentHover: ColorValue("#362965"),
+              AccentSoft: ColorValue("#ECEBF3"),
+              AccentBorder: ColorValue("#C5BFD7"),
+              Secondary: ColorValue("#D88777"),
+              OnSecondary: ColorValue("#292630"),
+              SecondaryText: ColorValue("#8D4538"),
+              Background: ColorValue("#FFFFFF"),
+              Surface: ColorValue("#F5F4F7"),
+              Text: ColorValue("#292630"),
+              TextMuted: ColorValue("#625F69"),
+              Border: ColorValue("#DFDCE6"),
+              ControlBorder: ColorValue("#625F69"),
+              Focus: ColorValue("#463782"),
+              Error: ColorValue("#A23D49"),
+              ErrorSurface: ColorValue("#FFF0F2"),
+              Warning: ColorValue("#8D4538"),
+              WarningSurface: ColorValue("#FBE8E3"),
+              Success: ColorValue("#463782"),
+              SuccessSurface: ColorValue("#ECEBF3"),
+              Info: ColorValue("#625B70"),
+              InfoSurface: ColorValue("#F2F0F5"),
+              CornerRadius: 12,
+              ButtonShape: "Pill",
+              ButtonCornerRadius: 12,
+              Mode: "Light",
+              Motion: false
+          }
+      Query:
+        PropertyKind: Output
+        DisplayName: Query
+        DataType: Text
+        Description: "Current search text with leading and trailing spaces removed. Updates on each keystroke. Empty means all titles."
+      Status:
+        PropertyKind: Output
+        DisplayName: Status
+        DataType: Text
+        Description: "Selected status Value. Empty means all statuses."
+      Owner:
+        PropertyKind: Output
+        DisplayName: Owner
+        DataType: Text
+        Description: "Selected owner Value. Empty means all owners."
+      ActiveFilterCount:
+        PropertyKind: Output
+        DisplayName: ActiveFilterCount
+        DataType: Number
+        Description: "Number of nonempty Query, Status, and Owner values, from zero to three."
+      OnChange:
+        PropertyKind: Event
+        DisplayName: OnChange
+        ReturnType: None
+        Description: "Runs after edited search text loses focus or a dropdown selection changes. Bind filtering to outputs for live results."
+        Default: =false
+      OnClear:
+        PropertyKind: Event
+        DisplayName: OnClear
+        ReturnType: None
+        Description: "Runs after the user selects Clear all. The search and both filters have been reset."
+        Default: =false
+    Properties:
+      Width: =840
+      Height: =Max(sfSummary.Y + sfSummary.Height, sfClear.Y + sfClear.Height) + 8
+      Fill: =uiSearchFilter.Design.Background
+      Query: =TrimEnds(sfQuery.Text)
+      Status: =Coalesce(sfStatus.Selected.Value, "")
+      Owner: =Coalesce(sfOwner.Selected.Value, "")
+      ActiveFilterCount: =If(IsBlank(uiSearchFilter.Query), 0, 1) + If(IsBlank(uiSearchFilter.Status), 0, 1) + If(IsBlank(uiSearchFilter.Owner), 0, 1)
+      OnReset: =Reset(sfQuery); Reset(sfStatus); Reset(sfOwner)
+    Children:
+      - sfSearchLabel:
+          Control: ModernText@1.0.0
+          Properties:
+            X: =0
+            Y: =0
+            Width: =sfQuery.Width
+            Height: =22
+            Text: ="Search"
+            Size: =13
+            FontWeight: =FontWeight.Semibold
+            Color: =uiSearchFilter.Design.Text
+      - sfQuery:
+          Control: ModernTextInput@1.0.0
+          Properties:
+            X: =0
+            Y: =26
+            Width: =If(Parent.Width >= 680, (Parent.Width - 24) / 2, Parent.Width)
+            Height: =40
+            Default: =""
+            Placeholder: =uiSearchFilter.SearchPlaceholder
+            Type: =TextInputType.Search
+            TriggerOutput: =TriggerOutput.Keypress
+            Appearance: =Appearance.Outline
+            BasePaletteColor: =uiSearchFilter.Design.Accent
+            Color: =uiSearchFilter.Design.Text
+            Fill: =uiSearchFilter.Design.Background
+            BorderColor: =uiSearchFilter.Design.ControlBorder
+            BorderThickness: =1
+            RadiusTopLeft: =Min(20, Max(0, Coalesce(uiSearchFilter.Design.CornerRadius, 12)))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            Size: =14
+            AccessibleLabel: ="Search. " & uiSearchFilter.SearchPlaceholder
+            DisplayMode: =If(uiSearchFilter.Disabled, DisplayMode.Disabled, DisplayMode.Edit)
+            OnChange: =uiSearchFilter.OnChange()
+      - sfStatusLabel:
+          Control: ModernText@1.0.0
+          Properties:
+            X: =sfStatus.X
+            Y: =If(Parent.Width >= 680, 0, 80)
+            Width: =sfStatus.Width
+            Height: =22
+            Text: ="Status"
+            Size: =13
+            FontWeight: =FontWeight.Semibold
+            Color: =uiSearchFilter.Design.Text
+      - sfStatus:
+          Control: ModernDropdown@1.0.0
+          Properties:
+            X: =If(Parent.Width >= 680, sfQuery.Width + 12, 0)
+            Y: =If(Parent.Width >= 680, 26, 106)
+            Width: =If(Parent.Width >= 680, (Parent.Width - 24) / 4, Parent.Width)
+            Height: =40
+            Items: |-
+              =Table({Value: ""}, Filter(uiSearchFilter.StatusOptions, !IsBlank(Value)))
+            Default: |-
+              ={Value: ""}
+            ItemDisplayText: =If(IsBlank(ThisItem.Value), "All statuses", ThisItem.Value)
+            Appearance: =Appearance.Outline
+            BasePaletteColor: =uiSearchFilter.Design.Accent
+            Color: =uiSearchFilter.Design.Text
+            Fill: =uiSearchFilter.Design.Background
+            BorderColor: =uiSearchFilter.Design.ControlBorder
+            BorderThickness: =1
+            RadiusTopLeft: =Min(20, Max(0, Coalesce(uiSearchFilter.Design.CornerRadius, 12)))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            Size: =14
+            AccessibleLabel: ="Filter by status. All statuses applies no status filter."
+            DisplayMode: =If(uiSearchFilter.Disabled, DisplayMode.Disabled, DisplayMode.Edit)
+            OnChange: =uiSearchFilter.OnChange()
+      - sfOwnerLabel:
+          Control: ModernText@1.0.0
+          Properties:
+            X: =sfOwner.X
+            Y: =If(Parent.Width >= 680, 0, 160)
+            Width: =sfOwner.Width
+            Height: =22
+            Text: ="Owner"
+            Size: =13
+            FontWeight: =FontWeight.Semibold
+            Color: =uiSearchFilter.Design.Text
+      - sfOwner:
+          Control: ModernDropdown@1.0.0
+          Properties:
+            X: =If(Parent.Width >= 680, sfStatus.X + sfStatus.Width + 12, 0)
+            Y: =If(Parent.Width >= 680, 26, 186)
+            Width: =If(Parent.Width >= 680, (Parent.Width - 24) / 4, Parent.Width)
+            Height: =40
+            Items: |-
+              =Table({Value: ""}, Filter(uiSearchFilter.OwnerOptions, !IsBlank(Value)))
+            Default: |-
+              ={Value: ""}
+            ItemDisplayText: =If(IsBlank(ThisItem.Value), "All owners", ThisItem.Value)
+            Appearance: =Appearance.Outline
+            BasePaletteColor: =uiSearchFilter.Design.Accent
+            Color: =uiSearchFilter.Design.Text
+            Fill: =uiSearchFilter.Design.Background
+            BorderColor: =uiSearchFilter.Design.ControlBorder
+            BorderThickness: =1
+            RadiusTopLeft: =Min(20, Max(0, Coalesce(uiSearchFilter.Design.CornerRadius, 12)))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            Size: =14
+            AccessibleLabel: ="Filter by owner. All owners applies no owner filter."
+            DisplayMode: =If(uiSearchFilter.Disabled, DisplayMode.Disabled, DisplayMode.Edit)
+            OnChange: =uiSearchFilter.OnChange()
+      - sfSummary:
+          Control: Label@2.5.1
+          Properties:
+            X: =0
+            Y: =If(Parent.Width >= 680, 80, 240)
+            Width: =Max(0, Parent.Width - 132)
+            Height: =40
+            Text: |-
+              =If(
+                  uiSearchFilter.ResultCount >= 0,
+                  Text(RoundDown(uiSearchFilter.ResultCount, 0)) & If(RoundDown(uiSearchFilter.ResultCount, 0) = 1, " result", " results") & " · ",
+                  ""
+              ) & If(
+                  uiSearchFilter.ActiveFilterCount = 0,
+                  "No active filters",
+                  Text(uiSearchFilter.ActiveFilterCount) & If(uiSearchFilter.ActiveFilterCount = 1, " active filter", " active filters")
+              )
+            Size: =11
+            Font: =Font.'Segoe UI'
+            Live: =Live.Polite
+            TabIndex: =-1
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PaddingBottom: =0
+            Color: =uiSearchFilter.Design.TextMuted
+            Wrap: =true
+            AutoHeight: =true
+      - sfClear:
+          Control: ModernButton@1.0.0
+          Properties:
+            X: =Max(0, Parent.Width - Self.Width)
+            Y: =If(Parent.Width >= 680, 80, 240)
+            Width: =120
+            Height: =40
+            Text: ="Clear all"
+            Appearance: =ButtonAppearance.Outline
+            BasePaletteColor: =uiSearchFilter.Design.Accent
+            Color: =uiSearchFilter.Design.Text
+            BorderColor: =uiSearchFilter.Design.ControlBorder
+            RadiusTopLeft: =If(uiSearchFilter.Design.ButtonShape = "Rounded", Min(20, Max(0, Coalesce(uiSearchFilter.Design.ButtonCornerRadius, 12))), 20)
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            AccessibleLabel: ="Clear search and all filters"
+            DisplayMode: =If(uiSearchFilter.Disabled, DisplayMode.Disabled, DisplayMode.Edit)
+            OnSelect: =Reset(sfQuery); Reset(sfStatus); Reset(sfOwner); uiSearchFilter.OnClear()
