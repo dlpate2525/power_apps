@@ -1,0 +1,204 @@
+ComponentDefinitions:
+  uiFormField:
+    DefinitionType: CanvasComponent
+    Description: "Single-line text field with a visible label, helper text, deferred required validation, and host-supplied errors."
+    AccessAppScope: false
+    CustomProperties:
+      Label:
+        PropertyKind: Input
+        DisplayName: Label
+        DataType: Text
+        Description: "Visible field name. Supply a meaningful, nonblank label."
+        Default: ="Project name"
+      DefaultText:
+        PropertyKind: Input
+        DisplayName: DefaultText
+        DataType: Text
+        Description: "Initial text and the value restored by Reset(componentInstance)."
+        Default: =""
+      HelperText:
+        PropertyKind: Input
+        DisplayName: HelperText
+        DataType: Text
+        Description: "Instructions shown below the input and included in its accessible label."
+        Default: ="Use a short name your team will recognize."
+      Required:
+        PropertyKind: Input
+        DisplayName: Required
+        DataType: Boolean
+        Description: "When true, blank or whitespace-only text is invalid. Errors wait for a changed blur or ShowValidation."
+        Default: =true
+      ErrorText:
+        PropertyKind: Input
+        DisplayName: ErrorText
+        DataType: Text
+        Description: "Host-supplied business error. Nonblank text displays immediately and makes IsValid false. The host clears it."
+        Default: =""
+      ShowValidation:
+        PropertyKind: Input
+        DisplayName: ShowValidation
+        DataType: Boolean
+        Description: "Set true after a host validation attempt to show any required error, including an untouched blank field."
+        Default: =false
+      Disabled:
+        PropertyKind: Input
+        DisplayName: Disabled
+        DataType: Boolean
+        Description: "Disables text editing. This does not clear text, errors, or the Required rule."
+        Default: =false
+      Design:
+        PropertyKind: Input
+        DisplayName: Design
+        DataType: Record
+        Description: "Shared design settings. Bind to the complete UiTheme record; the field consumes its text, surface, border, accent, error, and corner values."
+        Default: |-
+          ={
+              Accent: ColorValue("#463782"),
+              OnAccent: ColorValue("#FFFFFF"),
+              AccentHover: ColorValue("#362965"),
+              AccentSoft: ColorValue("#ECEBF3"),
+              AccentBorder: ColorValue("#C5BFD7"),
+              Secondary: ColorValue("#D88777"),
+              OnSecondary: ColorValue("#292630"),
+              SecondaryText: ColorValue("#8D4538"),
+              Background: ColorValue("#FFFFFF"),
+              Surface: ColorValue("#F5F4F7"),
+              Text: ColorValue("#292630"),
+              TextMuted: ColorValue("#625F69"),
+              Border: ColorValue("#DFDCE6"),
+              ControlBorder: ColorValue("#625F69"),
+              Focus: ColorValue("#463782"),
+              ButtonShape: "Pill",
+              ButtonCornerRadius: 12,
+              Mode: "Light",
+              Motion: false,
+              Error: ColorValue("#A23D49"),
+              ErrorSurface: ColorValue("#FFF0F2"),
+              Warning: ColorValue("#8D4538"),
+              WarningSurface: ColorValue("#FBE8E3"),
+              Success: ColorValue("#463782"),
+              SuccessSurface: ColorValue("#ECEBF3"),
+              Info: ColorValue("#625B70"),
+              InfoSurface: ColorValue("#F2F0F5"),
+              CornerRadius: 12
+          }
+      Text:
+        PropertyKind: Output
+        DisplayName: Text
+        DataType: Text
+        Description: "Current text, updated on each keystroke. Whitespace is preserved."
+      IsValid:
+        PropertyKind: Output
+        DisplayName: IsValid
+        DataType: Boolean
+        Description: "True when ErrorText is blank and the required rule passes, even before validation is displayed."
+      OnChange:
+        PropertyKind: Event
+        DisplayName: OnChange
+        ReturnType: None
+        Description: "Runs after edited text loses focus. It does not run on each keystroke or an unchanged focus/blur."
+        Parameters:
+          - NewText:
+              DataType: Text
+              Description: "The text when the edited input loses focus."
+              Default: =""
+        Default: =false
+    Properties:
+      Width: =360
+      Height: =Max(132, ffError.Y + ffError.Height)
+      Fill: =RGBA(0, 0, 0, 0)
+      OnReset: |-
+        =Reset(ffInput);
+        Set(ffTouched, false)
+      Text: =ffInput.Text
+      IsValid: =IsBlank(Trim(uiFormField.ErrorText)) && (!uiFormField.Required || !IsBlank(Trim(ffInput.Text)))
+    Children:
+      - ffLabel:
+          Control: ModernText@1.0.0
+          Properties:
+            X: =0
+            Y: =0
+            Width: =Parent.Width
+            Height: =24
+            AutoHeight: =true
+            Text: =uiFormField.Label & If(uiFormField.Required, " (required)", "")
+            Color: =uiFormField.Design.Text
+            Size: =14
+            FontWeight: =FontWeight.Semibold
+            Wrap: =true
+      - ffInput:
+          Control: ModernTextInput@1.0.0
+          Properties:
+            X: =0
+            Y: =ffLabel.Y + ffLabel.Height + 6
+            Width: =Parent.Width
+            Height: =44
+            Default: =uiFormField.DefaultText
+            Placeholder: =""
+            Type: =TextInputType.SingleLine
+            TriggerOutput: =TriggerOutput.Keypress
+            Required: =false
+            ValidationState: =If(IsBlank(ffError.Text), ValidationState.None, ValidationState.Error)
+            DisplayMode: =If(uiFormField.Disabled, DisplayMode.Disabled, DisplayMode.Edit)
+            Appearance: =Appearance.Outline
+            BasePaletteColor: =uiFormField.Design.Accent
+            Color: =uiFormField.Design.Text
+            Fill: =If(uiFormField.Disabled, uiFormField.Design.Surface, uiFormField.Design.Background)
+            BorderColor: =If(IsBlank(ffError.Text), uiFormField.Design.ControlBorder, uiFormField.Design.Error)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =If(IsBlank(ffError.Text), 1, 2)
+            RadiusTopLeft: =Min(Max(0, Min(Self.Width, Self.Height) / 2), Max(0, Coalesce(uiFormField.Design.CornerRadius, 12)))
+            RadiusTopRight: =Self.RadiusTopLeft
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            Size: =14
+            PaddingLeft: =12
+            PaddingRight: =12
+            AccessibleLabel: |-
+              =uiFormField.Label &
+              If(uiFormField.Required, ". Required.", ". Optional.") &
+              If(IsBlank(uiFormField.HelperText), "", " " & uiFormField.HelperText) &
+              If(IsBlank(ffError.Text), "", " " & ffError.Text)
+            OnChange: |-
+              =Set(ffTouched, true);
+              uiFormField.OnChange(Self.Text)
+      - ffHelp:
+          Control: ModernText@1.0.0
+          Properties:
+            X: =0
+            Y: =ffInput.Y + ffInput.Height + 6
+            Width: =Parent.Width
+            Height: =If(IsBlank(uiFormField.HelperText), 0, 20)
+            AutoHeight: =true
+            Text: =uiFormField.HelperText
+            Color: =uiFormField.Design.TextMuted
+            Size: =12
+            Wrap: =true
+      - ffError:
+          Control: Label@2.5.1
+          Properties:
+            X: =0
+            Y: =ffHelp.Y + ffHelp.Height + 4
+            Width: =Parent.Width
+            Height: =24
+            AutoHeight: =true
+            Text: |-
+              =If(
+                  !IsBlank(Trim(uiFormField.ErrorText)),
+                  "Error: " & uiFormField.ErrorText,
+                  (Coalesce(ffTouched, false) || uiFormField.ShowValidation) && uiFormField.Required && IsBlank(Trim(ffInput.Text)),
+                  "Error: " & uiFormField.Label & " is required.",
+                  ""
+              )
+            Visible: =true
+            Live: =Live.Polite
+            TabIndex: =-1
+            Color: =uiFormField.Design.Error
+            Fill: =If(IsBlank(Self.Text), RGBA(0, 0, 0, 0), uiFormField.Design.ErrorSurface)
+            Font: =Font.'Segoe UI'
+            Size: =12
+            PaddingLeft: =4
+            PaddingRight: =4
+            PaddingTop: =2
+            PaddingBottom: =2
+            Wrap: =true

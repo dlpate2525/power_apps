@@ -4,9 +4,9 @@
 
 Build consistent Power Apps screens with ready-made UI patterns. This fork aims to make common changes, such as brand color, simple to manage from one place.
 
-[Browse components](#component-catalog) · [Set up shared colors](docs/THEMING.md) · [Read the evaluation](docs/FORK-REVIEW.md) · [View the roadmap](docs/ROADMAP.md)
+[Browse components](#component-catalog) · [Set up shared colors](docs/THEMING.md) · [Read the evaluation](docs/FORK-REVIEW.md) · [View the roadmap](docs/ROADMAP.md) · [Track the new components](docs/COMPONENT-EXPANSION.md)
 
-> **Current status:** 12 component samples with a purple accent default, an editable shared palette, and a modernization plan. This fork has not yet completed its own Power Apps Studio validation.
+> **Current status:** 15 component samples with a purple accent default, an editable shared palette, and a modernization plan. This fork has not yet completed its own Power Apps Studio validation.
 
 The project is available under the [MIT License](LICENSE). Source copyright notices are retained there.
 
@@ -28,12 +28,13 @@ A **design token** is a named value for a shared style, such as a brand color or
 
 | Setting | Current coverage | What it changes |
 | --- | --- | --- |
-| `AccentColor` | All 12 components | Selected accents, highlights, and focus colors |
-| `Motion` | All 12 components | Optional animations controlled by that property |
+| `AccentColor` | Original 12 components | Selected accents, highlights, and focus colors |
+| `Motion` | Original 12 components | Optional animations controlled by that property |
 | `Theme` | 11 components | The component's own `"Light"` or `"Dark"` palette |
 | `ContentColor` | Floating action button | Its main icon and label color |
 | `Shape`, `CornerRadius` | Button | Pill by default, or rounded corners with an editable radius |
-| Spacing, corners, typography, status colors | Partial, component-specific | A complete shared contract is planned |
+| `Design` record | Form field, Search and filter bar, Message banner | Shared colors, status pairs, and supported corner properties |
+| Spacing and typography | Component-specific | A broader shared contract is planned |
 
 `Theme` is currently a text input. It is not Microsoft's `App.Theme` object. Changing `AccentColor` does not replace every internal color.
 
@@ -54,35 +55,13 @@ Open [COLOR-PALETTE.txt](COLOR-PALETTE.txt) for hex codes with `//` color-name c
 | Main text | Ink `#292630` | `UiTheme.Text` |
 | Supporting text | Muted ink `#625F69` | `UiTheme.TextMuted` |
 
-All 12 component `AccentColor` defaults now use `#463782`. The remaining values style the host app where explicitly bound; they do not replace every internal component color.
+The original 12 component `AccentColor` defaults use `#463782`. The three new components accept `Design = UiTheme`. Native modern-control styling still follows supported properties and `App.Theme`; see each guide for coverage.
 
 ### Start with one theme record
 
 Add the complete [theme formula](examples/theme/App.Formulas.powerfx) to **App.Formulas** in the host app. Edit its values to change the shared palette. A named formula recalculates when its dependencies change.
 
-```powerfx
-UiTheme = {
-    Accent: ColorValue("#463782"), // Deep purple - primary action
-    OnAccent: ColorValue("#FFFFFF"), // White - text on purple
-    AccentHover: ColorValue("#362965"), // Dark purple - hover
-    AccentSoft: ColorValue("#ECEBF3"), // Soft lavender - accent surface
-    AccentBorder: ColorValue("#C5BFD7"), // Lavender gray - decorative border
-    Secondary: ColorValue("#D88777"), // Muted coral - secondary accent
-    OnSecondary: ColorValue("#292630"), // Ink - text on coral
-    SecondaryText: ColorValue("#8D4538"), // Dark coral - text on light surfaces
-    Background: ColorValue("#FFFFFF"), // White - main background
-    Surface: ColorValue("#F5F4F7"), // Soft gray - secondary surface
-    Text: ColorValue("#292630"), // Ink - main text
-    TextMuted: ColorValue("#625F69"), // Muted ink - supporting text
-    Border: ColorValue("#DFDCE6"), // Light gray - decorative separator
-    ControlBorder: ColorValue("#625F69"), // Muted ink - necessary control outline
-    Focus: ColorValue("#463782"), // Deep purple - focus indicator
-    ButtonShape: "Pill",
-    ButtonCornerRadius: 12,
-    Mode: "Light",
-    Motion: false
-};
-```
+Use the complete linked formula so the `Design` record includes every required field. It includes separate error, warning, success, and information colors.
 
 Set each inserted component's supported properties in Studio:
 
@@ -94,6 +73,7 @@ Set each inserted component's supported properties in Studio:
 | Floating action button `ContentColor` | `UiTheme.OnAccent` |
 | Button `Shape` | `UiTheme.ButtonShape` |
 | Button `CornerRadius` | `UiTheme.ButtonCornerRadius` |
+| Form field, Search and filter bar, Message banner `Design` | `UiTheme` |
 
 For host controls, bind screen `Fill` to `UiTheme.Background` and text `Color` to `UiTheme.Text`. Use `UiTheme.OnSecondary` for text placed on coral.
 
@@ -109,7 +89,7 @@ The starter has been checked against the declared properties and Microsoft docum
 
 ## Component catalog
 
-Versions below identify the source baselines. This fork adds purple accent defaults and Button shape options. Links open each component's source and setup guide.
+Versions below identify the source baselines. This fork adds purple accent defaults, Button shape options, and three new patterns. Links open each component's source and setup guide.
 
 | Component | Use | Version | Studio name |
 | --- | --- | --- | --- |
@@ -125,6 +105,9 @@ Versions below identify the source baselines. This fork adds purple accent defau
 | [Navigation shell](navigation-shell/) | Side navigation and phone navigation | `0.2.0` | `lcsNavShell` |
 | [Stepper](stepper/) | Form steps and progress | `0.3.1` | `lcsStepper` |
 | [Tree view](tree-view/) | Expandable hierarchical items | `0.2.0` | `lcsTreeView` |
+| [Form field](form-field/) | Labeled text entry with helper text and validation | `0.1.0` | `uiFormField` |
+| [Search and filter bar](search-filter-bar/) | Query, status, and owner filters for host data | `0.1.0` | `uiSearchFilter` |
+| [Message banner](message-banner/) | Persistent status messages and resolution actions | `0.1.0` | `uiMessageBanner` |
 
 ### Button shapes
 
@@ -149,12 +132,14 @@ Collapse the catalog below to hide motion. For interactions you control, downloa
 | [**Attachments list**](attachments-list/)<br><img src="assets/previews/attachments-list.gif" alt="Attachments list HTML demo" width="420"> | [**Accordion**](accordion/)<br><img src="assets/previews/accordion.gif" alt="Accordion HTML demo" width="420"> |
 | [**Carousel**](carousel/)<br><img src="assets/previews/carousel.gif" alt="Carousel HTML demo" width="420"> | [**Navigation shell**](navigation-shell/)<br><img src="assets/previews/navigation-shell.gif" alt="Navigation shell HTML demo" width="420"> |
 | [**Stepper**](stepper/)<br><img src="assets/previews/stepper.gif" alt="Stepper HTML demo" width="420"> | [**Tree view**](tree-view/)<br><img src="assets/previews/tree-view.gif" alt="Tree view HTML demo" width="420"> |
+| [**Form field**](form-field/)<br><img src="assets/previews/form-field.gif" alt="Form field HTML demo" width="420"> | [**Search and filter bar**](search-filter-bar/)<br><img src="assets/previews/search-filter-bar.gif" alt="Search and filter bar HTML demo" width="420"> |
+| [**Message banner**](message-banner/)<br><img src="assets/previews/message-banner.gif" alt="Message banner HTML demo" width="420"> | |
 
 </details>
 
 ## Preview before publishing
 
-The [component gallery](preview/index.html) renders interactive HTML previews of all 12 components with sample data. Select a component, change the accent, and try its controls. Each preview links to its YAML source.
+The [component gallery](preview/index.html) renders interactive HTML previews of all 15 components with sample data. Select a component, change the accent, and try its controls. Each preview links to its YAML source.
 
 1. Download or clone this branch.
 2. Open `preview/index.html` in your browser.
@@ -164,9 +149,11 @@ The [component gallery](preview/index.html) renders interactive HTML previews of
 
 GitHub shows HTML source; open the downloaded file to run it. The preview runs locally without a build or publication step. Its controls change the preview only.
 
-The gallery includes button states, action menus, KPI values, table selection, Kanban moves, calendar dates, sample attachments, accordions, slides, navigation, steps, and tree selection. The [Button editor](preview/button.html) provides more detailed shape and color controls.
+The gallery includes button states, action menus, KPI values, table selection, Kanban moves, calendar dates, sample attachments, accordions, slides, navigation, steps, tree selection, field validation, combined filters, and message actions. The [Button editor](preview/button.html) provides more detailed shape and color controls.
 
 These HTML approximations do not execute Power Fx or render Microsoft's native controls. Generated palettes, focus behavior, events, and component imports still need Studio validation. Sample interactions stay in the page and do not save records.
+
+Follow the [local validation guide](docs/VALIDATION.md) to run the source, contrast, and browser checks.
 
 ## Try a sample
 
@@ -205,7 +192,7 @@ See the [roadmap and acceptance checks](docs/ROADMAP.md) for the work required b
 
 ## Compatibility and support
 
-All 12 samples use modern controls; 11 also include classic controls. The project does not claim that every control is modern or generally available.
+The original 12 samples use modern controls; 11 also include classic controls. The three new patterns use modern controls and retain classic Labels for live announcements where needed. Search and filter bar uses the modern Dropdown preview. The project does not claim that every control is modern or generally available.
 
 The attachments sample enables app-scope access and uses shared collections. Treat it as an app-level sample until library support and multiple-instance behavior are resolved.
 

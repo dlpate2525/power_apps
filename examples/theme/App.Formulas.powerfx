@@ -19,6 +19,15 @@ UiTheme = {
     Border: ColorValue("#DFDCE6"), // Light gray - decorative separator
     ControlBorder: ColorValue("#625F69"), // Muted ink - necessary control outline
     Focus: ColorValue("#463782"), // Deep purple - focus indicator
+    Error: ColorValue("#A23D49"), // Muted red - error text and icon
+    ErrorSurface: ColorValue("#FFF0F2"), // Pale rose - error background
+    Warning: ColorValue("#8D4538"), // Dark coral - warning text and icon
+    WarningSurface: ColorValue("#FBE8E3"), // Soft coral - warning background
+    Success: ColorValue("#463782"), // Deep purple - success text and checkmark
+    SuccessSurface: ColorValue("#ECEBF3"), // Soft lavender - success background
+    Info: ColorValue("#625B70"), // Gray badge text - information text and icon
+    InfoSurface: ColorValue("#F2F0F5"), // Gray badge surface - information background
+    CornerRadius: 12,
     ButtonShape: "Pill",
     ButtonCornerRadius: 12,
     Mode: "Light",

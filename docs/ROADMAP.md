@@ -2,9 +2,11 @@
 
 The goal is a reusable Power Apps library with shared design settings and evidence that each published component works.
 
-The current change provides documentation, shared theme settings, and purple accent defaults in all 12 definitions. Button also supports pill and rounded corners. Broader component styling and packaged library delivery remain planned work.
+The current change provides documentation, shared theme settings, and purple accent defaults in the original 12 definitions. Button also supports pill and rounded corners. Broader component styling and packaged library delivery remain planned work.
 
-The [local gallery](../preview/index.html) provides interactive HTML previews of all 12 components. Use it to review the design before Studio validation. It does not execute the component definitions.
+The [local gallery](../preview/index.html) provides interactive HTML previews of all 15 components. Use it to review the design before Studio validation. It does not execute the component definitions.
+
+The [component expansion checklist](COMPONENT-EXPANSION.md) tracks Form field, Search and filter bar, and Message banner. These new patterns accept a shared `Design` record; their native Studio checks remain pending.
 
 ## 1. Validate the baseline
 

@@ -52,7 +52,7 @@ def main():
             motion = field
         elif re.fullmatch(r'ButtonShape\s*:\s*"(Pill|Rounded)"', field):
             pass
-        elif re.fullmatch(r'ButtonCornerRadius\s*:\s*-?\d+(?:\.\d+)?', field):
+        elif re.fullmatch(r'(ButtonCornerRadius|CornerRadius)\s*:\s*-?\d+(?:\.\d+)?', field):
             pass
         else:
             parser.error(f'Cannot evaluate {field!r}. Use literal hex colors, light mode, and literal button settings for this check.')
@@ -75,7 +75,12 @@ def main():
         ('Focus', 'Surface', 3.0),
         ('ControlBorder', 'Background', 3.0),
         ('ControlBorder', 'Surface', 3.0),
+        ('Error', 'Background', 4.5),
     ]
+    for intent in ('Error', 'Warning', 'Success', 'Info'):
+        surface = intent + 'Surface'
+        pairs.extend([(intent, surface, 4.5), ('Text', surface, 4.5),
+                      ('TextMuted', surface, 4.5), ('Focus', surface, 3.0)])
     required = {name for a, b, _ in pairs for name in (a, b)} | {'Border', 'AccentBorder'}
     if missing := required - colors.keys():
         parser.error('Missing literal color fields: ' + ', '.join(sorted(missing)))

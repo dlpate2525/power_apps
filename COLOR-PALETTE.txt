@@ -5,24 +5,24 @@
 // Use additional shades when configuring individual controls.
 
 // PURPLES
-#463782 // Deep purple | UiTheme.Accent, UiTheme.Focus
+#463782 // Deep purple | UiTheme.Accent, UiTheme.Focus, UiTheme.Success
 #362965 // Dark purple | UiTheme.AccentHover
-#ECEBF3 // Soft lavender | UiTheme.AccentSoft
+#ECEBF3 // Soft lavender | UiTheme.AccentSoft, UiTheme.SuccessSurface
 #C5BFD7 // Lavender gray | UiTheme.AccentBorder; decorative border
 
 // CORALS
 #D88777 // Muted coral | UiTheme.Secondary; use ink text on this fill
-#8D4538 // Dark coral | UiTheme.SecondaryText; text on light surfaces
+#8D4538 // Dark coral | UiTheme.SecondaryText, UiTheme.Warning; text on light surfaces
 
 #FFF8F6 // Pale coral | Banner background
-#FBE8E3 // Soft coral | Icon background
+#FBE8E3 // Soft coral | UiTheme.WarningSurface
 #F2D9D3 // Coral border | Decorative border on pale coral
 #843E34 // Deep coral | Heading and link text on pale coral
 #75534E // Muted coral ink | Supporting text on pale coral
 
 // REDS
-#A23D49 // Muted red | Error text on pale rose
-#FFF0F2 // Pale rose | Error message and badge backgrounds
+#A23D49 // Muted red | UiTheme.Error; error text on white or pale rose
+#FFF0F2 // Pale rose | UiTheme.ErrorSurface
 #EFCDD2 // Rose border | Decorative border on pale rose
 #B74856 // Rose red | Status indicator; pair with a label or icon
 
@@ -39,8 +39,8 @@
 #625F69 // Muted ink | UiTheme.TextMuted, UiTheme.ControlBorder
 #292630 // Ink | UiTheme.Text, UiTheme.OnSecondary
 
-#625B70 // Gray badge text | Text on gray badge surfaces
-#F2F0F5 // Gray badge surface | Neutral badge background
+#625B70 // Gray badge text | UiTheme.Info
+#F2F0F5 // Gray badge surface | UiTheme.InfoSurface
 
 // Fixed Button colors in light mode: edit the component source to change them.
 #242424 // Charcoal | Secondary, Outline, and Subtle text

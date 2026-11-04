@@ -12,9 +12,11 @@ Use one host-app formula to edit the project's purple and coral palette. Bind co
 | `App.Theme` | Microsoft's active modern theme | Supplies native modern-control styling independently of this starter |
 | Component `Theme` | An existing text input | Selects the component's internal light or dark palette |
 
-All 12 component `AccentColor` defaults use `#463782`. Defaults are independent fallbacks. Bind each instance to `UiTheme.Accent` to share subsequent changes.
+The original 12 component `AccentColor` defaults use `#463782`. Defaults are independent fallbacks. Bind each instance to `UiTheme.Accent` to share subsequent changes.
 
 `UiTheme` is a named formula, not mutable session state. Edit its values in **App.Formulas**; dependent formulas update automatically. See the [App object reference](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/functions/object-app#formulas-property).
+
+The new Form field, Search and filter bar, and Message banner use a `Design` record instead of the older style inputs. Set their `Design` property to the complete `UiTheme` record.
 
 ## Set up the starter
 
@@ -24,12 +26,13 @@ For an existing app, enable **Settings > Updates > New > Modern controls and the
 2. Append the formula from [App.Formulas.powerfx](../examples/theme/App.Formulas.powerfx).
 3. Insert a component using its setup guide.
 4. Select the component instance on the screen.
-5. Set its `AccentColor` property to `UiTheme.Accent`.
-6. Set its `Motion` property to `UiTheme.Motion`.
-7. Set its `Theme` property to `UiTheme.Mode`, if available.
-8. Set the floating action button's `ContentColor` property to `UiTheme.OnAccent`, if used.
-9. Set the Button's `Shape` property to `UiTheme.ButtonShape`, if used.
-10. Set the Button's `CornerRadius` property to `UiTheme.ButtonCornerRadius`, if used.
+5. For the three new components, set `Design` to `UiTheme`.
+6. For the original components, set `AccentColor` to `UiTheme.Accent`.
+7. Set `Motion` to `UiTheme.Motion`, if that property exists.
+8. Set its `Theme` property to `UiTheme.Mode`, if available.
+9. Set the floating action button's `ContentColor` property to `UiTheme.OnAccent`, if used.
+10. Set the Button's `Shape` property to `UiTheme.ButtonShape`, if used.
+11. Set the Button's `CornerRadius` property to `UiTheme.ButtonCornerRadius`, if used.
 
 Keep existing named formulas. Use another name if the app already defines `UiTheme`. Adjust formula separators for your authoring language.
 
@@ -53,15 +56,17 @@ Change color values in `UiTheme`, then verify every affected foreground/backgrou
 | Borders | `Border` `#DFDCE6`; `ControlBorder` `#625F69` | Decorative separators versus necessary control outlines |
 | Focus | `Focus` `#463782` | A visible focus indicator on light backgrounds |
 | Preferences | `Mode` `"Light"`; `Motion` `false` | Existing component inputs |
+| Status pairs | `Error`/`ErrorSurface`, `Warning`/`WarningSurface`, `Success`/`SuccessSurface`, `Info`/`InfoSurface` | Independent text/icon and background colors for new patterns |
+| Field and banner corners | `CornerRadius` `12` | Supported properties in the new components |
 | Button corners | `ButtonShape` `"Pill"`; `ButtonCornerRadius` `12` | Pill default or adjustable rounded corners |
 
-The component bindings above use `Accent`, `OnAccent`, `Mode`, `Motion`, `ButtonShape`, and `ButtonCornerRadius`. Other fields are for host controls until a broader component interface is implemented.
+The component bindings above use `Accent`, `OnAccent`, `Mode`, `Motion`, `ButtonShape`, and `ButtonCornerRadius`. The three new components read supported fields through `Design`; their guides list native styling limits. Unused fields do not change those controls.
 
 Set `ButtonShape` to `"Rounded"` to use the editable radius. Pill ignores `ButtonCornerRadius` and uses half the smaller dimension. See the [Button guide](../button/README.md).
 
 For host screens, set `Fill` to `UiTheme.Background`. For supported containers, set `Fill` to `UiTheme.Surface`. Bind text and interaction properties only where the chosen control exposes them. Defining a token does not apply it automatically.
 
-Keep success, warning, and error palettes separate from brand colors. Existing status palettes remain component-specific and still need runtime verification.
+Status colors have separate variables. Success defaults to purple with a checkmark and a success label; it does not depend on color alone. Changing `Accent` does not change `Success`. The original components retain their existing internal status palettes.
 
 ### Color and interaction checks
 
@@ -100,13 +105,13 @@ Microsoft documents this theme reference and theme customization. **Lock primary
 
 ## Existing component limits
 
-All components expose `AccentColor` and `Motion`. All except the floating action button expose `Theme`. Its `ContentColor` input does not replace every action-menu color.
+The original 12 components expose `AccentColor` and `Motion`. Of those, all except the floating action button expose `Theme`. Its `ContentColor` input does not replace every action-menu color.
 
 The navigation shell's local theme takes precedence after its toggle is used; `CurrentTheme` reports the result. Set `ShowThemeToggle` to `false` on a fresh instance for this starter. Existing local state may require restarting the app session.
 
 Changing `Mode` to `"Dark"` affects bound component inputs only. It does not switch `App.Theme` or the light host colors. Keep `Mode` at `"Light"` until a coordinated dark palette is validated.
 
-Internal surfaces, status colors, SVG styles, typography, spacing, and corners remain component-specific. A proposed `Design` Record input will first be piloted on Button and KPI card. Its fields, defaults, and precedence need implementation and validation; it does not exist today. See the [roadmap](ROADMAP.md).
+Internal surfaces, status colors, SVG styles, typography, spacing, and corners remain component-specific. The three new components implement `Design` as a Record input. Button and KPI card still use their existing properties; extending the shared record to them remains planned. See the [roadmap](ROADMAP.md).
 
 ## Compatibility and validation
 
@@ -116,7 +121,7 @@ If import fails, record the Studio version and error. Generic YAML parsing canno
 
 Check each control's [preview status](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/controls/modern-controls/modern-controls-reference). [Enhanced component properties](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/component-properties) are enabled for new apps; existing apps may need the setting enabled.
 
-Run `python scripts/check_theme.py` from the repository root. It checks selected color pairs in the literal `UiTheme` light palette. It does not require component fallback defaults to match your customized accent. Unsupported dynamic formulas or dark mode fail this limited check and require manual Studio validation. The script does not execute Power Fx or establish accessibility conformance.
+Run `python scripts/check_theme.py` from the repository root. It checks 32 declared color pairs in the literal `UiTheme` light palette, including the four message states. It does not evaluate native control-generated colors. It does not require component fallback defaults to match your customized accent. Unsupported dynamic formulas or dark mode fail this limited check and require manual Studio validation. The script does not execute Power Fx or establish accessibility conformance.
 
 1. Import the sample into a clean development app.
 2. Record the Studio version and enabled features.
