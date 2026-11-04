@@ -4,7 +4,7 @@
 
 Build consistent Power Apps screens with ready-made UI patterns. This fork aims to make common changes, such as brand color, simple to manage from one place.
 
-[Browse components](#component-catalog) · [Set up shared colors](docs/THEMING.md) · [Read the evaluation](docs/FORK-REVIEW.md) · [View the roadmap](docs/ROADMAP.md) · [Track the new components](docs/COMPONENT-EXPANSION.md)
+[Browse components](#component-catalog) · [Set up shared colors](docs/THEMING.md) · [Read the component deep dive](docs/COMPONENT-DEEP-DIVE.md) · [View the roadmap](docs/ROADMAP.md) · [Track the new components](docs/COMPONENT-EXPANSION.md)
 
 > **Current status:** 15 component samples with a purple accent default, an editable shared palette, and a modernization plan. This fork has not yet completed its own Power Apps Studio validation.
 
@@ -21,6 +21,8 @@ Create a practical library of modern Power Apps components that makers can reuse
 - Publish tested versions with clear setup steps and known limits.
 
 These are the project's targets. The [evaluation](docs/FORK-REVIEW.md) explains the gaps in the current samples.
+
+The [component deep dive](docs/COMPONENT-DEEP-DIVE.md) reviews all 15 definitions and provides a prioritized improvement plan. It identifies source defects, compatibility questions, and native acceptance tests. Functional fixes come before broader theme coverage and library packaging.
 
 ## What you can configure today
 
